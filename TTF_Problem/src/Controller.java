@@ -1,13 +1,10 @@
-import com.sun.javafx.collections.ObservableSequentialListWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
@@ -16,9 +13,6 @@ import java.util.Collections;
 public class Controller {
     @FXML
     private ComboBox<String> choose_file;
-
-    @FXML
-    private Button submit;
 
     @FXML
     private LineChart<?,?> chart;
@@ -40,6 +34,9 @@ public class Controller {
 
     @FXML
     private TextField pm;
+
+    @FXML
+    private Label winner;
 
     private ArrayList<String> files;
 
@@ -81,13 +78,16 @@ public class Controller {
         XYChart.Series series_3 = new XYChart.Series();
         series_3.setName("Najgorszy");
 
-        for (int i=0; i <= score.size()-1; i++)
+        for (int i=0; i < score.size(); i++)
         {
             ArrayList<Double> res = score.get(i);
             String X = (i+1) + "";
             series_1.getData().add(new XYChart.Data(X, res.get(0)));
             series_2.getData().add(new XYChart.Data(X, res.get(1)));
             series_3.getData().add(new XYChart.Data(X, res.get(2)));
+
+            if (i == score.size()-1)
+                winner.setText("\t" + res.get(0) + "");
         }
         chart.getData().clear();
         chart.getData().addAll(series_1, series_2, series_3);
