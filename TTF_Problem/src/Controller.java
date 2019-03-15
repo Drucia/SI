@@ -3,9 +3,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +36,20 @@ public class Controller {
     @FXML
     private Label winner;
 
+    @FXML
+    private Label error;
+
+    @FXML
+    private RadioButton weight;
+
+    @FXML
+    private RadioButton profit;
+
+    @FXML
+    private RadioButton ratio;
+
     private ArrayList<String> files;
+    private ToggleGroup group;
 
     @FXML
     public void initialize()
@@ -56,40 +67,70 @@ public class Controller {
 
         ObservableList<String> list = FXCollections.observableList(files);
         choose_file.setItems(list);
+
+        group = new ToggleGroup();
+
+        ratio.setToggleGroup(group);
+        ratio.setSelected(true);
+
+        weight.setToggleGroup(group);
+
+        profit.setToggleGroup(group);
     }
 
     public void onSubmitClicked()
     {
-        int chosen_file = files.indexOf(choose_file.getValue());
-        int pop = Integer.parseInt(pop_size.getText());
-        int g = Integer.parseInt(gen.getText());
-        int t = Integer.parseInt(tour.getText());
-        int b = Integer.parseInt(best.getText());
-        double x = Double.parseDouble(px.getText());
-        double m = Double.parseDouble(pm.getText());
-        MainManager manager = new MainManager();
-        ArrayList<ArrayList<Double>> score = manager.runAlg(chosen_file, pop, g, t, b, x, m);
-        chart.setTitle("Najlepsze i najgorsze fitness dla danych populacji");
+        error.setVisible(false);
+        try {
+            int chosen_file = files.indexOf(choose_file.getValue());
+            int pop = Integer.parseInt(pop_size.getText());
+            int g = Integer.parseInt(gen.getText());
+            int t = Integer.parseInt(tour.getText());
+            int b = Integer.parseInt(best.getText());
+            double x = Double.parseDouble(px.getText());
+            double m = Double.parseDouble(pm.getText());
+            int greedy = KNP.BY_RATIO_ID;
+            String gr = ((RadioButton) group.getSelectedToggle()).getId();
 
-        XYChart.Series series_1 = new XYChart.Series();
-        series_1.setName("Najlepszy");
-        XYChart.Series series_2 = new XYChart.Series();
-        series_2.setName("Srednia");
-        XYChart.Series series_3 = new XYChart.Series();
-        series_3.setName("Najgorszy");
+            switch (gr) {
+                case "ratio":
+                    greedy = KNP.BY_RATIO_ID;
+                    break;
+                case "weight":
+                    greedy = KNP.BY_WEIGHT_ID;
+                    break;
+                case "profit":
+                    greedy = KNP.BY_PROFIT_ID;
+                    break;
+            }
 
-        for (int i=0; i < score.size(); i++)
+            MainManager manager = new MainManager();
+            ArrayList<ArrayList<Double>> score = manager.runAlg(chosen_file, pop, g, t, b, x, m, greedy);
+            chart.setTitle("Najlepsze i najgorsze fitness dla danych populacji");
+
+            XYChart.Series series_1 = new XYChart.Series();
+            series_1.setName("Najlepszy");
+            XYChart.Series series_2 = new XYChart.Series();
+            series_2.setName("Srednia");
+            XYChart.Series series_3 = new XYChart.Series();
+            series_3.setName("Najgorszy");
+
+            for (int i = 0; i < score.size(); i++) {
+                ArrayList<Double> res = score.get(i);
+                String X = (i + 1) + "";
+                series_1.getData().add(new XYChart.Data(X, res.get(0)));
+                series_2.getData().add(new XYChart.Data(X, res.get(1)));
+                series_3.getData().add(new XYChart.Data(X, res.get(2)));
+
+                if (i == score.size() - 1)
+                    winner.setText("\t" + res.get(0) + "");
+            }
+            chart.getData().clear();
+            chart.getData().addAll(series_1, series_2, series_3);
+        } catch (Exception e)
         {
-            ArrayList<Double> res = score.get(i);
-            String X = (i+1) + "";
-            series_1.getData().add(new XYChart.Data(X, res.get(0)));
-            series_2.getData().add(new XYChart.Data(X, res.get(1)));
-            series_3.getData().add(new XYChart.Data(X, res.get(2)));
-
-            if (i == score.size()-1)
-                winner.setText("\t" + res.get(0) + "");
+            chart.getData().clear();
+            error.setVisible(true);
         }
-        chart.getData().clear();
-        chart.getData().addAll(series_1, series_2, series_3);
     }
 }

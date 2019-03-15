@@ -17,17 +17,17 @@ public class MainManager
             files.add("hard_" + i + ".ttp");
             files.add("medium_" + i + ".ttp");
         }
-        files.add("trivial_0");
-        files.add("trivial_1");
+        files.add("trivial_0.ttp");
+        files.add("trivial_1.ttp");
         Collections.sort(files);
     }
 
-    public ArrayList<ArrayList<Double>> runAlg(int chosen_file, int pop, int gen, int tour, int best, double px, double pm)
+    public ArrayList<ArrayList<Double>> runAlg(int chosen_file, int pop, int gen, int tour, int best, double px, double pm, int greedy_knp)
     {
         Loader.readData(path + files.get(chosen_file));
         DistanceManager.initializeMatrix(Loader.towns);
 
-        GA.setConsts(pop, gen, tour, best, px, pm, KNP.BY_RATIO_ID);
+        GA.setConsts(pop, gen, tour, best, px, pm, greedy_knp);
 
         ArrayList<ArrayList<Double>> all_pops;
         List<TTF> start_pop = GA.initialise();
@@ -49,6 +49,8 @@ public class MainManager
     {
         Loader.readData(path + "easy_0.ttp");
         DistanceManager.initializeMatrix(Loader.towns);
+
+        GA.setConsts(100   , 100, 5, 2, 0.7, 0.01, KNP.BY_RATIO_ID);
 
         ArrayList<ArrayList<Double>> all_pops;
         List<TTF> start_pop = GA.initialise();
