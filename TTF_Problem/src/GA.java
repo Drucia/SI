@@ -144,80 +144,28 @@ public class GA
 
     private static List<TTF> crossover(TTF os1, TTF os2)
     {
-        TTF first_child = new TTF(os1);
-        TTF second_child = new TTF(os2);
 
-        int size = os1.getTravel().size();
+        ArrayList<Integer> parent_1 = new ArrayList(os1.getTravel());
+        ArrayList<Integer> parent_2 = new ArrayList(os2.getTravel());
 
-        int cut_point_1 = random.nextInt(size);
-        int cut_point_2 = random.nextInt(size-1);
+        int cut_point = random.nextInt(parent_1.size()-1) + 1;
 
-        if (cut_point_1 == cut_point_2)
-            cut_point_2 = size - 1;
-        else if (cut_point_1 > cut_point_2) // swap
-        {
-            int tmp = cut_point_1;
-            cut_point_1 = cut_point_2;
-            cut_point_2 = tmp;
-        }
+        ArrayList<Integer> offspring_1 = new ArrayList<>(parent_1.subList(0, cut_point));
+        ArrayList<Integer> offspring_2 = new ArrayList<>(parent_2.subList(0, cut_point));
 
-        Integer[] parent_1 = new Integer[size];
-        parent_1 = os1.getTravel().toArray(parent_1);
+        parent_2.removeAll(offspring_1);
+        parent_1.removeAll(offspring_2);
 
-        Integer[] parent_2 = new Integer[size];
-        parent_2 = os2.getTravel().toArray(parent_2);
-
-        Integer[] offspring_1 = new Integer[size];
-        Integer[] offspring_2 = new Integer[size];
-        int[] mapping_1 = new int[size+1];
-        int[] mapping_2 = new int[size+1];
-
-        Arrays.fill(mapping_1, -1);
-        Arrays.fill(mapping_2, -1);
-
-        for (int i = cut_point_1; i <= cut_point_2; i++) // change between cut points (cut points included)
-        {
-            offspring_1[i] = parent_2[i];
-            mapping_1[parent_2[i]] = parent_1[i];
-
-            offspring_2[i] = parent_1[i];
-            mapping_2[parent_1[i]] = parent_2[i];
-        }
-
-        for (int i=0; i < size; i++) // fill rest
-        {
-            if ((i < cut_point_1) || i > cut_point_2) // fill to first cut point and fill from second cut point to end
-            {
-                int value_1 = parent_1[i];
-                int map_val_1 = mapping_1[value_1];
-                int value_2 = parent_2[i];
-                int map_val_2 = mapping_2[value_2];
-
-                while(map_val_1 != -1) // we already have this value
-                {
-                    value_1 = map_val_1;
-                    map_val_1 = mapping_1[value_1];
-                }
-
-                while(map_val_2 != -1)
-                {
-                    value_2 = map_val_2;
-                    map_val_2 = mapping_2[value_2];
-                }
-
-                offspring_1[i] = value_1;
-                offspring_2[i] = value_2;
-            }
-        }
-
-        ArrayList<Integer> new_travel = new ArrayList<>(Arrays.asList(offspring_1));
-        first_child.setTravel(new_travel);
-        new_travel = new ArrayList<>(Arrays.asList(offspring_2));
-        second_child.setTravel(new_travel);
+        offspring_1.addAll(parent_2);
+        offspring_2.addAll(parent_1);
 
         ArrayList<TTF> result = new ArrayList<>();
-        result.add(first_child);
-        result.add(second_child);
+        TTF res = new TTF(os1);
+        res.setTravel(offspring_1);
+        result.add(res);
+        res = new TTF(os2);
+        res.setTravel(offspring_2);
+        result.add(res);
 
         return result;
     }

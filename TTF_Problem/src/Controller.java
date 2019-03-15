@@ -131,6 +131,7 @@ public class Controller {
         {
             chart.getData().clear();
             error.setVisible(true);
+            e.printStackTrace();
         }
     }
 }
