@@ -1,7 +1,10 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.OptionalDouble;
 
 public class MainManager
 {
@@ -35,13 +38,53 @@ public class MainManager
         GA.evaluate(start_pop);
         all_pops = GA.score;
 
-        for (int i=0; i<all_pops.size(); i++)
-        {
-            ArrayList<Double> curr_pop = all_pops.get(i);
-            System.out.println("Numer populacji: " + i + ", najlepszy: " + curr_pop.get(0) + ", srednia: " + curr_pop.get(1) + ", najgorszy: " + curr_pop.get(2));
-        }
+        StringBuilder res_path = new StringBuilder("D:\\Users\\oladr\\Studia\\Term_VI\\Sztuczna\\Badania\\TTF\\");
+        res_path.append(files.get(chosen_file));
+        res_path.append("_");
+        res_path.append(pop);
+        res_path.append("_");
+        res_path.append(gen);
+        res_path.append("_");
+        res_path.append(tour);
+        res_path.append("_");
+        res_path.append(best);
+        res_path.append("_");
+        res_path.append((int) px*100);
+        res_path.append("_");
+        res_path.append((int) pm*100);
+        res_path.append("_");
+        res_path.append(greedy_knp);
+        res_path.append(".csv");
+        String absoluteFilePath = String.valueOf(res_path);
 
-        System.out.println("KONIEC");
+        try {
+            File file = new File(absoluteFilePath);
+            file.createNewFile();
+            FileWriter f_writer = new FileWriter(file);
+            BufferedWriter writer = new BufferedWriter(f_writer);
+            writer.write("Numer populacji, Najlepszy, Srednia, Najgorszy\n");
+
+            for (int i = 0; i < all_pops.size(); i++) {
+                ArrayList<Double> curr_pop = all_pops.get(i);
+                //System.out.println("Numer populacji: " + i + ", najlepszy: " + curr_pop.get(0) + ", srednia: " + curr_pop.get(1) + ", najgorszy: " + curr_pop.get(2));
+                StringBuilder s_res = new StringBuilder();
+                s_res.append(i+1);
+                s_res.append(",");
+                s_res.append(curr_pop.get(0));
+                s_res.append(",");
+                s_res.append(curr_pop.get(1));
+                s_res.append(",");
+                s_res.append(curr_pop.get(2));
+                s_res.append("\n");
+                writer.write(String.valueOf(s_res));
+            }
+
+            writer.close();
+            System.out.println("KONIEC");
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
 
         return all_pops;
     }
