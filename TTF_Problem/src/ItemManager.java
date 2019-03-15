@@ -4,9 +4,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ItemManager {
-    private static int capacity = Loader.capacity;
-    private static ArrayList<Item> items = Loader.items;
-    private static int number_of_towns = Loader.dimension;
+    private static int capacity;
+    private static ArrayList<Item> items;
+    private static int number_of_towns;
 
     private static ArrayList<Item> getByBestWeight(ArrayList<Item> items) {
         Collections.sort(items, new Comparator<Item>() {
@@ -39,6 +39,9 @@ public class ItemManager {
     }
 
     public static HashMap<Integer, List<Pair<Item, Integer>>> getChosenItems(){
+        capacity = Loader.capacity;
+        items = Loader.items;
+        number_of_towns = Loader.dimension;
         ArrayList<Pair<Item, Integer>> all_items_with_choices = chooseItems(capacity, items);
         HashMap<Integer, List<Pair<Item, Integer>>> items_in_towns = new HashMap<>();
 

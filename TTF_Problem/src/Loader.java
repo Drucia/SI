@@ -13,12 +13,15 @@ public class Loader
     public static double min_speed;
     public static double max_speed;
     public static double renting_ratio;
-    public static ArrayList<Town> towns = new ArrayList<>();
-    public static ArrayList<Item> items = new ArrayList<>();
+    public static ArrayList<Town> towns;
+    public static ArrayList<Item> items;
 
 
     public static void readData(String name)
     {
+        towns = new ArrayList<>();
+        items = new ArrayList<>();
+
         File file = new File(name);
         try
         {

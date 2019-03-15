@@ -53,8 +53,8 @@ public class Controller {
             files.add("hard_" + i + ".ttp");
             files.add("medium_" + i + ".ttp");
         }
-        files.add("trivial_0");
-        files.add("trivial_1");
+        files.add("trivial_0.ttp");
+        files.add("trivial_1.ttp");
         Collections.sort(files);
 
         ObservableList<String> list = FXCollections.observableList(files);
@@ -89,7 +89,7 @@ public class Controller {
             series_2.getData().add(new XYChart.Data(X, res.get(1)));
             series_3.getData().add(new XYChart.Data(X, res.get(2)));
         }
-
+        chart.getData().clear();
         chart.getData().addAll(series_1, series_2, series_3);
     }
 }

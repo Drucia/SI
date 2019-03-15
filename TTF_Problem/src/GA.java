@@ -4,13 +4,13 @@ public class GA
 {
     static private Random random = new Random();
     static private final int limes = 100;
-    static public int gen = 100;
-    static public int pop_size = 100;
-    static public double px = 0.7*limes;
-    static public double pm = 0.01*limes;
-    static public int tour = 5;
-    static public int best_in_tour = 2;
-    static private int t = 0;
+    static public int gen;
+    static public int pop_size;
+    static public double px;
+    static public double pm;
+    static public int tour;
+    static public int best_in_tour;
+    static private int t;
     static public ArrayList<ArrayList<Double>> score;
 
     private static TTF mutation(TTF os)
@@ -25,13 +25,14 @@ public class GA
         return new_ttf;
     }
 
-    public static void setConsts(int p_s, int g, int t, int best, double x, double m)
+    public static void setConsts(int p_s, int g, int to, int best, double x, double m)
     {
         gen =g;
         pop_size = p_s;
         px = x*limes;
         pm = m*limes;
-        tour = t;
+        tour = to;
+        t = 0;
         best_in_tour = best;
     }
 
