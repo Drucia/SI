@@ -12,35 +12,47 @@ public class TTF implements Comparable<TTF>
     private double speed_max;
     private int capacity;
     private int dimension;
+    private int greedy_knp;
     private ArrayList<Integer> travel;
     private HashMap<Integer, List<Pair<Item, Integer>>> items_plan;
 
     public ArrayList<Integer> getTravel() {
         return travel;
     }
+    public int getGreedy_knp() {return greedy_knp;}
+
+    public HashMap<Integer, List<Pair<Item, Integer>>> getItems_plan() {
+        return items_plan;
+    }
 
     public void setTravel(ArrayList<Integer> travel) {
         this.travel = travel;
     }
 
-    public TTF(ArrayList<Integer> travel) {
-        this.actual_capacity = 0;
-        this.travel = travel;
-        getConstans();
+    public TTF(int greedy_knp) {
+        this.greedy_knp = greedy_knp;
+        this.travel = DistanceManager.getTravel();
+        KNP greedy = new KNP(greedy_knp);
+        items_plan = greedy.getChosenItems();
+        setConstants();
         calcActualSpeed();
     }
 
-    private void getConstans() {
+    private void setConstants() {
+        actual_capacity = 0;
         speed_min = Loader.min_speed;
         speed_max = Loader.max_speed;
         capacity = Loader.capacity;
         dimension = Loader.dimension;
-        items_plan = ItemManager.getChosenItems();
     }
 
     public TTF(TTF other)
     {
-        this(new ArrayList<>(other.getTravel()));
+        this.greedy_knp = other.getGreedy_knp();
+        this.travel = new ArrayList<>();
+        this.items_plan = other.getItems_plan();
+        setConstants();
+        calcActualSpeed();
     }
 
     private double calcObjectiveFunctionTSP()
