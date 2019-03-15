@@ -27,7 +27,7 @@ public class MainManager
         Loader.readData(path + files.get(chosen_file));
         DistanceManager.initializeMatrix(Loader.towns);
 
-        GA.setConsts(pop, gen, tour, best, px, pm);
+        GA.setConsts(pop, gen, tour, best, px, pm, KNP.BY_RATIO_ID);
 
         ArrayList<ArrayList<Double>> all_pops;
         List<TTF> start_pop = GA.initialise();

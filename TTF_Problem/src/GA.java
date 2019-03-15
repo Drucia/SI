@@ -4,13 +4,14 @@ public class GA
 {
     static private Random random = new Random();
     static private final int limes = 100;
-    static public int gen;
-    static public int pop_size;
-    static public double px;
-    static public double pm;
-    static public int tour;
-    static public int best_in_tour;
+    static private int gen;
+    static private int pop_size;
+    static private double px;
+    static private double pm;
+    static private int tour;
+    static private int best_in_tour;
     static private int t;
+    static private int knp;
     static public ArrayList<ArrayList<Double>> score;
 
     private static TTF mutation(TTF os)
@@ -25,7 +26,7 @@ public class GA
         return new_ttf;
     }
 
-    public static void setConsts(int p_s, int g, int to, int best, double x, double m)
+    public static void setConsts(int p_s, int g, int to, int best, double x, double m, int greedy_knp)
     {
         gen =g;
         pop_size = p_s;
@@ -34,6 +35,7 @@ public class GA
         tour = to;
         t = 0;
         best_in_tour = best;
+        knp = greedy_knp;
     }
 
     public static List<TTF> initialise()
@@ -43,7 +45,7 @@ public class GA
 
         for (int i=0; i < pop_size; i++)
         {
-            TTF ttf = new TTF(DistanceManager.getTravel());
+            TTF ttf = new TTF(knp);
             pop.add(ttf);
         }
 
