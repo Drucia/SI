@@ -38,14 +38,31 @@ public class DistanceManager
     private static ArrayList<Integer> getGreedyTravel() {
         // get the nearest
         ArrayList<Integer> towns_id = new ArrayList<>(matrix.keySet());
+        int loop = towns_id.size();
         ArrayList<Integer> travel = new ArrayList<>();
-        travel.add(towns_id.get(0));
+        Integer t_id = towns_id.get(0);
+        travel.add(t_id);
+        towns_id.remove(t_id);
 
-        for (int i=1; i<towns_id.size(); i++)
+        for (int i=1; i<loop; i++)
         {
+            HashMap<Integer, Integer> towns_to = matrix.get(travel.get(i-1));
+            Integer id = towns_id.get(0);
+            int min_dis = towns_to.get(id);
 
+            for (int j=1; j<towns_id.size(); j++) {
+                Integer town_to_id = towns_id.get(j);
+                int dis = towns_to.get(town_to_id);
+                if (dis < min_dis)
+                {
+                    min_dis = dis;
+                    id = town_to_id;
+                }
+            }
+            travel.add(id);
+            towns_id.remove(id);
         }
-        return null;
+        return travel;
     }
 
     public static int getDistanceBetween(int x1, int x2)
