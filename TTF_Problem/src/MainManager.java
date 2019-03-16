@@ -10,6 +10,7 @@ public class MainManager
 {
     private static String path = "D:\\Users\\oladr\\Studia\\Term_VI\\Sztuczna\\WorkSpace\\TTF_Problem\\src\\data\\student\\";
     private ArrayList<String> files;
+    private static StringBuilder res_path = new StringBuilder("D:\\Users\\oladr\\Studia\\Term_VI\\Sztuczna\\Badania\\TTF\\");
 
     public MainManager()
     {
@@ -38,7 +39,6 @@ public class MainManager
         GA.evaluate(start_pop);
         all_pops = GA.score;
 
-        StringBuilder res_path = new StringBuilder("D:\\Users\\oladr\\Studia\\Term_VI\\Sztuczna\\Badania\\TTF\\");
         res_path.append(files.get(chosen_file));
         res_path.append("_");
         res_path.append(pop);
@@ -56,7 +56,13 @@ public class MainManager
         res_path.append(greedy_knp);
         res_path.append(".csv");
         String absoluteFilePath = String.valueOf(res_path);
+        writeToFile(absoluteFilePath, all_pops);
 
+        return all_pops;
+    }
+
+    private void writeToFile(String absoluteFilePath, ArrayList<ArrayList<Double>> all_pops)
+    {
         try {
             File file = new File(absoluteFilePath);
             file.createNewFile();
@@ -85,8 +91,6 @@ public class MainManager
         {
             e.printStackTrace();
         }
-
-        return all_pops;
     }
     public static void main(String[] args)
     {
@@ -108,5 +112,19 @@ public class MainManager
         }
 
         System.out.println("KONIEC");
+    }
+
+    public ArrayList<ArrayList<Double>> runAlg(int chosen_file, int knp, boolean is_greedy) {
+        Loader.readData(path + files.get(chosen_file));
+        DistanceManager.initializeMatrix(Loader.towns);
+
+        ArrayList<ArrayList<Double>> res = new ArrayList<>();
+        TTF os = new TTF(knp, is_greedy);
+        ArrayList<Double> sc = new ArrayList<>();
+        sc.add(os.calcObjectiveFunction());
+        res.add(sc);
+
+        return res;
+
     }
 }

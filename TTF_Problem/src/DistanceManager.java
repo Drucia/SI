@@ -24,11 +24,28 @@ public class DistanceManager
         return distance_matrix;
     }
 
-    public static ArrayList<Integer> getTravel()
+    public static ArrayList<Integer> getTravel(boolean is_greedy)
     {
+        if (!is_greedy) {
+            ArrayList<Integer> towns_id = new ArrayList<>(matrix.keySet());
+            Collections.shuffle(towns_id);
+            return towns_id;
+        }
+        
+        return getGreedyTravel();
+    }
+
+    private static ArrayList<Integer> getGreedyTravel() {
+        // get the nearest
         ArrayList<Integer> towns_id = new ArrayList<>(matrix.keySet());
-        Collections.shuffle(towns_id);
-        return towns_id;
+        ArrayList<Integer> travel = new ArrayList<>();
+        travel.add(towns_id.get(0));
+
+        for (int i=1; i<towns_id.size(); i++)
+        {
+
+        }
+        return null;
     }
 
     public static int getDistanceBetween(int x1, int x2)

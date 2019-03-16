@@ -29,9 +29,9 @@ public class TTF implements Comparable<TTF>
         this.travel = travel;
     }
 
-    public TTF(int greedy_knp) {
+    public TTF(int greedy_knp, boolean is_greedy_tsp) {
         this.greedy_knp = greedy_knp;
-        this.travel = DistanceManager.getTravel();
+        this.travel = DistanceManager.getTravel(is_greedy_tsp);
         KNP greedy = new KNP(greedy_knp);
         items_plan = greedy.getChosenItems();
         setConstants();

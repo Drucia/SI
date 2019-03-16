@@ -45,7 +45,7 @@ public class GA
 
         for (int i=0; i < pop_size; i++)
         {
-            TTF ttf = new TTF(knp);
+            TTF ttf = new TTF(knp, false);
             pop.add(ttf);
         }
 

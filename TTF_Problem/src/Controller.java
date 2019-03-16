@@ -1,3 +1,4 @@
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,7 +14,7 @@ public class Controller {
     private ComboBox<String> choose_file;
 
     @FXML
-    private LineChart<?,?> chart;
+    private LineChart<?, ?> chart;
 
     @FXML
     private TextField pop_size;
@@ -40,6 +41,28 @@ public class Controller {
     private Label error;
 
     @FXML
+    private Label pop_size_l;
+
+    @FXML
+    private Label tour_size_l;
+
+    @FXML
+    private Label gen_l;
+
+    @FXML
+    private Label best_l;
+
+    @FXML
+    private Label px_l;
+
+    @FXML
+    private Label pm_l;
+
+
+    @FXML
+    private ChoiceBox<String> choice;
+
+    @FXML
     private RadioButton weight;
 
     @FXML
@@ -50,13 +73,12 @@ public class Controller {
 
     private ArrayList<String> files;
     private ToggleGroup group;
+    private boolean is_greedy = false;
 
     @FXML
-    public void initialize()
-    {
+    public void initialize() {
         files = new ArrayList<>();
-        for (int i=0; i<5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             files.add("easy_" + i + ".ttp");
             files.add("hard_" + i + ".ttp");
             files.add("medium_" + i + ".ttp");
@@ -67,6 +89,7 @@ public class Controller {
 
         ObservableList<String> list = FXCollections.observableList(files);
         choose_file.setItems(list);
+        choose_file.setValue("easy_0.ttp");
 
         group = new ToggleGroup();
 
@@ -76,10 +99,48 @@ public class Controller {
         weight.setToggleGroup(group);
 
         profit.setToggleGroup(group);
+
+        choice.getItems().addAll("zachlanny", "genetyczny");
+        choice.setValue("genetyczny");
+
+        choice.getSelectionModel()
+                .selectedItemProperty()
+                .addListener( (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                    is_greedy = newValue.equals("zachlanny");
+                    if (is_greedy)
+                    {
+                        pop_size.setVisible(false);
+                        tour.setVisible(false);
+                        gen.setVisible(false);
+                        best.setVisible(false);
+                        px.setVisible(false);
+                        pm.setVisible(false);
+                        pop_size_l.setVisible(false);
+                        tour_size_l.setVisible(false);
+                        gen_l.setVisible(false);
+                        best_l.setVisible(false);
+                        px_l.setVisible(false);
+                        pm_l.setVisible(false);
+                    }
+                    else
+                    {
+                        pop_size.setVisible(true);
+                        tour.setVisible(true);
+                        gen.setVisible(true);
+                        best.setVisible(true);
+                        px.setVisible(true);
+                        pm.setVisible(true);
+                        pop_size_l.setVisible(true);
+                        tour_size_l.setVisible(true);
+                        gen_l.setVisible(true);
+                        best_l.setVisible(true);
+                        px_l.setVisible(true);
+                        pm_l.setVisible(true);
+
+                    }});
     }
 
-    public void onSubmitClicked()
-    {
+    public void onSubmitClicked() {
         error.setVisible(false);
         try {
             int chosen_file = files.indexOf(choose_file.getValue());
@@ -105,7 +166,15 @@ public class Controller {
             }
 
             MainManager manager = new MainManager();
-            ArrayList<ArrayList<Double>> score = manager.runAlg(chosen_file, pop, g, t, b, x, m, greedy);
+            ArrayList<ArrayList<Double>> score;
+
+            if (is_greedy)
+            {
+                score = manager.runAlg(chosen_file, greedy, is_greedy);
+            }
+            else
+                score = manager.runAlg(chosen_file, pop, g, t, b, x, m, greedy);
+
             chart.setTitle("Najlepsze i najgorsze fitness dla danych populacji");
 
             XYChart.Series series_1 = new XYChart.Series();
@@ -127,8 +196,7 @@ public class Controller {
             }
             chart.getData().clear();
             chart.getData().addAll(series_1, series_2, series_3);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             chart.getData().clear();
             error.setVisible(true);
             e.printStackTrace();
