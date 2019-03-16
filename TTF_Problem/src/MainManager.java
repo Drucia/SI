@@ -39,6 +39,9 @@ public class MainManager
         GA.evaluate(start_pop);
         all_pops = GA.score;
 
+        Double px_d = px*100;
+        Double pm_d = pm*100;
+
         StringBuilder res_path = new StringBuilder();
         res_path.append(score_path);
         res_path.append(files.get(chosen_file));
@@ -51,9 +54,9 @@ public class MainManager
         res_path.append("_");
         res_path.append(best);
         res_path.append("_");
-        res_path.append((int) px*100);
+        res_path.append(px_d.intValue());
         res_path.append("_");
-        res_path.append((int) pm*100);
+        res_path.append(pm_d.intValue());
         res_path.append("_");
         res_path.append(greedy_knp);
         res_path.append(".csv");
