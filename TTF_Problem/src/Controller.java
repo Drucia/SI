@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +39,7 @@ public class Controller {
     private Label winner;
 
     @FXML
-    private Label error;
+    private Label msg;
 
     @FXML
     private Label pop_size_l;
@@ -139,8 +140,53 @@ public class Controller {
                     }});
     }
 
+    public void onSaveClicked() {
+        msg.setVisible(false);
+        try {
+            int chosen_file = files.indexOf(choose_file.getValue());
+            int greedy = KNP.BY_RATIO_ID;
+            String gr = ((RadioButton) group.getSelectedToggle()).getId();
+
+            switch (gr) {
+                case "ratio":
+                    greedy = KNP.BY_RATIO_ID;
+                    break;
+                case "weight":
+                    greedy = KNP.BY_WEIGHT_ID;
+                    break;
+                case "profit":
+                    greedy = KNP.BY_PROFIT_ID;
+                    break;
+            }
+
+            MainManager manager = new MainManager();
+
+            if (is_greedy) {
+                manager.runAlg(chosen_file, greedy);
+            } else
+            {
+                int pop = Integer.parseInt(pop_size.getText());
+                int g = Integer.parseInt(gen.getText());
+                int t = Integer.parseInt(tour.getText());
+                int b = Integer.parseInt(best.getText());
+                double x = Double.parseDouble(px.getText());
+                double m = Double.parseDouble(pm.getText());
+
+                manager.runAlgForResearch(chosen_file, pop, g, t, b, x, m, greedy);
+            }
+            msg.setText("Zapisano");
+            msg.setTextFill(Color.GREEN);
+            msg.setVisible(true);
+        } catch (Exception e) {
+            chart.getData().clear();
+            msg.setText("Wprowadz poprawne dane!!!");
+            msg.setVisible(true);
+            e.printStackTrace();
+        }
+    }
+
     public void onSubmitClicked() {
-        error.setVisible(false);
+        msg.setVisible(false);
         try {
             int chosen_file = files.indexOf(choose_file.getValue());
             int greedy = KNP.BY_RATIO_ID;
@@ -202,7 +248,9 @@ public class Controller {
             chart.setTitle("Najlepsze i najgorsze fitness dla danych populacji");
         } catch (Exception e) {
             chart.getData().clear();
-            error.setVisible(true);
+            msg.setText("Wprowadz poprawne dane!!!");
+            msg.setTextFill(Color.RED);
+            msg.setVisible(true);
             e.printStackTrace();
         }
     }
