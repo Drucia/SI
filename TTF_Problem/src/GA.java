@@ -101,7 +101,12 @@ public class GA
             }
 
             Collections.sort(tournament, Collections.reverseOrder());
-            winners = tournament.subList(0, best);
+
+            if (tour != 0) {
+                winners = tournament.subList(0, best);
+            }
+            else
+                winners = tmp_pop;
             score.addAll(winners);
         }
 
