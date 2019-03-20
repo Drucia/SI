@@ -108,9 +108,9 @@ public class MainManager
                 ArrayList<Double> curr_score = avg_score.get(j);
 
                 if(i == I_NUMBER_OF_ITER-1) {
-                    curr_score.set(0, (curr_score.get(0) + curr_pop.get(0))/iter.size());
-                    curr_score.set(1, (curr_score.get(1) + curr_pop.get(1))/iter.size());
-                    curr_score.set(2, (curr_score.get(2) + curr_pop.get(2))/iter.size());
+                    curr_score.set(0, (curr_score.get(0) + curr_pop.get(0))/I_NUMBER_OF_ITER);
+                    curr_score.set(1, (curr_score.get(1) + curr_pop.get(1))/I_NUMBER_OF_ITER);
+                    curr_score.set(2, (curr_score.get(2) + curr_pop.get(2))/I_NUMBER_OF_ITER);
                 }
                 else
                 {
@@ -161,21 +161,30 @@ public class MainManager
         Loader.readData(path + "easy_0.ttp");
         DistanceManager.initializeMatrix(Loader.towns);
 
-        GA.setConsts(100   , 100, 5, 2, 0.7, 0.01, KNP.BY_RATIO_ID);
+        TTF os = new TTF(2, true);
+        double score = os.calcObjectiveFunction();
+        TTF os2 = new TTF(2, false);
+        System.out.println("Dla zachlannego: " + score);
+        System.out.println("Dla nie zachlannego: " + os2.calcObjectiveFunction());
+        List<TTF> w = GA.crossover(os, os2);
+        System.out.println("Po krzyzowaniu: " + w.get(0).calcObjectiveFunction());
+        System.out.println("Po krzyzowaniu: " + w.get(1).calcObjectiveFunction());
 
-        ArrayList<ArrayList<Double>> all_pops;
-        List<TTF> start_pop = GA.initialise();
-        GA.evaluate(start_pop);
-        all_pops = GA.score;
-        int i = 1;
-
-        for (ArrayList<Double> d: all_pops)
-        {
-            System.out.println("Numer populacji: " + i + ", najlepszy: " + d.get(0) + ", srednia: " + d.get(1) + ", najgorszy: " + d.get(2));
-            i++;
-        }
-
-        System.out.println("KONIEC");
+//        GA.setConsts(100   , 100, 5, 2, 0.7, 0.01, KNP.BY_RATIO_ID);
+//
+//        ArrayList<ArrayList<Double>> all_pops;
+//        List<TTF> start_pop = GA.initialise();
+//        GA.evaluate(start_pop);
+//        all_pops = GA.score;
+//        int i = 1;
+//
+//        for (ArrayList<Double> d: all_pops)
+//        {
+//            System.out.println("Numer populacji: " + i + ", najlepszy: " + d.get(0) + ", srednia: " + d.get(1) + ", najgorszy: " + d.get(2));
+//            i++;
+//        }
+//
+//        System.out.println("KONIEC");
     }
 
     public Double runAlg(int chosen_file, int knp) {
@@ -206,6 +215,6 @@ public class MainManager
             e.printStackTrace();
         }
 
-        return os.calcObjectiveFunction();
+        return score;
     }
 }

@@ -96,7 +96,9 @@ public class GA
             List<TTF> tmp_pop = new ArrayList<>(pop);
             for (int i = 0; i < tour; i++) {
                 int idx = random.nextInt(tmp_pop.size());
-                tournament.add(tmp_pop.get(idx));
+                TTF tmp = new TTF(tmp_pop.get(idx));
+                tmp.setTravel(tmp_pop.get(idx).getTravel());
+                tournament.add(tmp);
                 tmp_pop.remove(idx);
             }
 
@@ -118,15 +120,27 @@ public class GA
         ArrayList<TTF> new_pop = new ArrayList<>();
 
         for(int i=0; i<pop_size; i+=2) {
-            if (i+1 == pop_size)
-                new_pop.add(pop.get(i));
-            else {
+            if (i+1 == pop_size) {
+                TTF old = pop.get(i);
+                TTF tmp = new TTF(old);
+                tmp.setTravel(old.getTravel());
+                new_pop.add(tmp);
+            }else {
                 List<TTF> pair = pop.subList(i, i + 2);
 
                 if (random.nextInt(limes) < px) {
                     new_pop.addAll(crossover(pair.get(0), pair.get(1)));
-                } else
-                    new_pop.addAll(pair);
+                } else {
+                    TTF old = pair.get(0);
+                    TTF tmp = new TTF(old);
+                    tmp.setTravel(old.getTravel());
+                    new_pop.add(tmp);
+                    old = pair.get(1);
+                    tmp = new TTF(old);
+                    tmp.setTravel(old.getTravel());
+                    new_pop.add(tmp);
+                    //new_pop.addAll(pair);
+                }
             }
         }
 
@@ -140,14 +154,18 @@ public class GA
             if (random.nextInt(limes) < pm) {
                 result.add(mutation(osobnik));
             }
-            else
-                result.add(osobnik);
+            else {
+                TTF new_ttf = new TTF(osobnik);
+                new_ttf.setTravel(osobnik.getTravel());
+                result.add(new_ttf);
+                //result.add(osobnik);
+            }
         }
 
         return result;
     }
 
-    private static List<TTF> crossover(TTF os1, TTF os2)
+    public static List<TTF> crossover(TTF os1, TTF os2)
     {
 
         ArrayList<Integer> parent_1 = new ArrayList(os1.getTravel());

@@ -69,7 +69,8 @@ public class TTF implements Comparable<TTF>
         }
 
         // dodanie ostatniego czasu - do miasta poczatkowego
-        calcActualCapacity(items_plan.get(dimension-1));
+        calcActualCapacity(items_plan.get(travel.get(dimension-1)));
+        //calcActualCapacity(items_plan.get(dimension-1));
         calcActualSpeed();
         obj_fun += calcTime(travel.get(dimension-1), travel.get(0));
 
@@ -78,18 +79,21 @@ public class TTF implements Comparable<TTF>
 
     public double calcObjectiveFunction()
     {
+        actual_capacity = 0;
+        calcActualSpeed();
         double obj_fun = KNP.calcObjectiveFunction(items_plan) - calcObjectiveFunctionTSP();
 
         return obj_fun;
     }
 
     private void calcActualCapacity(List<Pair<Item, Integer>> list_of_items) {
-        KNP.calcActualCapacity(list_of_items);
+        actual_capacity +=
+                KNP.calcActualCapacity(list_of_items);
     }
 
     private void calcActualSpeed() {
         actual_speed = speed_max - actual_capacity * ((speed_max - speed_min)/capacity);
-        actual_speed = actual_speed < speed_min ? speed_min : actual_speed > speed_max ? speed_max : actual_speed;
+        //actual_speed = actual_speed < speed_min ? speed_min : actual_speed > speed_max ? speed_max : actual_speed;
     }
 
     private double calcTime(int x1, int x2) {

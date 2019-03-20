@@ -26,7 +26,9 @@ public class KNP
         Collections.sort(items, new Comparator<Item>() {
             @Override
             public int compare(Item o1, Item o2) {
-                return o1.getWeight() - o2.getWeight();
+
+                //return o1.getWeight() - o2.getWeight();
+                return  o2.getWeight() - o1.getWeight();
             }
         });
         return items;
@@ -87,7 +89,9 @@ public class KNP
         Collections.sort(items, new Comparator<Item>() {
             @Override
             public int compare(Item o1, Item o2) {
-                return o1.getProfit() - o2.getProfit();
+
+                //return o1.getProfit() - o2.getProfit();
+                return  o2.getProfit() - o1.getProfit();
             }
         });
         return items;
@@ -97,7 +101,8 @@ public class KNP
         Collections.sort(items, new Comparator<Item>() {
             @Override
             public int compare(Item o1, Item o2) {
-                return o1.getProfit() / o1.getWeight() - o2.getProfit() / o2.getWeight();
+                //return o1.getProfit() / o1.getWeight() - o2.getProfit() / o2.getWeight();
+                return o2.getProfit() / o2.getWeight() - o1.getProfit() / o1.getWeight();
             }
         });
         return items;
