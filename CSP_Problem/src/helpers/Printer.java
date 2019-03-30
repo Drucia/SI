@@ -69,4 +69,59 @@ public class Printer {
                 System.out.println(line_con_builder);
         }
     }
+
+    public static void printSkyscrapper(HashMap<Character, ArrayList<Integer>> matrix, HashMap<String, HashMap<String, Integer>> constraints)
+    {
+        StringBuilder first_line_builder = new StringBuilder("  | ");
+        StringBuilder last_line_builder = new StringBuilder("  | ");
+        StringBuilder sep_line_builder = new StringBuilder("-- ");
+        StringBuilder line_builder, variable_builder;
+        int dimension = matrix.size();
+        char row = 'A';
+        boolean is_done = false;
+
+        for (int i=1; i<=dimension; i++, row++)
+        {
+            line_builder = new StringBuilder();
+
+            ArrayList<Integer> row_val = matrix.get(row);
+
+            for (int j=0; j<dimension;j++)
+            {
+                variable_builder = new StringBuilder();
+                variable_builder.append(row);
+                variable_builder.append(j+1);
+                HashMap<String, Integer> cons = constraints.get(variable_builder.toString());
+
+                if (!is_done)
+                {
+                    first_line_builder.append(cons.get("G") + " | ");
+                    last_line_builder.append(cons.get("D") + " | ");
+                    sep_line_builder.append(" -  ");
+                }
+
+                if (j == 0)
+                    line_builder.append(cons.get("L") + " | ");
+
+                line_builder.append(row_val.get(j) + " | ");
+                
+                if (j == dimension-1)
+                    line_builder.append(cons.get("P"));
+
+            }
+
+            if(!is_done)
+            {
+                is_done = true;
+                System.out.println(first_line_builder);
+                sep_line_builder.append("--");
+                System.out.println(sep_line_builder);
+            }
+
+            System.out.println(line_builder);
+            System.out.println(sep_line_builder);
+        }
+
+        System.out.println(last_line_builder);
+    }
 }

@@ -74,6 +74,8 @@ public class IO {
                     matrix.put(rowChar, tmp);
                 }
 
+                reader.close();
+
         } catch (Exception e) {
             System.out.println(e.toString());
         }
@@ -143,6 +145,8 @@ public class IO {
                 else
                     constraints.put(second, tmp);
             }
+
+            reader.close();
         } catch (Exception e) {
             System.out.println(e.toString());
         }
