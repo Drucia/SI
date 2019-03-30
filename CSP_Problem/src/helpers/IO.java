@@ -13,6 +13,7 @@ public class IO {
     public static final int SMALLER_THEN = 0;
     private static final String PATH = "D:\\Users\\oladr\\Studia\\Term_VI\\Sztuczna\\WorkSpace\\CSP_Problem\\src\\CSP_2019_dane_testowe_v1.0\\";
     public static ArrayList<Integer> domain;
+    public static HashMap<String, ArrayList<Integer>> already_there_per_col_row;
     public static HashMap<Character, ArrayList<Integer>> matrix;
     public static HashMap<String, HashMap<String, Integer>> constraints;
 
@@ -81,6 +82,8 @@ public class IO {
         }
     }
 
+    //TODO change rows to numbers
+
     public static void readFutoshikiData(String name) {
         File file = new File(PATH + name);
         try {
@@ -89,6 +92,7 @@ public class IO {
 
             matrix = new HashMap<>();
             constraints = new HashMap<>();
+            already_there_per_col_row = new HashMap<>();
 
             int dimension = Integer.parseInt(reader.readLine());
 
@@ -106,8 +110,30 @@ public class IO {
                 //HashMap<Integer, Integer> tmp = new HashMap<>();
                 ArrayList<Integer> tmp = new ArrayList<>();
 
-                for (int col = 1; col <= dimension; col++)
-                    tmp.add(Integer.parseInt(line[col - 1]));
+                for (int col = 1; col <= dimension; col++) {
+                    int value = Integer.parseInt(line[col - 1]);
+
+                    if (value != 0) {
+                        ArrayList<Integer> tmp_dom;
+                        if (already_there_per_col_row.containsKey(rowChar+""))
+                            tmp_dom = already_there_per_col_row.get(rowChar+"");
+                        else
+                            tmp_dom = new ArrayList<>();
+
+                        tmp_dom.add(value);
+                        already_there_per_col_row.put(rowChar+"", tmp_dom);
+
+                        if (already_there_per_col_row.containsKey(col+""))
+                            tmp_dom = already_there_per_col_row.get(col+"");
+                        else
+                            tmp_dom = new ArrayList<>();
+
+                        tmp_dom.add(value);
+                        already_there_per_col_row.put(col+"", tmp_dom);
+                    }
+
+                    tmp.add(value);
+                }
                     //tmp.put(col, Integer.parseInt(line[col - 1]));
 
                 matrix.put(rowChar, tmp);

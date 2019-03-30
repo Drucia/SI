@@ -104,7 +104,7 @@ public class Printer {
                     line_builder.append(cons.get("L") + " | ");
 
                 line_builder.append(row_val.get(j) + " | ");
-                
+
                 if (j == dimension-1)
                     line_builder.append(cons.get("P"));
 
