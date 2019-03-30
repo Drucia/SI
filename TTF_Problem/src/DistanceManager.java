@@ -63,6 +63,8 @@ public class DistanceManager
             towns_id.remove(id);
         }
         return travel;
+//        Collections.shuffle(towns_id);
+//        return towns_id;
     }
 
     public static int getDistanceBetween(int x1, int x2)
