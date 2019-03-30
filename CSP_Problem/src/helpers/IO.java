@@ -16,73 +16,68 @@ public class IO {
     public static HashMap<Character, ArrayList<Integer>> matrix;
     public static HashMap<String, HashMap<String, Integer>> constraints;
 
-//    public static void readSkyscrapperData(String name) {
-//        File file = new File(PATH + name);
-//        try {
-//            FileReader freader = new FileReader(file);
-//            BufferedReader reader = new BufferedReader(freader);
-//
-//            matrix = new HashMap<>();
-//            constraints = new HashMap<>();
-//
-//            int dimension = Integer.parseInt(reader.readLine());
-//
-//            domain = new ArrayList<>(IntStream.range(1, dimension+1)
-//                    .boxed()
-//                    .collect(toList()));
-//
-//            // fill matrix by zeros
-//
-//            char rowChar = 'A';
-//
-//            // read constraints
-//
-//            String line;
-//            while ((line = reader.readLine()) != null)
-//            {
-//                String[] constr = line.split(";");
-//
-//                for (int row = 1; row <= dimension; row++, rowChar++)
-//                {
-//                    HashMap<Integer, Integer> tmp = new HashMap<>();
-//
-//                    for (int col = 1; col <= dimension; col++)
-//                        tmp.put(col, 0);
-//
-//                    matrix.put(rowChar, tmp);
-//                }
-//
-//                String first = constr[0];
-//                String second = constr[1];
-//                HashMap<String, Integer> tmp = constraints.get(first);
-//
-//                if (tmp == null)
-//                    tmp = new HashMap<>();
-//
-//                // first is smaller than second
-//                tmp.put(second, SMALLER_THEN);
-//
-//                if (constraints.containsKey(first))
-//                    constraints.replace(first, tmp);
-//                else
-//                    constraints.put(first, tmp);
-//
-//                tmp = constraints.get(second);
-//
-//                if (tmp == null)
-//                    tmp = new HashMap<>();
-//
-//                tmp.put(first, GRATER_THEN);
-//
-//                if (constraints.containsKey(second))
-//                    constraints.replace(second, tmp);
-//                else
-//                    constraints.put(second, tmp);
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e.toString());
-//        }
-//    }
+    public static void readSkyscrapperData(String name) {
+        File file = new File(PATH + name);
+        try {
+            FileReader freader = new FileReader(file);
+            BufferedReader reader = new BufferedReader(freader);
+
+            matrix = new HashMap<>();
+            constraints = new HashMap<>();
+
+            int dimension = Integer.parseInt(reader.readLine());
+
+            domain = new ArrayList<>(IntStream.range(1, dimension+1)
+                    .boxed()
+                    .collect(toList()));
+
+            // fill matrix by zeros
+
+            char rowChar = 'A';
+
+            // read constraints
+
+            ArrayList<String[]> lines = new ArrayList<>();
+            String curr_line;
+
+            while ((curr_line = reader.readLine()) != null)
+            {
+                lines.add(curr_line.split(";"));
+            }
+
+                for (int row = 1; row <= dimension; row++, rowChar++)
+                {
+                    ArrayList<Integer> tmp = new ArrayList<>();
+
+                    for (int col = 1; col <= dimension; col++)
+                    {
+                        tmp.add(0);
+
+                        StringBuilder variable_builder = new StringBuilder();
+                        variable_builder.append(rowChar);
+                        variable_builder.append(col);
+                        String var = variable_builder.toString();
+                        HashMap<String, Integer> temp = new HashMap<>();
+
+                        for (int l = 0; l<lines.size(); l++)
+                        {
+                            String con = lines.get(l)[0];
+
+                            if (con.equals("G") || con.equals("D"))
+                                temp.put(con, Integer.parseInt(lines.get(l)[col]));
+                            else
+                                temp.put(con, Integer.parseInt(lines.get(l)[rowChar-64]));
+                        }
+                        constraints.put(var, temp);
+                    }
+
+                    matrix.put(rowChar, tmp);
+                }
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
 
     public static void readFutoshikiData(String name) {
         File file = new File(PATH + name);
