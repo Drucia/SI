@@ -4,16 +4,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.stream.IntStream;
-
-import static java.util.stream.Collectors.toList;
 
 public class IO {
     public static final int GRATER_THEN = 1;
     public static final int SMALLER_THEN = 0;
     private static final String PATH = "D:\\Users\\oladr\\Studia\\Term_VI\\Sztuczna\\WorkSpace\\CSP_Problem\\src\\CSP_2019_dane_testowe_v1.0\\";
-    public static ArrayList<Integer> domain;
-    public static HashMap<String, ArrayList<Integer>> already_there_per_col_row;
+    public static int dimension;
+    public static ArrayList<String> start_values_by_idx; // not use
+    public static HashMap<String, ArrayList<Integer>> already_there_per_col_row; // not use
     public static HashMap<Integer, ArrayList<Integer>> matrix;
     public static HashMap<String, HashMap<String, Integer>> constraints;
 
@@ -26,11 +24,7 @@ public class IO {
             matrix = new HashMap<>();
             constraints = new HashMap<>();
 
-            int dimension = Integer.parseInt(reader.readLine());
-
-            domain = new ArrayList<>(IntStream.range(1, dimension+1)
-                    .boxed()
-                    .collect(toList()));
+            dimension = Integer.parseInt(reader.readLine());
 
             ArrayList<String[]> lines = new ArrayList<>();
             String curr_line;
@@ -85,44 +79,40 @@ public class IO {
             matrix = new HashMap<>();
             constraints = new HashMap<>();
             already_there_per_col_row = new HashMap<>();
+            start_values_by_idx = new ArrayList<>();
 
-            int dimension = Integer.parseInt(reader.readLine());
-
-            domain = new ArrayList<>(IntStream.range(1, dimension + 1)
-                    .boxed()
-                    .collect(toList()));
+            dimension = Integer.parseInt(reader.readLine());
 
             reader.readLine(); // START: line
 
             // read matrix
 
-            char rowChar = 'A';
-            for (int row = 0; row < dimension; row++, rowChar++) {
+            for (int row = 0; row < dimension; row++) {
                 String[] line = reader.readLine().split(";");
-                //HashMap<Integer, Integer> tmp = new HashMap<>();
                 ArrayList<Integer> tmp = new ArrayList<>();
 
                 for (int col = 0; col < dimension; col++) {
                     int value = Integer.parseInt(line[col]);
 
-                    if (value != 0) {
-                        ArrayList<Integer> tmp_dom;
-                        if (already_there_per_col_row.containsKey("R"+row))
-                            tmp_dom = already_there_per_col_row.get("R"+row);
-                        else
-                            tmp_dom = new ArrayList<>();
-
-                        tmp_dom.add(value);
-                        already_there_per_col_row.put("R"+row, tmp_dom);
-
-                        if (already_there_per_col_row.containsKey("C"+col))
-                            tmp_dom = already_there_per_col_row.get("C"+col);
-                        else
-                            tmp_dom = new ArrayList<>();
-
-                        tmp_dom.add(value);
-                        already_there_per_col_row.put("C"+col, tmp_dom);
-                    }
+//                    if (value != 0) {
+//                        ArrayList<Integer> tmp_dom;
+//                        if (already_there_per_col_row.containsKey("R"+row))
+//                            tmp_dom = already_there_per_col_row.get("R"+row);
+//                        else
+//                            tmp_dom = new ArrayList<>();
+//
+//                        tmp_dom.add(value);
+//                        already_there_per_col_row.put("R"+row, tmp_dom);
+//
+//                        if (already_there_per_col_row.containsKey("C"+col))
+//                            tmp_dom = already_there_per_col_row.get("C"+col);
+//                        else
+//                            tmp_dom = new ArrayList<>();
+//
+//                        tmp_dom.add(value);
+//                        already_there_per_col_row.put("C"+col, tmp_dom);
+//                        start_values_by_idx.add(row+""+col);
+//                    }
 
                     tmp.add(value);
                 }

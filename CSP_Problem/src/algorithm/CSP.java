@@ -1,118 +1,219 @@
 package algorithm;
 
 import helpers.IO;
+import java.util.*;
+import java.util.stream.IntStream;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import static java.util.stream.Collectors.toList;
 
 public class CSP {
-    private ArrayList<Integer> domain;
-    private ArrayList<ArrayList<Integer>> columns;
-    private HashMap<String, ArrayList<Integer>> already_there_per_col_row;
-    private HashMap<Character, ArrayList<Integer>> matrix;
-    private HashMap<String, HashMap<String, Integer>> constraints;
-    private boolean isFutoshiki;
-    private int dimension;
-    private int counter;
+    private static final String FUTOSHIKI_FILLED = "";
+    private static final int UNASSIGNED = 0;
+    private static HashMap<String, HashMap<String, Integer>> constraints;
+    private static int dimension;
+    private static int counter;
+    private static long totalTime;
+    private static long startTime;
+    private static long endTime;
 
-    public CSP(ArrayList<Integer> domain, HashMap<Character, ArrayList<Integer>> matrix, HashMap<String, HashMap<String, Integer>> constraints, boolean isFutoshiki) {
-        this.domain = domain;
-        this.matrix = matrix;
-        this.constraints = constraints;
-        this.isFutoshiki = isFutoshiki;
-        dimension = domain.size();
-        columns = new ArrayList<>();
-        counter = 0;
+    public static void set_constans(HashMap<String, HashMap<String, Integer>> con, int dim)
+    {
+        constraints = con;
+        dimension = dim;
     }
 
-    public HashMap<Character, HashMap<Integer, Integer>> runForwarding(HashMap<String, ArrayList<Integer>> already_there_per_col_row)
-    {
-        this.already_there_per_col_row = already_there_per_col_row;
+    public static int getCounter() {
+        return counter;
+    }
 
-        char rowChar = 'A';
-        for (int row=0; row<dimension; row++)
+    public static long getTotalTime() {
+        return totalTime;
+    }
+
+    public static HashMap<Integer, ArrayList<Integer>> runForwarding(HashMap<Integer, ArrayList<Integer>> grid)
+    {
+        counter = 0;
+        startTime = System.nanoTime();
+        solve_futoshiki(grid, true);
+        endTime   = System.nanoTime();
+        totalTime = endTime - startTime;
+        return grid;
+    }
+
+    public static HashMap<Integer, ArrayList<Integer>> runBackTracking(HashMap<Integer, ArrayList<Integer>> grid)
+    {
+        counter = 0;
+        startTime = System.nanoTime();
+        solve_futoshiki(grid, false);
+        endTime   = System.nanoTime();
+        totalTime = endTime - startTime;
+        return grid;
+    }
+
+    private static boolean solve_futoshiki(HashMap<Integer, ArrayList<Integer>> grid, boolean isForwarding)
+    {
+        if ( FUTOSHIKI_FILLED == get_unassigned_location(grid))
         {
-            for(int col=0; col<dimension; col++)
+            return true;
+        }
+
+        // Get unassigned variable - heuristic
+        String row_and_col = get_unassigned_location(grid);
+        int row = Integer.parseInt(row_and_col.substring(0,1));
+        int col = Integer.parseInt(row_and_col.substring(1));
+
+        // Get domain, if is forwarding - get current domain
+        ArrayList<Integer> cur_domain = getDomain(col, row, isForwarding, grid);
+
+        for (int num = 0; num < cur_domain.size(); num++)
+        {
+            // count instructions
+            counter++;
+
+            // check if this value is valid
+            if (canBeHere(cur_domain.get(num), row, col, grid))
             {
-                int curr_val = matrix.get(rowChar).get(col);
-                if (curr_val == 0)
+                // assign for now value
+                grid.get(row).set(col, cur_domain.get(num));
+
+                // Do the same thing again recursively. If we go
+                // through all of the recursions, and in the end
+                // return true, then all of our number placements
+                // on the Futoshiki grid are valid and we have fully
+                // solved it
+                if (solve_futoshiki(grid, isForwarding))
                 {
-                    ArrayList<Integer> curr_domain = domain;
-                    curr_domain.removeAll(already_there_per_col_row.get(rowChar+""));
-                    curr_domain.removeAll(already_there_per_col_row.get(col+""));
+                    return true;
                 }
+
+                // As we were not able to validly go through all
+                // of the recursions, we must have an invalid number
+                // placement somewhere. Lets go back and try a
+                // different number for this particular unassigned location
+                grid.get(row).set(col, UNASSIGNED);
             }
         }
-        return null;
+
+        // If we have gone through all possible numbers for the current unassigned
+        // location, then we probably assigned a bad number early. Lets backtrack
+        // and try a different number for the previous unassigned locations.
+        return false;
     }
 
-    private void updateDomains(int col, String row, int value)
+    private static ArrayList<Integer> getDomain(int col, int row, boolean isForwarding, HashMap<Integer, ArrayList<Integer>> matrix)
     {
-        ArrayList<Integer> tmp_dom;
-        if (already_there_per_col_row.containsKey(row))
-            tmp_dom = already_there_per_col_row.get(row);
-        else
-            tmp_dom = new ArrayList<>(domain);
+        ArrayList<Integer> domain = new ArrayList<>(IntStream.range(1, dimension + 1)
+            .boxed()
+            .collect(toList()));
 
-        tmp_dom.add(value);
-        already_there_per_col_row.put(row, tmp_dom);
+        if (!isForwarding) {
+            return domain;
+        }
 
-        if (already_there_per_col_row.containsKey(col+""))
-            tmp_dom = already_there_per_col_row.get(col+"");
-        else
-            tmp_dom = new ArrayList<>(domain);
+        ArrayList<Integer> score = new ArrayList<>();
 
-        tmp_dom.add(value);
-        already_there_per_col_row.put(col+"", tmp_dom);
+        // get all from row
+        for (int i=0; i<dimension; i++)
+        {
+            int val_r = matrix.get(i).get(col);
+            int val_c = matrix.get(row).get(i);
+
+            if (val_r != 0 && !score.contains(val_r))
+                score.add(val_r);
+
+            if (val_c != 0 && !score.contains(val_c))
+                score.add(val_c);
+        }
+
+        domain.removeAll(score);
+
+        return domain;
     }
 
-    public HashMap<Character, HashMap<Integer, Integer>> runBackTracking()
+    private static String get_unassigned_location(HashMap<Integer, ArrayList<Integer>> grid)
     {
-        return null;
+        for (int i=0; i<dimension; i++)
+        {
+            for (int j=0; j<dimension; j++)
+                if (grid.get(i).get(j) == 0)
+                    return i+""+j;
+        }
+
+        return "";
     }
 
-    private boolean canBeHereFor(int value, char row, int col)
+    private static boolean canBeHere(int value, int row, int col, HashMap<Integer, ArrayList<Integer>> matrix)
     {
-        counter++;
-        boolean score = true;
-        StringBuilder curr = new StringBuilder(row);
-        curr.append(col);
-        String cur = curr.toString();
-        StringBuilder next = new StringBuilder();
-        String nex;
+        return !getColumn(col, matrix).contains(value) && !matrix.get(row).contains(value) && canBeHereByConst(value, row, col, matrix);
+    }
+
+    private static boolean canBeHereByConst(int value, int row, int col, HashMap<Integer, ArrayList<Integer>> matrix)
+    {
+        boolean if_do = true;
+        String curr = row+""+col;
+        String next = curr;
+        int next_r = row;
+        int next_c = col;
 
         // for upper
 
-        if(row != 'A') {
-            char next_row = row;
-            next_row++;
-            next.append(next_row);
-            next.append(col);
-            nex = next.toString();
-
-            if (constraints.get(cur).containsKey(nex))
+        for(int i=0; i<4; i++)
+        {
+            switch(i)
             {
-                if (constraints.get(cur).get(nex) == IO.GRATER_THEN && value <= matrix.get(next_row).get(col))
-                    return false;
-                if (constraints.get(cur).get(nex) == IO.SMALLER_THEN && value >= matrix.get(next_row).get(col))
-                    return false;
+                case 0:
+                    if(if_do = (row != 0))
+                    {
+                        next_r = row-1;
+                        next_c = col;
+                    }
+                    break;
+                case 1:
+                    if(if_do = (row != dimension-1))
+                    {
+                        next_r = row+1;
+                        next_c = col;
+                    }
+                    break;
+                case 2:
+                    if(if_do = (col != 0))
+                    {
+                        next_r = row;
+                        next_c = col-1;
+                    }
+                    break;
+                case 3:
+                    if(if_do = (row != dimension-1))
+                    {
+                        next_r = row;
+                        next_c = col+1;
+                    }
+                    break;
+            }
+
+            next = next_r + "" + next_c;
+
+            if (if_do && constraints.containsKey(curr) && constraints.get(curr).containsKey(next)) {
+                if (matrix.get(next_r).get(next_c) != 0) {
+                    int con_val = constraints.get(curr).get(next);
+                    int next_val = matrix.get(next_r).get(next_c);
+                    if (con_val == IO.GRATER_THEN && value <= next_val)
+                        return false;
+                    if (con_val == IO.SMALLER_THEN && value >= next_val)
+                        return false;
+                }
             }
         }
 
-        //if (row != '')
         return true;
     }
 
-    private ArrayList<Integer> getColumn(int colNum)
+    private static ArrayList<Integer> getColumn(int colNum, HashMap<Integer, ArrayList<Integer>> matrix)
     {
-        if (columns.get(colNum-1) != null)
-            return columns.get(colNum-1);
-
         ArrayList column = new ArrayList();
 
-        char row = 'A';
-        for (int i=0; i<dimension; i++, row++)
-            column.add(matrix.get(row).get(colNum));
+        for (int i=0; i<dimension; i++)
+            column.add(matrix.get(i).get(colNum));
 
         return column;
     }
