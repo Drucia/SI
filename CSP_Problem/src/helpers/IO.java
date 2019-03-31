@@ -14,7 +14,7 @@ public class IO {
     private static final String PATH = "D:\\Users\\oladr\\Studia\\Term_VI\\Sztuczna\\WorkSpace\\CSP_Problem\\src\\CSP_2019_dane_testowe_v1.0\\";
     public static ArrayList<Integer> domain;
     public static HashMap<String, ArrayList<Integer>> already_there_per_col_row;
-    public static HashMap<Character, ArrayList<Integer>> matrix;
+    public static HashMap<Integer, ArrayList<Integer>> matrix;
     public static HashMap<String, HashMap<String, Integer>> constraints;
 
     public static void readSkyscrapperData(String name) {
@@ -32,12 +32,6 @@ public class IO {
                     .boxed()
                     .collect(toList()));
 
-            // fill matrix by zeros
-
-            char rowChar = 'A';
-
-            // read constraints
-
             ArrayList<String[]> lines = new ArrayList<>();
             String curr_line;
 
@@ -46,16 +40,16 @@ public class IO {
                 lines.add(curr_line.split(";"));
             }
 
-                for (int row = 1; row <= dimension; row++, rowChar++)
+                for (int row = 0; row < dimension; row++)
                 {
                     ArrayList<Integer> tmp = new ArrayList<>();
 
-                    for (int col = 1; col <= dimension; col++)
+                    for (int col = 0; col < dimension; col++)
                     {
                         tmp.add(0);
 
                         StringBuilder variable_builder = new StringBuilder();
-                        variable_builder.append(rowChar);
+                        variable_builder.append(row);
                         variable_builder.append(col);
                         String var = variable_builder.toString();
                         HashMap<String, Integer> temp = new HashMap<>();
@@ -65,14 +59,14 @@ public class IO {
                             String con = lines.get(l)[0];
 
                             if (con.equals("G") || con.equals("D"))
-                                temp.put(con, Integer.parseInt(lines.get(l)[col]));
+                                temp.put(con, Integer.parseInt(lines.get(l)[col+1]));
                             else
-                                temp.put(con, Integer.parseInt(lines.get(l)[rowChar-64]));
+                                temp.put(con, Integer.parseInt(lines.get(l)[row+1]));
                         }
                         constraints.put(var, temp);
                     }
 
-                    matrix.put(rowChar, tmp);
+                    matrix.put(row, tmp);
                 }
 
                 reader.close();
@@ -81,8 +75,6 @@ public class IO {
             System.out.println(e.toString());
         }
     }
-
-    //TODO change rows to numbers
 
     public static void readFutoshikiData(String name) {
         File file = new File(PATH + name);
@@ -105,38 +97,36 @@ public class IO {
             // read matrix
 
             char rowChar = 'A';
-            for (int row = 1; row <= dimension; row++, rowChar++) {
+            for (int row = 0; row < dimension; row++, rowChar++) {
                 String[] line = reader.readLine().split(";");
                 //HashMap<Integer, Integer> tmp = new HashMap<>();
                 ArrayList<Integer> tmp = new ArrayList<>();
 
-                for (int col = 1; col <= dimension; col++) {
-                    int value = Integer.parseInt(line[col - 1]);
+                for (int col = 0; col < dimension; col++) {
+                    int value = Integer.parseInt(line[col]);
 
                     if (value != 0) {
                         ArrayList<Integer> tmp_dom;
-                        if (already_there_per_col_row.containsKey(rowChar+""))
-                            tmp_dom = already_there_per_col_row.get(rowChar+"");
+                        if (already_there_per_col_row.containsKey("R"+row))
+                            tmp_dom = already_there_per_col_row.get("R"+row);
                         else
                             tmp_dom = new ArrayList<>();
 
                         tmp_dom.add(value);
-                        already_there_per_col_row.put(rowChar+"", tmp_dom);
+                        already_there_per_col_row.put("R"+row, tmp_dom);
 
-                        if (already_there_per_col_row.containsKey(col+""))
-                            tmp_dom = already_there_per_col_row.get(col+"");
+                        if (already_there_per_col_row.containsKey("C"+col))
+                            tmp_dom = already_there_per_col_row.get("C"+col);
                         else
                             tmp_dom = new ArrayList<>();
 
                         tmp_dom.add(value);
-                        already_there_per_col_row.put(col+"", tmp_dom);
+                        already_there_per_col_row.put("C"+col, tmp_dom);
                     }
 
                     tmp.add(value);
                 }
-                    //tmp.put(col, Integer.parseInt(line[col - 1]));
-
-                matrix.put(rowChar, tmp);
+                matrix.put(row, tmp);
             }
 
             reader.readLine(); // REL: line
@@ -144,8 +134,8 @@ public class IO {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] constr = line.split(";");
-                String first = constr[0];
-                String second = constr[1];
+                String first = ((int) (constr[0].charAt(0)) - 65) + "" + (constr[0].charAt(1) - '1');
+                String second = ((int) (constr[1].charAt(0)) - 65) + "" + (constr[1].charAt(1) - '1');
                 HashMap<String, Integer> tmp = constraints.get(first);
 
                 if (tmp == null)

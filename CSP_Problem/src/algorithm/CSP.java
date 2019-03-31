@@ -100,7 +100,7 @@ public class CSP {
         }
 
         //if (row != '')
-
+        return true;
     }
 
     private ArrayList<Integer> getColumn(int colNum)

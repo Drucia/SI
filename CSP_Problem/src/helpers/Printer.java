@@ -4,37 +4,33 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Printer {
-    public static void printFutoshiki(HashMap<Character, ArrayList<Integer>> matrix, HashMap<String, HashMap<String, Integer>> constraints)
+    public static void printFutoshiki(HashMap<Integer, ArrayList<Integer>> matrix, HashMap<String, HashMap<String, Integer>> constraints)
     {
         StringBuilder line_builder, line_con_builder;
         StringBuilder variable_builder, next_variable;
-        char rowChar = 'A';
+
         int dimension = matrix.size();
 
-        for (int i=1; i<=dimension; i++, rowChar++) // row loop
+        for (int i=0; i<dimension; i++) // row loop
         {
-            ArrayList<Integer> row = matrix.get(rowChar);
+            ArrayList<Integer> row = matrix.get(i);
             line_builder = new StringBuilder("|  ");
             line_con_builder = new StringBuilder("- ");
 
-            //for (int j=1; j<=dimension; j++) // col loop
             for (int j=0; j<dimension; j++) // col loop
             {
                 line_builder.append(row.get(j) + "  ");
                 variable_builder = new StringBuilder();
-                variable_builder.append(rowChar);
-                //variable_builder.append(j);
-                variable_builder.append(j+1);
+                variable_builder.append(i);
+                variable_builder.append(j);
                 HashMap<String, Integer> cons;
                 String variable = variable_builder.toString();
 
-                //if ((cons=constraints.get(variable)) != null && j != dimension)
                 if ((cons=constraints.get(variable)) != null && j != dimension-1)
                 {
                     next_variable = new StringBuilder();
-                    next_variable.append(rowChar);
-                    //next_variable.append(j+1);
-                    next_variable.append(j+2);
+                    next_variable.append(i);
+                    next_variable.append(j+1);
                     String next_var = next_variable.toString();
 
                     if(cons.containsKey(next_var))
@@ -45,14 +41,11 @@ public class Printer {
                 else
                     line_builder.append("|  ");
 
-                if (cons != null && i != dimension)
+                if (cons != null && i != dimension-1)
                 {
                     next_variable = new StringBuilder();
-                    char tmp = rowChar;
-                    tmp++;
-                    next_variable.append(tmp);
-                    //next_variable.append(j);
-                    next_variable.append(j+1);
+                    next_variable.append(i+1);
+                    next_variable.append(j);
                     String next_var = next_variable.toString();
 
                     if(cons.containsKey(next_var))
@@ -65,32 +58,32 @@ public class Printer {
             }
             System.out.println(line_builder);
 
-            if (i != dimension)
+            if (i != dimension-1)
                 System.out.println(line_con_builder);
         }
     }
 
-    public static void printSkyscrapper(HashMap<Character, ArrayList<Integer>> matrix, HashMap<String, HashMap<String, Integer>> constraints)
+    public static void printSkyscrapper(HashMap<Integer, ArrayList<Integer>> matrix, HashMap<String, HashMap<String, Integer>> constraints)
     {
         StringBuilder first_line_builder = new StringBuilder("  | ");
         StringBuilder last_line_builder = new StringBuilder("  | ");
         StringBuilder sep_line_builder = new StringBuilder("-- ");
         StringBuilder line_builder, variable_builder;
         int dimension = matrix.size();
-        char row = 'A';
+
         boolean is_done = false;
 
-        for (int i=1; i<=dimension; i++, row++)
+        for (int i=0; i<dimension; i++)
         {
             line_builder = new StringBuilder();
 
-            ArrayList<Integer> row_val = matrix.get(row);
+            ArrayList<Integer> row_val = matrix.get(i);
 
             for (int j=0; j<dimension;j++)
             {
                 variable_builder = new StringBuilder();
-                variable_builder.append(row);
-                variable_builder.append(j+1);
+                variable_builder.append(i);
+                variable_builder.append(j);
                 HashMap<String, Integer> cons = constraints.get(variable_builder.toString());
 
                 if (!is_done)
