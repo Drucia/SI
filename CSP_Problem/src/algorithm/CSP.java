@@ -15,11 +15,13 @@ public class CSP {
     private static long totalTime;
     private static long startTime;
     private static long endTime;
+    private static ArrayList<HashMap<Integer, ArrayList<Integer>>> scores;
 
     public static void set_constans(HashMap<String, HashMap<String, Integer>> con, int dim)
     {
         constraints = con;
         dimension = dim;
+        scores = new ArrayList<>();
     }
 
     public static int getCounter() {
@@ -30,31 +32,45 @@ public class CSP {
         return totalTime;
     }
 
-    public static HashMap<Integer, ArrayList<Integer>> runForwarding(HashMap<Integer, ArrayList<Integer>> grid)
+    public static ArrayList<HashMap<Integer, ArrayList<Integer>>> runForwarding(HashMap<Integer, ArrayList<Integer>> grid)
     {
         counter = 0;
         startTime = System.nanoTime();
-        solve_futoshiki(grid, true);
+        solve_futoshiki(makeCopy(grid), true);
         endTime   = System.nanoTime();
         totalTime = endTime - startTime;
-        return grid;
+        return scores;
     }
 
-    public static HashMap<Integer, ArrayList<Integer>> runBackTracking(HashMap<Integer, ArrayList<Integer>> grid)
+    private static HashMap<Integer, ArrayList<Integer>> makeCopy(HashMap<Integer,ArrayList<Integer>> grid) {
+        HashMap<Integer, ArrayList<Integer>> copy = new HashMap<>();
+
+        for (Integer i : grid.keySet())
+        {
+            ArrayList<Integer> tmp = new ArrayList<>(grid.get(i));
+            copy.put(i, tmp);
+        }
+
+        return copy;
+    }
+
+    public static ArrayList<HashMap<Integer, ArrayList<Integer>>> runBackTracking(HashMap<Integer, ArrayList<Integer>> grid)
     {
         counter = 0;
         startTime = System.nanoTime();
-        solve_futoshiki(grid, false);
+        solve_futoshiki(makeCopy(grid), false);
         endTime   = System.nanoTime();
         totalTime = endTime - startTime;
-        return grid;
+        return scores;
     }
 
     private static boolean solve_futoshiki(HashMap<Integer, ArrayList<Integer>> grid, boolean isForwarding)
     {
         if ( FUTOSHIKI_FILLED == get_unassigned_location(grid))
         {
-            return true;
+            scores.add(makeCopy(grid));
+            // search next solution
+            return false;
         }
 
         // Get unassigned variable - heuristic
@@ -83,6 +99,17 @@ public class CSP {
                 // solved it
                 if (solve_futoshiki(grid, isForwarding))
                 {
+//                    if (!scores.containsKey(row))
+//                        scores.put(row, new HashMap<>());
+//                    else if (!scores.get(row).containsKey(col)) {
+//                        scores.get(row).put(col, new ArrayList<>(cur_domain.get(num)));
+//                    }
+//                    else {
+//                        ArrayList<Integer> score = scores.get(row).get(col);
+//                        score.add(cur_domain.get(num));
+//                        scores.get(row).put(col, score);
+//                    }
+
                     return true;
                 }
 
@@ -91,6 +118,7 @@ public class CSP {
                 // placement somewhere. Lets go back and try a
                 // different number for this particular unassigned location
                 grid.get(row).set(col, UNASSIGNED);
+//                scores.get(row).get(col).set(scores.get(row).get(col).size()-1, UNASSIGNED);
             }
         }
 
