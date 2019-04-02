@@ -21,7 +21,6 @@ public class CSP {
     {
         constraints = con;
         dimension = dim;
-        scores = new ArrayList<>();
     }
 
     public static int getCounter() {
@@ -35,6 +34,7 @@ public class CSP {
     public static ArrayList<HashMap<Integer, ArrayList<Integer>>> runForwarding(HashMap<Integer, ArrayList<Integer>> grid)
     {
         counter = 0;
+        scores = new ArrayList<>();
         startTime = System.nanoTime();
         solve_futoshiki(makeCopy(grid), true);
         endTime   = System.nanoTime();
@@ -57,6 +57,7 @@ public class CSP {
     public static ArrayList<HashMap<Integer, ArrayList<Integer>>> runBackTracking(HashMap<Integer, ArrayList<Integer>> grid)
     {
         counter = 0;
+        scores = new ArrayList<>();
         startTime = System.nanoTime();
         solve_futoshiki(makeCopy(grid), false);
         endTime   = System.nanoTime();
@@ -69,6 +70,7 @@ public class CSP {
         if ( FUTOSHIKI_FILLED == get_unassigned_location(grid))
         {
             scores.add(makeCopy(grid));
+
             // search next solution
             return false;
         }
@@ -99,17 +101,6 @@ public class CSP {
                 // solved it
                 if (solve_futoshiki(grid, isForwarding))
                 {
-//                    if (!scores.containsKey(row))
-//                        scores.put(row, new HashMap<>());
-//                    else if (!scores.get(row).containsKey(col)) {
-//                        scores.get(row).put(col, new ArrayList<>(cur_domain.get(num)));
-//                    }
-//                    else {
-//                        ArrayList<Integer> score = scores.get(row).get(col);
-//                        score.add(cur_domain.get(num));
-//                        scores.get(row).put(col, score);
-//                    }
-
                     return true;
                 }
 
@@ -118,7 +109,6 @@ public class CSP {
                 // placement somewhere. Lets go back and try a
                 // different number for this particular unassigned location
                 grid.get(row).set(col, UNASSIGNED);
-//                scores.get(row).get(col).set(scores.get(row).get(col).size()-1, UNASSIGNED);
             }
         }
 
@@ -172,10 +162,126 @@ public class CSP {
 
     private static boolean canBeHere(int value, int row, int col, HashMap<Integer, ArrayList<Integer>> matrix)
     {
-        return !getColumn(col, matrix).contains(value) && !matrix.get(row).contains(value) && canBeHereByConst(value, row, col, matrix);
+        //return !getColumn(col, matrix).contains(value) && !matrix.get(row).contains(value) && canBeHereByConstFutosh(value, row, col, matrix);
+        return !getColumn(col, matrix).contains(value) && !matrix.get(row).contains(value) && canBeHereByConstSky(value, row, col, matrix);
     }
 
-    private static boolean canBeHereByConst(int value, int row, int col, HashMap<Integer, ArrayList<Integer>> matrix)
+    private static boolean checkByRow(int l, int r, ArrayList<Integer> ro, int col, int value)
+    {
+        // for left constraint
+        int counter = 0;
+        int last_seen = 0;
+
+        if (l != UNASSIGNED) {
+            for (int i = 0; i < dimension; i++) {
+                if (i == col && value > last_seen)
+                {
+                    counter++;
+                    last_seen = value;
+                }
+                else if (ro.get(i) != UNASSIGNED && ro.get(i) > last_seen) {
+                    counter++;
+                    last_seen = ro.get(i);
+                }
+            }
+
+            if (counter != l)
+                return false;
+        }
+
+        // for right
+        counter = 0;
+        last_seen = 0;
+
+        if (r != UNASSIGNED) {
+            for (int i = dimension - 1; i >= 0; i--) {
+                if (i == col && value > last_seen)
+                {
+                    counter++;
+                    last_seen = value;
+                }
+                else if (ro.get(i) != UNASSIGNED && ro.get(i) > last_seen) {
+                    counter++;
+                    last_seen = ro.get(i);
+                }
+            }
+
+            if (counter != r)
+                return false;
+        }
+
+        return true;
+    }
+
+    private static boolean checkByCol(int u, int d, ArrayList<Integer> column, int row, int value)
+    {
+        int counter = 0;
+        int last_seen = 0;
+
+        if (u != UNASSIGNED) {
+            for (int i = 0; i < dimension; i++) {
+                if (i == row && value > last_seen)
+                {
+                    counter++;
+                    last_seen = value;
+                }
+                else if (column.get(i) != UNASSIGNED && column.get(i) > last_seen) {
+                    counter++;
+                    last_seen = column.get(i);
+                }
+            }
+
+            if (counter != u)
+                return false;
+        }
+        // for down
+        counter = 0;
+        last_seen = 0;
+
+        if (d != UNASSIGNED) {
+            for (int i = dimension - 1; i >= 0; i--) {
+                if (i == row && value > last_seen)
+                {
+                    counter++;
+                    last_seen = value;
+                }
+                else if (column.get(i) != UNASSIGNED && column.get(i) > last_seen) {
+                    counter++;
+                    last_seen = column.get(i);
+                }
+            }
+
+            if (counter != d)
+                return false;
+        }
+
+        return true;
+    }
+
+    private static boolean canBeHereByConstSky(int value, int row, int col, HashMap<Integer, ArrayList<Integer>> matrix)
+    {
+        HashMap<String, Integer> con = constraints.get(row+""+col);
+        int u = con.get("G");
+        int d = con.get("D");
+        int l = con.get("L");
+        int r = con.get("P");
+
+        ArrayList<Integer> column = getColumn(col, matrix);
+        ArrayList<Integer> ro = matrix.get(row);
+        int c_f = Collections.frequency(column, UNASSIGNED);
+        int c_r = Collections.frequency(ro, UNASSIGNED);
+
+        if (Collections.frequency(column, UNASSIGNED) == 1 && Collections.frequency(ro, UNASSIGNED) == 1)
+            return checkByCol(u, d, column, row, value) && checkByRow(l, r, ro, col, value);
+        else if (Collections.frequency(column, UNASSIGNED) == 1)
+            return checkByCol(u, d, column, row, value);
+        else if (Collections.frequency(ro, UNASSIGNED) == 1)
+            return checkByRow(l, r, ro, col, value);
+
+        return true;
+    }
+
+    private static boolean canBeHereByConstFutosh(int value, int row, int col, HashMap<Integer, ArrayList<Integer>> matrix)
     {
         boolean if_do = true;
         String curr = row+""+col;
