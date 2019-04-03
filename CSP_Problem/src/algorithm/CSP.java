@@ -1,26 +1,35 @@
 package algorithm;
 
-import helpers.IO;
-import java.util.*;
+import javafx.util.Pair;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 
 public class CSP {
+    public static final int FIRST_HEURISTIC = 0;
+    public static final int MIN_HEURISTIC = 1;
     private static final String FUTOSHIKI_FILLED = "";
-    private static final int UNASSIGNED = 0;
-    private static HashMap<String, HashMap<String, Integer>> constraints;
+    public static final int UNASSIGNED = 0;
+    private static Constraint constraints;
     private static int dimension;
     private static int counter;
     private static long totalTime;
     private static long startTime;
     private static long endTime;
     private static ArrayList<HashMap<Integer, ArrayList<Integer>>> scores;
+    private static int heuristic;
 
-    public static void set_constans(HashMap<String, HashMap<String, Integer>> con, int dim)
+    public static void set_constans(Constraint con, int dim, int heu)
     {
         constraints = con;
         dimension = dim;
+        heuristic = heu;
     }
 
     public static int getCounter() {
@@ -67,7 +76,7 @@ public class CSP {
 
     private static boolean solve_futoshiki(HashMap<Integer, ArrayList<Integer>> grid, boolean isForwarding)
     {
-        if ( FUTOSHIKI_FILLED == get_unassigned_location(grid))
+        if ( FUTOSHIKI_FILLED == get_unassigned_location(isForwarding, grid))
         {
             scores.add(makeCopy(grid));
 
@@ -76,7 +85,7 @@ public class CSP {
         }
 
         // Get unassigned variable - heuristic
-        String row_and_col = get_unassigned_location(grid);
+        String row_and_col = get_unassigned_location(isForwarding, grid);
         int row = Integer.parseInt(row_and_col.substring(0,1));
         int col = Integer.parseInt(row_and_col.substring(1));
 
@@ -148,198 +157,52 @@ public class CSP {
         return domain;
     }
 
-    private static String get_unassigned_location(HashMap<Integer, ArrayList<Integer>> grid)
+    private static String get_unassigned_location(boolean isForwarding, HashMap<Integer, ArrayList<Integer>> grid)
     {
-        for (int i=0; i<dimension; i++)
-        {
-            for (int j=0; j<dimension; j++)
-                if (grid.get(i).get(j) == 0)
-                    return i+""+j;
+        if (heuristic == FIRST_HEURISTIC) {
+            for (int i = 0; i < dimension; i++) {
+                for (int j = 0; j < dimension; j++)
+                    if (grid.get(i).get(j) == UNASSIGNED)
+                        return i + "" + j;
+            }
         }
 
+        if (heuristic == MIN_HEURISTIC)
+        {
+            // first variable, second size of domain
+            ArrayList<Pair<String, Integer>> variables = new ArrayList<>();
+            for (int i = 0; i < dimension; i++)
+            {
+                ArrayList<Integer> col = new ArrayList<>();
+                ArrayList<Integer> row = grid.get(i);
+                for (int j = 0; j < dimension; j++)
+                    if (row.get(j) == UNASSIGNED)
+                        col.add(j);
+
+                for (int j = 0; j < col.size(); j++)
+                {
+                    // added variable with its domain size
+                    Pair<String, Integer> var = new Pair<>(i+""+col.get(j), getDomain(col.get(j), i, isForwarding, grid).size());
+                    variables.add(var);
+                }
+            }
+
+            Collections.sort(variables, new Comparator<Pair<String, Integer>>() {
+                @Override
+                public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
+                    return o1.getValue() - o2.getValue();
+                }
+            });
+
+            if (!variables.isEmpty())
+                return variables.get(0).getKey();
+        }
         return "";
     }
 
     private static boolean canBeHere(int value, int row, int col, HashMap<Integer, ArrayList<Integer>> matrix)
     {
-        //return !getColumn(col, matrix).contains(value) && !matrix.get(row).contains(value) && canBeHereByConstFutosh(value, row, col, matrix);
-        return !getColumn(col, matrix).contains(value) && !matrix.get(row).contains(value) && canBeHereByConstSky(value, row, col, matrix);
-    }
-
-    private static boolean checkByRow(int l, int r, ArrayList<Integer> ro, int col, int value)
-    {
-        // for left constraint
-        int counter = 0;
-        int last_seen = 0;
-
-        if (l != UNASSIGNED) {
-            for (int i = 0; i < dimension; i++) {
-                if (i == col && value > last_seen)
-                {
-                    counter++;
-                    last_seen = value;
-                }
-                else if (ro.get(i) != UNASSIGNED && ro.get(i) > last_seen) {
-                    counter++;
-                    last_seen = ro.get(i);
-                }
-            }
-
-            if (counter != l)
-                return false;
-        }
-
-        // for right
-        counter = 0;
-        last_seen = 0;
-
-        if (r != UNASSIGNED) {
-            for (int i = dimension - 1; i >= 0; i--) {
-                if (i == col && value > last_seen)
-                {
-                    counter++;
-                    last_seen = value;
-                }
-                else if (ro.get(i) != UNASSIGNED && ro.get(i) > last_seen) {
-                    counter++;
-                    last_seen = ro.get(i);
-                }
-            }
-
-            if (counter != r)
-                return false;
-        }
-
-        return true;
-    }
-
-    private static boolean checkByCol(int u, int d, ArrayList<Integer> column, int row, int value)
-    {
-        int counter = 0;
-        int last_seen = 0;
-
-        if (u != UNASSIGNED) {
-            for (int i = 0; i < dimension; i++) {
-                if (i == row && value > last_seen)
-                {
-                    counter++;
-                    last_seen = value;
-                }
-                else if (column.get(i) != UNASSIGNED && column.get(i) > last_seen) {
-                    counter++;
-                    last_seen = column.get(i);
-                }
-            }
-
-            if (counter != u)
-                return false;
-        }
-        // for down
-        counter = 0;
-        last_seen = 0;
-
-        if (d != UNASSIGNED) {
-            for (int i = dimension - 1; i >= 0; i--) {
-                if (i == row && value > last_seen)
-                {
-                    counter++;
-                    last_seen = value;
-                }
-                else if (column.get(i) != UNASSIGNED && column.get(i) > last_seen) {
-                    counter++;
-                    last_seen = column.get(i);
-                }
-            }
-
-            if (counter != d)
-                return false;
-        }
-
-        return true;
-    }
-
-    private static boolean canBeHereByConstSky(int value, int row, int col, HashMap<Integer, ArrayList<Integer>> matrix)
-    {
-        HashMap<String, Integer> con = constraints.get(row+""+col);
-        int u = con.get("G");
-        int d = con.get("D");
-        int l = con.get("L");
-        int r = con.get("P");
-
-        ArrayList<Integer> column = getColumn(col, matrix);
-        ArrayList<Integer> ro = matrix.get(row);
-        int c_f = Collections.frequency(column, UNASSIGNED);
-        int c_r = Collections.frequency(ro, UNASSIGNED);
-
-        if (Collections.frequency(column, UNASSIGNED) == 1 && Collections.frequency(ro, UNASSIGNED) == 1)
-            return checkByCol(u, d, column, row, value) && checkByRow(l, r, ro, col, value);
-        else if (Collections.frequency(column, UNASSIGNED) == 1)
-            return checkByCol(u, d, column, row, value);
-        else if (Collections.frequency(ro, UNASSIGNED) == 1)
-            return checkByRow(l, r, ro, col, value);
-
-        return true;
-    }
-
-    private static boolean canBeHereByConstFutosh(int value, int row, int col, HashMap<Integer, ArrayList<Integer>> matrix)
-    {
-        boolean if_do = true;
-        String curr = row+""+col;
-        String next = curr;
-        int next_r = row;
-        int next_c = col;
-
-        // for upper
-
-        for(int i=0; i<4; i++)
-        {
-            switch(i)
-            {
-                case 0:
-                    if(if_do = (row != 0))
-                    {
-                        next_r = row-1;
-                        next_c = col;
-                    }
-                    break;
-                case 1:
-                    if(if_do = (row != dimension-1))
-                    {
-                        next_r = row+1;
-                        next_c = col;
-                    }
-                    break;
-                case 2:
-                    if(if_do = (col != 0))
-                    {
-                        next_r = row;
-                        next_c = col-1;
-                    }
-                    break;
-                case 3:
-                    if(if_do = (row != dimension-1))
-                    {
-                        next_r = row;
-                        next_c = col+1;
-                    }
-                    break;
-            }
-
-            next = next_r + "" + next_c;
-
-            if (if_do && constraints.containsKey(curr) && constraints.get(curr).containsKey(next)) {
-                if (matrix.get(next_r).get(next_c) != 0) {
-                    int con_val = constraints.get(curr).get(next);
-                    int next_val = matrix.get(next_r).get(next_c);
-                    if (con_val == IO.GRATER_THEN && value <= next_val)
-                        return false;
-                    if (con_val == IO.SMALLER_THEN && value >= next_val)
-                        return false;
-                }
-            }
-        }
-
-        return true;
+        return !getColumn(col, matrix).contains(value) && !matrix.get(row).contains(value) && constraints.canBeHereByConstraint(value, row, col, matrix);
     }
 
     private static ArrayList<Integer> getColumn(int colNum, HashMap<Integer, ArrayList<Integer>> matrix)

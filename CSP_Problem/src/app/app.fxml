@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.Controller">
+   <children>
+      <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="600.0">
+         <children>
+            <RadioButton fx:id="futo_radio" layoutX="147.0" layoutY="59.0" mnemonicParsing="false" text="Futoshiki" />
+            <RadioButton fx:id="sky_radio" layoutX="318.0" layoutY="59.0" mnemonicParsing="false" text="SkyScrapper" />
+            <Label layoutX="224.0" layoutY="27.0" prefHeight="17.0" prefWidth="189.0" text="Wybierz rodzaj gry:" />
+            <Label layoutX="224.0" layoutY="99.0" text="Wybierz rodzaj plików:" />
+            <RadioButton fx:id="tes_radio" layoutX="147.0" layoutY="127.0" mnemonicParsing="false" text="Testowe" />
+            <RadioButton fx:id="res_radio" layoutX="318.0" layoutY="127.0" mnemonicParsing="false" text="Badawcze" />
+            <Label layoutX="224.0" layoutY="169.0" text="Wybierz heurystykę:" />
+            <RadioButton fx:id="first_radio" layoutX="147.0" layoutY="196.0" mnemonicParsing="false" text="od lewego górnego rogu" />
+            <RadioButton fx:id="min_domain_radio" layoutX="147.0" layoutY="224.0" mnemonicParsing="false" text="od najmniejszej dziedziny" />
+            <Label layoutX="225.0" layoutY="259.0" text="Wybierz plik:" />
+            <ChoiceBox fx:id="files" layoutX="193.0" layoutY="285.0" prefHeight="31.0" prefWidth="189.0" />
+            <Button fx:id="start" layoutX="197.0" layoutY="346.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onStartClicked" prefHeight="33.0" prefWidth="189.0" text="START" />
+         </children>
+      </Pane>
+   </children>
+</VBox>

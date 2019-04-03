@@ -8,15 +8,20 @@ import java.util.HashMap;
 public class IO {
     public static final int GRATER_THEN = 1;
     public static final int SMALLER_THEN = 0;
-    private static final String PATH = "D:\\Users\\oladr\\Studia\\Term_VI\\Sztuczna\\WorkSpace\\CSP_Problem\\src\\CSP_2019_dane_testowe_v1.0\\";
+    public static final int TEST = 0;
+    public static final int RESEARCH = 1;
+    private static final String TEST_PATH = "D:\\Users\\oladr\\Studia\\Term_VI\\Sztuczna\\WorkSpace\\CSP_Problem\\src\\CSP_2019_dane_testowe_v1.0\\";
+    private static final String RESEARCH_PATH = "D:\\Users\\oladr\\Studia\\Term_VI\\Sztuczna\\WorkSpace\\CSP_Problem\\src\\CSP_2019_dane_badawcze_v1.2\\";
     public static int dimension;
-    public static ArrayList<String> start_values_by_idx; // not use
-    public static HashMap<String, ArrayList<Integer>> already_there_per_col_row; // not use
     public static HashMap<Integer, ArrayList<Integer>> matrix;
     public static HashMap<String, HashMap<String, Integer>> constraints;
 
-    public static void readSkyscrapperData(String name) {
-        File file = new File(PATH + name);
+    public static void readSkyscrapperData(int path, String name) {
+        File file;
+        if (path == TEST)
+            file = new File(TEST_PATH + name);
+        else
+            file = new File(RESEARCH_PATH + name);
         try {
             FileReader freader = new FileReader(file);
             BufferedReader reader = new BufferedReader(freader);
@@ -70,16 +75,18 @@ public class IO {
         }
     }
 
-    public static void readFutoshikiData(String name) {
-        File file = new File(PATH + name);
+    public static void readFutoshikiData(int path, String name) {
+        File file;
+        if (path == TEST)
+            file = new File(TEST_PATH + name);
+        else
+            file = new File(RESEARCH_PATH + name);
         try {
             FileReader freader = new FileReader(file);
             BufferedReader reader = new BufferedReader(freader);
 
             matrix = new HashMap<>();
             constraints = new HashMap<>();
-            already_there_per_col_row = new HashMap<>();
-            start_values_by_idx = new ArrayList<>();
 
             dimension = Integer.parseInt(reader.readLine());
 
@@ -93,27 +100,6 @@ public class IO {
 
                 for (int col = 0; col < dimension; col++) {
                     int value = Integer.parseInt(line[col]);
-
-//                    if (value != 0) {
-//                        ArrayList<Integer> tmp_dom;
-//                        if (already_there_per_col_row.containsKey("R"+row))
-//                            tmp_dom = already_there_per_col_row.get("R"+row);
-//                        else
-//                            tmp_dom = new ArrayList<>();
-//
-//                        tmp_dom.add(value);
-//                        already_there_per_col_row.put("R"+row, tmp_dom);
-//
-//                        if (already_there_per_col_row.containsKey("C"+col))
-//                            tmp_dom = already_there_per_col_row.get("C"+col);
-//                        else
-//                            tmp_dom = new ArrayList<>();
-//
-//                        tmp_dom.add(value);
-//                        already_there_per_col_row.put("C"+col, tmp_dom);
-//                        start_values_by_idx.add(row+""+col);
-//                    }
-
                     tmp.add(value);
                 }
                 matrix.put(row, tmp);
