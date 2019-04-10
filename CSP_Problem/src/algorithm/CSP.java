@@ -2,10 +2,7 @@ package algorithm;
 
 import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -14,6 +11,8 @@ import static java.util.stream.Collectors.toList;
 public class CSP {
     public static final int FIRST_HEURISTIC = 0;
     public static final int MIN_HEURISTIC = 1;
+    public static final int RAND_HEURISTIC = 2;
+    public static final int MAX_HEURISTIC = 3;
     private static final String FUTOSHIKI_FILLED = "";
     public static final int UNASSIGNED = 0;
     private static Constraint constraints;
@@ -183,6 +182,62 @@ public class CSP {
                 {
                     // added variable with its domain size
                     Pair<String, Integer> var = new Pair<>(i+""+col.get(j), getDomain(col.get(j), i, isForwarding, grid).size());
+                    variables.add(var);
+                }
+            }
+
+            Collections.sort(variables, new Comparator<Pair<String, Integer>>() {
+                @Override
+                public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
+                    return o1.getValue() - o2.getValue();
+                }
+            });
+
+            if (!variables.isEmpty())
+                return variables.get(0).getKey();
+        }
+
+        if (heuristic == RAND_HEURISTIC)
+        {
+            Random r = new Random();
+            // first variable, second size of domain
+            ArrayList<String> variables = new ArrayList<>();
+            for (int i = 0; i < dimension; i++)
+            {
+                ArrayList<Integer> col = new ArrayList<>();
+                ArrayList<Integer> row = grid.get(i);
+                for (int j = 0; j < dimension; j++)
+                    if (row.get(j) == UNASSIGNED)
+                        col.add(j);
+
+                for (int j = 0; j < col.size(); j++)
+                {
+                    // added variable with its domain size
+                    String var = i+""+col.get(j);
+                    variables.add(var);
+                }
+            }
+
+            if (!variables.isEmpty())
+                return variables.get(r.nextInt(variables.size()));
+        }
+
+        if (heuristic == MAX_HEURISTIC)
+        {
+            // first variable, second size of domain
+            ArrayList<Pair<String, Integer>> variables = new ArrayList<>();
+            for (int i = 0; i < dimension; i++)
+            {
+                ArrayList<Integer> col = new ArrayList<>();
+                ArrayList<Integer> row = grid.get(i);
+                for (int j = 0; j < dimension; j++)
+                    if (row.get(j) == UNASSIGNED)
+                        col.add(j);
+
+                for (int j = 0; j < col.size(); j++)
+                {
+                    // added variable with its domain size
+                    Pair<String, Integer> var = new Pair<>(i+""+col.get(j), constraints.getNumberOfConstraint(i+""+col.get(j)));
                     variables.add(var);
                 }
             }

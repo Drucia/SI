@@ -21,8 +21,8 @@ public class SkyScrapperConstraint implements Constraint {
 
         ArrayList<Integer> column = getColumn(col, matrix);
         ArrayList<Integer> ro = matrix.get(row);
-        int c_f = Collections.frequency(column, CSP.UNASSIGNED);
-        int c_r = Collections.frequency(ro, CSP.UNASSIGNED);
+        //int c_f = Collections.frequency(column, CSP.UNASSIGNED);
+        //int c_r = Collections.frequency(ro, CSP.UNASSIGNED);
 
         if (Collections.frequency(column, CSP.UNASSIGNED) == 1 && Collections.frequency(ro, CSP.UNASSIGNED) == 1)
             return checkByCol(u, d, column, row, value) && checkByRow(l, r, ro, col, value);
@@ -32,6 +32,20 @@ public class SkyScrapperConstraint implements Constraint {
             return checkByRow(l, r, ro, col, value);
 
         return true;
+    }
+
+    @Override
+    public int getNumberOfConstraint(String var) {
+        if (!constraints.containsKey(var))
+            return 0;
+
+        HashMap<String, Integer> con = constraints.get(var);
+        int c = 0;
+        for(String s : con.keySet())
+            if (con.get(s) == 0)
+                c++;
+
+        return c;
     }
 
     private ArrayList<Integer> getColumn(int colNum, HashMap<Integer, ArrayList<Integer>> matrix)

@@ -49,7 +49,7 @@ public class FutoshikiConstraint implements Constraint {
                     }
                     break;
                 case 3:
-                    if(if_do = (row != dimension-1))
+                    if(if_do = (col != dimension-1))
                     {
                         next_r = row;
                         next_c = col+1;
@@ -72,5 +72,12 @@ public class FutoshikiConstraint implements Constraint {
         }
 
         return true;
+    }
+
+    @Override
+    public int getNumberOfConstraint(String var) {
+        if (!constraints.containsKey(var))
+            return 0;
+        return constraints.get(var).size();
     }
 }
