@@ -10,6 +10,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,14 +19,19 @@ import java.util.HashMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 public class Controller {
 
     public static final String main_path = "D:\\Users\\oladr\\Studia\\Term_VI\\Sztuczna\\Badania\\CSP\\";
+
+    @FXML
+    private WebView before;
+
+    @FXML
+    private WebView after;
 
     @FXML
     private RadioButton futo_radio;
@@ -39,16 +46,24 @@ public class Controller {
     private RadioButton res_radio;
 
     @FXML
-    private RadioButton first_radio;
-
-    @FXML
-    private RadioButton min_domain_radio;
-
-    @FXML
     private ChoiceBox<String> files;
 
     @FXML
     private ChoiceBox<String> heuristic;
+
+    @FXML
+    private Label amount;
+    @FXML
+    private Label time;
+    @FXML
+    private Label count;
+
+    @FXML
+    private Label amountf;
+    @FXML
+    private Label timef;
+    @FXML
+    private Label countf;
 
     @FXML
     private Button start;
@@ -186,68 +201,98 @@ public class Controller {
     public static void main(String[] args)
     {
         // research for test_futo
-        for(String s : test_fut)
-        {
-            IO.readFutoshikiData(IO.TEST, s);
-            FutoshikiConstraint fc = new FutoshikiConstraint(IO.constraints);
-
-            for (int i=0; i<4; i++)
-            {
-                CSP.set_constans(fc, IO.dimension, i);
-                ArrayList<HashMap<Integer, ArrayList<Integer>>> scores = CSP.runBackTracking(IO.matrix);
-                writeToFile("futoshiki", s, heu.get(i), "backtracking", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
-                scores = CSP.runForwarding(IO.matrix);
-                writeToFile("futoshiki", s, heu.get(i), "forwarding", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
-            }
-        }
+//        for(String s : test_fut)
+//        {
+//            IO.readFutoshikiData(IO.TEST, s);
+//            FutoshikiConstraint fc = new FutoshikiConstraint(IO.constraints);
+//
+//            for (int i=0; i<4; i++)
+//            {
+//                CSP.set_constans(fc, IO.dimension, i);
+//                ArrayList<HashMap<Integer, ArrayList<Integer>>> scores = CSP.runBackTracking(IO.matrix);
+//                writeToFile("futoshiki", s, heu.get(i), "backtracking", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
+//                scores = CSP.runForwarding(IO.matrix);
+//                writeToFile("futoshiki", s, heu.get(i), "forwarding", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
+//            }
+//        }
 
         // research for test_sky
-        for(String s : test_sky)
-        {
-            IO.readSkyscrapperData(IO.TEST, s);
-            SkyScrapperConstraint sc = new SkyScrapperConstraint(IO.constraints);
-
-            for (int i=0; i<4; i++)
-            {
-                CSP.set_constans(sc, IO.dimension, i);
-                ArrayList<HashMap<Integer, ArrayList<Integer>>> scores = CSP.runBackTracking(IO.matrix);
-                writeToFile("skyscraper", s, heu.get(i), "backtracking", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
-                scores = CSP.runForwarding(IO.matrix);
-                writeToFile("skyscraper", s, heu.get(i), "forwarding", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
-            }
-        }
+//        for(String s : test_sky)
+//        {
+//            IO.readSkyscrapperData(IO.TEST, s);
+//            SkyScrapperConstraint sc = new SkyScrapperConstraint(IO.constraints);
+//
+//            for (int i=0; i<4; i++)
+//            {
+//                CSP.set_constans(sc, IO.dimension, i);
+//                ArrayList<HashMap<Integer, ArrayList<Integer>>> scores = CSP.runBackTracking(IO.matrix);
+//                writeToFile("skyscraper", s, heu.get(i), "backtracking", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
+//                scores = CSP.runForwarding(IO.matrix);
+//                writeToFile("skyscraper", s, heu.get(i), "forwarding", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
+//            }
+//        }
 
         // research for res_futo
-        for(int s=0; s<15; s++)
-        {
-            IO.readFutoshikiData(IO.RESEARCH, res_fut.get(s));
-            FutoshikiConstraint fc = new FutoshikiConstraint(IO.constraints);
+//        for(int s=0; s<15; s++)
+//        {
+//            IO.readFutoshikiData(IO.RESEARCH, res_fut.get(s));
+//            FutoshikiConstraint fc = new FutoshikiConstraint(IO.constraints);
+//
+//            for (int i=0; i<4; i++)
+//            {
+//                CSP.set_constans(fc, IO.dimension, i);
+//                ArrayList<HashMap<Integer, ArrayList<Integer>>> scores = CSP.runBackTracking(IO.matrix);
+//                writeToFile("futoshiki", res_fut.get(s), heu.get(i), "backtracking", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
+//                scores = CSP.runForwarding(IO.matrix);
+//                writeToFile("futoshiki", res_fut.get(s), heu.get(i), "forwarding", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
+//            }
+//        }
 
-            for (int i=0; i<4; i++)
-            {
-                CSP.set_constans(fc, IO.dimension, i);
-                ArrayList<HashMap<Integer, ArrayList<Integer>>> scores = CSP.runBackTracking(IO.matrix);
-                writeToFile("futoshiki", res_fut.get(s), heu.get(i), "backtracking", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
-                scores = CSP.runForwarding(IO.matrix);
-                writeToFile("futoshiki", res_fut.get(s), heu.get(i), "forwarding", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
-            }
-        }
+//            IO.readFutoshikiData(IO.RESEARCH, "test_futo_6_1.txt");
+//            FutoshikiConstraint fc = new FutoshikiConstraint(IO.constraints);
+//            CSP.set_constans(fc, IO.dimension, CSP.MAX_HEURISTIC);
+//            ArrayList<HashMap<Integer, ArrayList<Integer>>> scores = CSP.runForwarding(IO.matrix);
+//            writeToFile("futoshiki", "test_futo_6_1.txt", heu.get(2), "forwarding", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
+//
+//            IO.readFutoshikiData(IO.RESEARCH, "test_futo_7_0.txt");
+//            fc = new FutoshikiConstraint(IO.constraints);
+//
+//            for (int i=0; i<4; i++)
+//            {
+//                CSP.set_constans(fc, IO.dimension, i);
+//                scores = CSP.runBackTracking(IO.matrix);
+//                writeToFile("futoshiki", "test_futo_7_0.txt", heu.get(i), "backtracking", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
+//                scores = CSP.runForwarding(IO.matrix);
+//                writeToFile("futoshiki", "test_futo_7_0.txt", heu.get(i), "forwarding", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
+//            }
+//
+//            IO.readFutoshikiData(IO.RESEARCH, "test_futo_8_0.txt");
+//            fc = new FutoshikiConstraint(IO.constraints);
+//
+//            for (int i=0; i<4; i++)
+//            {
+//                CSP.set_constans(fc, IO.dimension, i);
+//                scores = CSP.runBackTracking(IO.matrix);
+//                writeToFile("futoshiki", "test_futo_8_0.txt", heu.get(i), "backtracking", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
+//                scores = CSP.runForwarding(IO.matrix);
+//                writeToFile("futoshiki", "test_futo_8_0.txt", heu.get(i), "forwarding", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
+//            }
 
         // research for res_sky
-        for(int s=0; s<4; s++)
-        {
-            IO.readSkyscrapperData(IO.RESEARCH, res_sky.get(s));
-            SkyScrapperConstraint sc = new SkyScrapperConstraint(IO.constraints);
-
-            for (int i=0; i<4; i++)
-            {
-                CSP.set_constans(sc, IO.dimension, i);
-                ArrayList<HashMap<Integer, ArrayList<Integer>>> scores = CSP.runBackTracking(IO.matrix);
-                writeToFile("skyscraper", res_sky.get(s), heu.get(i), "backtracking", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
-                scores = CSP.runForwarding(IO.matrix);
-                writeToFile("skyscraper", res_sky.get(s), heu.get(i), "forwarding", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
-            }
-        }
+//        for(int s=0; s<15; s++)
+//        {
+//            IO.readSkyscrapperData(IO.RESEARCH, res_sky.get(s));
+//            SkyScrapperConstraint sc = new SkyScrapperConstraint(IO.constraints);
+//
+//            for (int i=0; i<4; i++)
+//            {
+//                CSP.set_constans(sc, IO.dimension, i);
+//                ArrayList<HashMap<Integer, ArrayList<Integer>>> scores = CSP.runBackTracking(IO.matrix);
+//                writeToFile("skyscraper", res_sky.get(s), heu.get(i), "backtracking", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
+//                scores = CSP.runForwarding(IO.matrix);
+//                writeToFile("skyscraper", res_sky.get(s), heu.get(i), "forwarding", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
+//            }
+//        }
     }
 
     public void onStartClicked()
@@ -287,6 +332,18 @@ public class Controller {
 
 //            System.out.println("\n------------------START PACK------------------\n");
 //            Printer.printSkyscrapper(IO.matrix, IO.constraints);
+
+            Printer.printSkyscrapperHtml(name+"_start", new ArrayList<>(Arrays.asList(IO.matrix)), IO.constraints);
+            WebEngine webEngine = before.getEngine();
+            File file = new File(Controller.main_path + "\\html\\" + name+"_start" + "\\0.html");
+            URL url= null;
+            try {
+                url = file.toURI().toURL();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            webEngine.load(url.toString());
+
             SkyScrapperConstraint sc = new SkyScrapperConstraint(IO.constraints);
             CSP.set_constans(sc, IO.dimension, heuristic);
 //            System.out.println("\n-----------------BACKTRACKING-----------------\n");
@@ -299,10 +356,13 @@ public class Controller {
 //            System.out.println("Counter -> " + CSP.getCounter());
 //            System.out.println("Total Time [nano time] -> " + CSP.getTotalTime());
 
+            amount.setText(scores.size()+"");
+            count.setText(CSP.getCounter()+"");
+            time.setText(CSP.getTotalTime()+"");
             // write to file
             writeToFile("skyscraper", name, heu, "backtracking", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
 
-            System.out.println("\n-----------------FORWARDING-----------------\n");
+//            System.out.println("\n-----------------FORWARDING-----------------\n");
             scores = CSP.runForwarding(IO.matrix);
 //            for (HashMap<Integer, ArrayList<Integer>> m : scores) {
 //                Printer.printSkyscrapper(m, IO.constraints);
@@ -312,43 +372,83 @@ public class Controller {
 //            System.out.println("Counter -> " + CSP.getCounter());
 //            System.out.println("Total Time [nano time] -> " + CSP.getTotalTime());
 
+            amountf.setText(scores.size()+"");
+            countf.setText(CSP.getCounter()+"");
+            timef.setText(CSP.getTotalTime()+"");
             writeToFile("skyscraper", name, heu, "forwarding", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
-            System.out.println("\n-------------------KONIEC-------------------\n");
+
+            webEngine = after.getEngine();
+            file = new File(Controller.main_path + "\\html\\" + name + "\\0.html");
+            url= null;
+            try {
+                url = file.toURI().toURL();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            webEngine.load(url.toString());
+//            System.out.println("\n-------------------KONIEC-------------------\n");
         }
         else // make for futoshiki
         {
             // read from file
             IO.readFutoshikiData(path, name);
 
-            System.out.println("\n------------------START PACK------------------\n");
-            Printer.printFutoshiki(IO.matrix, IO.constraints);
+//            System.out.println("\n------------------START PACK------------------\n");
+//            Printer.printFutoshiki(IO.matrix, IO.constraints);
+            Printer.printFutoshikiHtml(name+"_start", new ArrayList<>(Arrays.asList(IO.matrix)), IO.constraints);
+            WebEngine webEngine = before.getEngine();
+            File file = new File(Controller.main_path + "\\html\\" + name+"_start" + "\\0.html");
+            URL url= null;
+            try {
+                url = file.toURI().toURL();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            webEngine.load(url.toString());
+
             FutoshikiConstraint fc = new FutoshikiConstraint(IO.constraints);
             CSP.set_constans(fc, IO.dimension, heuristic);
-            System.out.println("\n-----------------BACKTRACKING-----------------\n");
+//            System.out.println("\n-----------------BACKTRACKING-----------------\n");
             ArrayList<HashMap<Integer, ArrayList<Integer>>> scores = CSP.runBackTracking(IO.matrix);
-            for (HashMap<Integer, ArrayList<Integer>> m : scores) {
-                Printer.printFutoshiki(m, IO.constraints);
-                System.out.println("\n");
-            }
-            System.out.println("Liczba rozwiązań -> " + scores.size());
-            System.out.println("Counter -> " + CSP.getCounter());
-            System.out.println("Total Time [nano time] -> " + CSP.getTotalTime());
+//            for (HashMap<Integer, ArrayList<Integer>> m : scores) {
+//                Printer.printFutoshiki(m, IO.constraints);
+//                System.out.println("\n");
+//            }
+//            System.out.println("Liczba rozwiązań -> " + scores.size());
+//            System.out.println("Counter -> " + CSP.getCounter());
+//            System.out.println("Total Time [nano time] -> " + CSP.getTotalTime());
 
+            amount.setText(scores.size()+"");
+            count.setText(CSP.getCounter()+"");
+            time.setText(CSP.getTotalTime()+"");
             // write to file
             writeToFile("futoshiki", name, heu, "backtracking", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
 
 
-            System.out.println("\n-----------------FORWARDING-----------------\n");
+//            System.out.println("\n-----------------FORWARDING-----------------\n");
             scores = CSP.runForwarding(IO.matrix);
-            for (HashMap<Integer, ArrayList<Integer>> m : scores) {
-                Printer.printFutoshiki(m, IO.constraints);
-                System.out.println("\n");
-            }
-            System.out.println("Liczba rozwiązań -> " + scores.size());
-            System.out.println("Counter -> " + CSP.getCounter());
-            System.out.println("Total Time [nano time] -> " + CSP.getTotalTime());
+//            for (HashMap<Integer, ArrayList<Integer>> m : scores) {
+//                Printer.printFutoshiki(m, IO.constraints);
+//                System.out.println("\n");
+//            }
+//            System.out.println("Liczba rozwiązań -> " + scores.size());
+//            System.out.println("Counter -> " + CSP.getCounter());
+//            System.out.println("Total Time [nano time] -> " + CSP.getTotalTime());
+            amountf.setText(scores.size()+"");
+            countf.setText(CSP.getCounter()+"");
+            timef.setText(CSP.getTotalTime()+"");
             writeToFile("futoshiki", name, heu, "forwarding", scores, scores.size(), CSP.getCounter(), CSP.getTotalTime());
-            System.out.println("\n-------------------KONIEC-------------------\n");
+
+            webEngine = after.getEngine();
+            file = new File(Controller.main_path + "\\html\\" + name + "\\0.html");
+            url= null;
+            try {
+                url = file.toURI().toURL();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            webEngine.load(url.toString());
+//            System.out.println("\n-------------------KONIEC-------------------\n");
         }
     }
 }

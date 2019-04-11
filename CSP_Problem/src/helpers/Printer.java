@@ -220,7 +220,7 @@ public class Printer {
                     StringBuilder s_res = new StringBuilder();
                     s_res.append("<!DOCTYPE html>\n");
                     s_res.append("<html>\n");
-                    s_res.append("<table border='1' style='border-collapse:separate; width: 25%; text-align: center;'>\n");
+                    s_res.append("<table border='1' style='border-collapse:separate; width: 100%; text-align: center;'>\n");
 
                     // place for score
                     StringBuilder line_builder, line_con_builder;
