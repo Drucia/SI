@@ -1,11 +1,10 @@
 package sample;
 
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -143,17 +142,16 @@ public class Controller {
     private ArrayList<ImageView> list_of_fields;
     private ArrayList<ImageView> list_of_blacks;
     private ArrayList<ImageView> list_of_whites;
-    private ArrayList<Integer> list_of_black_on_board;
-    private ArrayList<Integer> list_of_white_on_board;
-    private ArrayList<Integer> list_of_pawns;
+    private ArrayList<Integer> list_of_black_behind_board;
+    private ArrayList<Integer> list_of_white_behind_board;
 
     @FXML
     public void initialize()
     {
         list_of_fields = new ArrayList<>(Arrays.asList(
                 p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10,
-                p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
-                p21, p22, p23
+                p11, p12, p13, p14, p15, p16, p17, p18, p19,
+                p20, p21, p22, p23
         ));
 
         list_of_blacks = new ArrayList<>(Arrays.asList(
@@ -164,9 +162,8 @@ public class Controller {
                 w0, w1, w2, w3, w4, w5, w6, w7, w8
         ));
 
-        list_of_black_on_board = new ArrayList<>();
-        list_of_white_on_board = new ArrayList<>();
-        list_of_pawns = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
+        list_of_black_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
+        list_of_white_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
 
         game_phase = NMM.I_OPEN_GAME_PHASE;
         player = NMM.I_WHITE_PLAYER;
@@ -190,27 +187,34 @@ public class Controller {
     }
 
     private boolean setPawnOnBoard(String id_of_clicked_place) {
-        ArrayList<Integer> on_board;
+        ArrayList<Integer> behind_board;
         ArrayList<ImageView> pawns;
+        String play;
 
         if (player == NMM.I_WHITE_PLAYER) {
             pawns = list_of_whites;
-            on_board = list_of_white_on_board;
+            behind_board = list_of_white_behind_board;
+            play = "white";
         }
         else {
             pawns = list_of_blacks;
-            on_board = list_of_black_on_board;
+            behind_board = list_of_black_behind_board;
+            play = "black";
         }
 
-        if (on_board.size() == NMM.I_AMOUNT_OF_PAWN)
+        if (behind_board.isEmpty())
             return false;
 
-        ImageView field = list_of_fields.get(Integer.parseInt(id_of_clicked_place.substring(1)));
+        int id = Integer.parseInt(id_of_clicked_place.substring(1));
+        ImageView field = list_of_fields.get(id);
 
         if (field.getImage() != null)
             return false;
 
-
+        ImageView pawn = pawns.get(behind_board.get(0));
+        pawn.setVisible(false);
+        field.setImage(new Image("/images/" + play + ".png"));
+        behind_board.remove(0);
         return true;
     }
 }
