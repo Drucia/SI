@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="678.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="New" />
+            <MenuItem mnemonicParsing="false" text="Open…" />
+            <Menu mnemonicParsing="false" text="Open Recent" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Close" />
+            <MenuItem mnemonicParsing="false" text="Save" />
+            <MenuItem mnemonicParsing="false" text="Save As…" />
+            <MenuItem mnemonicParsing="false" text="Revert" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Preferences…" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Quit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Undo" />
+            <MenuItem mnemonicParsing="false" text="Redo" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Cut" />
+            <MenuItem mnemonicParsing="false" text="Copy" />
+            <MenuItem mnemonicParsing="false" text="Paste" />
+            <MenuItem mnemonicParsing="false" text="Delete" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Select All" />
+            <MenuItem mnemonicParsing="false" text="Unselect All" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <children>
+            <ImageView fitHeight="511.0" fitWidth="546.0" layoutX="176.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/board.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="b2" fitHeight="40.0" fitWidth="40.0" layoutX="303.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="b3" fitHeight="40.0" fitWidth="40.0" layoutX="356.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="b4" fitHeight="40.0" fitWidth="40.0" layoutX="409.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="b5" fitHeight="40.0" fitWidth="40.0" layoutX="462.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="b6" fitHeight="40.0" fitWidth="40.0" layoutX="511.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="b7" fitHeight="40.0" fitWidth="40.0" layoutX="563.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="b8" fitHeight="40.0" fitWidth="40.0" layoutX="620.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="b0" fitHeight="40.0" fitWidth="40.0" layoutX="199.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="b1" fitHeight="40.0" fitWidth="40.0" layoutX="250.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w2" fitHeight="40.0" fitWidth="40.0" layoutX="302.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w3" fitHeight="40.0" fitWidth="40.0" layoutX="355.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w4" fitHeight="40.0" fitWidth="40.0" layoutX="409.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w5" fitHeight="40.0" fitWidth="40.0" layoutX="461.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w6" fitHeight="40.0" fitWidth="40.0" layoutX="510.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w7" fitHeight="40.0" fitWidth="40.0" layoutX="562.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w8" fitHeight="40.0" fitWidth="40.0" layoutX="619.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w0" fitHeight="40.0" fitWidth="40.0" layoutX="198.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w1" fitHeight="40.0" fitWidth="40.0" layoutX="250.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="p2" fitHeight="40.0" fitWidth="40.0" layoutX="176.0" layoutY="63.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p14" fitHeight="40.0" fitWidth="40.0" layoutX="411.0" layoutY="63.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p23" fitHeight="40.0" fitWidth="40.0" layoutX="647.0" layoutY="63.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p5" fitHeight="40.0" fitWidth="40.0" layoutX="256.0" layoutY="142.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p13" fitHeight="40.0" fitWidth="40.0" layoutX="412.0" layoutY="142.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p20" fitHeight="40.0" fitWidth="40.0" layoutX="571.0" layoutY="142.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p12" fitHeight="40.0" fitWidth="40.0" layoutX="412.0" layoutY="220.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p8" fitHeight="40.0" fitWidth="40.0" layoutX="335.0" layoutY="220.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p17" fitHeight="40.0" fitWidth="40.0" layoutX="486.0" layoutY="220.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p11" fitHeight="40.0" fitWidth="40.0" layoutX="412.0" layoutY="371.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p6" fitHeight="40.0" fitWidth="40.0" layoutX="335.0" layoutY="378.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p15" fitHeight="40.0" fitWidth="40.0" layoutX="486.0" layoutY="378.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p4" fitHeight="40.0" fitWidth="40.0" layoutX="256.0" layoutY="299.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p1" fitHeight="40.0" fitWidth="40.0" layoutX="176.0" layoutY="299.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p7" fitHeight="40.0" fitWidth="40.0" layoutX="332.0" layoutY="298.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p19" fitHeight="40.0" fitWidth="40.0" layoutX="563.0" layoutY="299.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p16" fitHeight="40.0" fitWidth="40.0" layoutX="486.0" layoutY="299.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p22" fitHeight="40.0" fitWidth="40.0" layoutX="647.0" layoutY="298.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p3" fitHeight="40.0" fitWidth="40.0" layoutX="256.0" layoutY="451.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p10" fitHeight="40.0" fitWidth="40.0" layoutX="412.0" layoutY="451.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p18" fitHeight="40.0" fitWidth="40.0" layoutX="563.0" layoutY="451.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p0" fitHeight="40.0" fitWidth="40.0" layoutX="176.0" layoutY="528.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p9" fitHeight="40.0" fitWidth="40.0" layoutX="412.0" layoutY="528.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p21" fitHeight="40.0" fitWidth="40.0" layoutX="647.0" layoutY="528.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>
