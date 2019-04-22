@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="306.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NewGameController">
+   <children>
+      <AnchorPane prefHeight="402.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="34.0" layoutY="35.0" text="Białe pionki:" />
+            <ChoiceBox fx:id="white_player" layoutX="34.0" layoutY="60.0" prefWidth="150.0" />
+            <Label layoutX="34.0" layoutY="98.0" text="Czarne pionki:" />
+            <ChoiceBox fx:id="black_player" layoutX="34.0" layoutY="123.0" prefWidth="150.0" />
+            <Button layoutX="99.0" layoutY="181.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" text="START" onAction="#startPressed"/>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
