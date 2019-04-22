@@ -271,6 +271,11 @@ public class Controller {
         for (int i=0; i<board.size(); i++)
             board.set(i, -1);
 
+        list_of_black_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
+        list_of_white_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
+
+        player = NMM.I_WHITE_PLAYER;
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("NewGame.fxml"));
         // initializing the controller
