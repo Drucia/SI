@@ -144,6 +144,7 @@ public class Controller {
     private ArrayList<ImageView> list_of_whites;
     private ArrayList<Integer> list_of_black_behind_board;
     private ArrayList<Integer> list_of_white_behind_board;
+    public static ArrayList<Integer> board;
 
     @FXML
     public void initialize()
@@ -165,13 +166,17 @@ public class Controller {
         list_of_black_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
         list_of_white_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
 
+        Integer[] data = new Integer[24];
+        Arrays.fill(data,-1);
+        board = new ArrayList<>(Arrays.asList(data));
+
         game_phase = NMM.I_OPEN_GAME_PHASE;
         player = NMM.I_WHITE_PLAYER;
     }
 
         public void onPlaceClicked(MouseEvent mouseEvent)
     {
-        if (game_phase == 0)
+        if (game_phase == NMM.I_OPEN_GAME_PHASE)
         {
             MouseButton mb = mouseEvent.getButton();
             String id_of_clicked_place = mouseEvent.getPickResult().getIntersectedNode().getId();
@@ -182,7 +187,13 @@ public class Controller {
 
                 if (isSet)
                     player = (player + 1) % 2;
+
+                if (list_of_black_behind_board.isEmpty() && list_of_white_behind_board.isEmpty())
+                    game_phase = NMM.I_MID_GAME_PHASE;
             }
+        } else if (game_phase == NMM.I_MID_GAME_PHASE)
+        {
+            System.out.println("Jestesmy w czesci glownej");
         }
     }
 
@@ -215,6 +226,7 @@ public class Controller {
         pawn.setVisible(false);
         field.setImage(new Image("/images/" + play + ".png"));
         behind_board.remove(0);
+        board.set(id, player);
         return true;
     }
 }
