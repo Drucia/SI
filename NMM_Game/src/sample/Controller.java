@@ -1,23 +1,16 @@
 package sample;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,8 +19,6 @@ import java.util.Arrays;
 public class Controller {
     public static int game_phase; // opening phase
     public static int player; // id of actual player 0 - white, 1 - black
-
-    public static Stage stage;
 
     @FXML
     private ImageView b2;
@@ -155,18 +146,17 @@ public class Controller {
     @FXML
     private ImageView p21;
 
-    @FXML
-    private AnchorPane anchor;
-
     private ArrayList<ImageView> list_of_fields;
     private ArrayList<ImageView> list_of_blacks;
     private ArrayList<ImageView> list_of_whites;
     private ArrayList<Integer> list_of_black_behind_board;
     private ArrayList<Integer> list_of_white_behind_board;
     public static ArrayList<Integer> board;
+    public static Stage primaryStage;
 
     @FXML
-    public void initialize() {
+    public void initialize()
+    {
         list_of_fields = new ArrayList<>(Arrays.asList(
                 p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10,
                 p11, p12, p13, p14, p15, p16, p17, p18, p19,
@@ -248,7 +238,7 @@ public class Controller {
         return true;
     }
 
-    public void newGameClicked() throws IOException {
+    public void newGameClicked(ActionEvent actionEvent) {
         for (ImageView i : list_of_fields)
             i.setImage(null);
 
@@ -261,28 +251,30 @@ public class Controller {
         for (int i=0; i<board.size(); i++)
             board.set(i, -1);
 
-        Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner(anchor.getScene().getWindow());
-        dialog.setTitle("Nowa Gra");
-        Parent root = FXMLLoader.load(getClass().getResource("NewGame.fxml"));
-        Scene dialogScene = new Scene(root);
-        dialog.setScene(dialogScene);
-        dialog.show();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("NewGame.fxml"));
+        // initializing the controller
+        Parent layout;
+        try {
+            layout = loader.load();
+            Scene scene = new Scene(layout);
+            // this is the popup stage
+            Stage popupStage = new Stage();
+            // Giving the popup controller access to the popup stage (to allow the controller to close the stage) 
+            NewGameController.stage = popupStage;
+            popupStage.initOwner(primaryStage);
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.setScene(scene);
+            popupStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //return popupController.getResult();
     }
 
-    public void optionClicked() throws IOException {
-        Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner(anchor.getScene().getWindow());
-        dialog.setTitle("Nowa Gra");
-        Parent root = FXMLLoader.load(getClass().getResource("Option.fxml"));
-        Scene dialogScene = new Scene(root);
-        dialog.setScene(dialogScene);
-        dialog.show();
+    public void optionClicked(ActionEvent actionEvent) {
     }
 
-    public void closeClicked() {
-        stage.close();
+    public void closeClicked(ActionEvent actionEvent) {
     }
 }

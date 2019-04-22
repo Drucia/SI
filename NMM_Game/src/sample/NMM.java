@@ -9,7 +9,6 @@ public class NMM {
     public static final int I_AMOUNT_OF_PAWN = 9;
     public static final int I_AI_PLAYER = 0;
     public static final int I_MAN_PLAYER = 1;
-
     public static int w_player;
     public static int b_player;
 

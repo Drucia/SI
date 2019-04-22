@@ -70,8 +70,13 @@
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/app/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="-2550">
               <caret line="148" lean-forward="true" selection-start-line="148" selection-end-line="148" />
+=======
+            <state relative-caret-position="493">
+              <caret line="96" lean-forward="true" selection-start-line="94" selection-start-column="4" selection-end-line="96" />
+>>>>>>> parent of b97e3fe... Added open phase for manual player
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -113,7 +118,11 @@
       <file leaf-file-name="CSP.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/algorithm/CSP.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="17">
+=======
+            <state relative-caret-position="969">
+>>>>>>> parent of b97e3fe... Added open phase for manual player
               <caret line="67" column="35" selection-start-line="67" selection-start-column="35" selection-end-line="67" selection-end-column="35" />
             </state>
           </provider>
@@ -212,7 +221,10 @@
           <select />
         </subPane>
       </pane>
+<<<<<<< HEAD
       <pane id="PackagesPane" />
+=======
+>>>>>>> parent of b97e3fe... Added open phase for manual player
       <pane id="AndroidView" />
     </panes>
   </component>
@@ -742,6 +754,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/algorithm/CSP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="969">
+          <caret line="67" column="35" selection-start-line="67" selection-start-column="35" selection-end-line="67" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/app.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -759,6 +778,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/algorithm/CSP.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="17">
           <caret line="67" column="35" selection-start-line="67" selection-start-column="35" selection-end-line="67" selection-end-column="35" />
         </state>
@@ -774,6 +794,16 @@
         </state>
       </provider>
     </entry>
+=======
+        <state relative-caret-position="493">
+          <caret line="96" lean-forward="true" selection-start-line="94" selection-start-column="4" selection-end-line="96" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+>>>>>>> parent of b97e3fe... Added open phase for manual player
   </component>
   <component name="masterDetails">
     <states>

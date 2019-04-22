@@ -7,13 +7,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("NMM.fxml"));
         primaryStage.setTitle("Nine Men's Morris");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        Controller.primaryStage = primaryStage;
         primaryStage.show();
     }
 
