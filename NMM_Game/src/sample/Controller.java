@@ -180,6 +180,26 @@ public class Controller {
 
         game_phase = NMM.I_OPEN_GAME_PHASE;
         player = NMM.I_WHITE_PLAYER;
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("NewGame.fxml"));
+        // initializing the controller
+        Parent layout;
+        try {
+            layout = loader.load();
+            Scene scene = new Scene(layout);
+            // this is the popup stage
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Nowa Gra");
+            // Giving the popup controller access to the popup stage (to allow the controller to close the stage)
+            NewGameController.stage = popupStage;
+            popupStage.initOwner(primaryStage);
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.setScene(scene);
+            popupStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void onPlaceClicked(MouseEvent mouseEvent)
@@ -260,6 +280,7 @@ public class Controller {
             Scene scene = new Scene(layout);
             // this is the popup stage
             Stage popupStage = new Stage();
+            popupStage.setTitle("Nowa Gra");
             // Giving the popup controller access to the popup stage (to allow the controller to close the stage) 
             NewGameController.stage = popupStage;
             popupStage.initOwner(primaryStage);
