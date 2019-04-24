@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="678.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<VBox prefHeight="678.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -144,6 +145,7 @@
             <ImageView fx:id="p18" fitHeight="40.0" fitWidth="40.0" layoutX="563.0" layoutY="451.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="p0" fitHeight="40.0" fitWidth="40.0" layoutX="176.0" layoutY="528.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="p9" fitHeight="40.0" fitWidth="40.0" layoutX="412.0" layoutY="528.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <Button layoutX="721.0" layoutY="280.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="146.0" text="Następny gracz" onAction="#nextPlayerPressed"/>
             <ImageView fx:id="p21" fitHeight="40.0" fitWidth="40.0" layoutX="647.0" layoutY="528.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
          </children>
     </AnchorPane>

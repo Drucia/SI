@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Controller {
-    public static int game_phase; // opening phase
+    public static int game_phase; // first is opening phase
     public static int player; // id of actual player 0 - white, 1 - black
     public static int player_type; // type of player 0 - AI, 1 - manual
 
@@ -151,8 +151,8 @@ public class Controller {
     private ArrayList<ImageView> list_of_fields;
     private ArrayList<ImageView> list_of_blacks;
     private ArrayList<ImageView> list_of_whites;
-    private ArrayList<Integer> list_of_black_behind_board;
-    private ArrayList<Integer> list_of_white_behind_board;
+    //private ArrayList<Integer> list_of_black_behind_board;
+    //private ArrayList<Integer> list_of_white_behind_board;
     //public static ArrayList<Integer> board;
     public static Stage primaryStage;
 
@@ -173,8 +173,8 @@ public class Controller {
                 w0, w1, w2, w3, w4, w5, w6, w7, w8
         ));
 
-        list_of_black_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
-        list_of_white_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
+        //list_of_black_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
+        //list_of_white_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
 
         Integer[] data = new Integer[24];
         Arrays.fill(data, NMM.I_BLANK_FIELD);
@@ -207,28 +207,19 @@ public class Controller {
     public void onPlaceClicked(MouseEvent mouseEvent)
     {
         player_type = NMM.getPlayerType(player);
-        
+
         if (game_phase == NMM.I_OPEN_GAME_PHASE)
         {
             MouseButton mb = mouseEvent.getButton();
             String id_of_clicked_place = mouseEvent.getPickResult().getIntersectedNode().getId();
 
-            //if (mb.name().equals("PRIMARY"))
-            //{
-            boolean isSet;
+            if (player_type == NMM.I_MAN_PLAYER)
+                setPawnOnBoard(id_of_clicked_place); // communicate
 
-            if (player_type == NMM.I_MAN_PLAYER) {
-                isSet = setPawnOnBoard(id_of_clicked_place); // communicate
-            } else {
-                ArrayList<Pair<Pair<Integer, Integer>, Integer>> shifts = NMM.makeMove(player); // <(idx_from, idx_for), val>
-                isSet = makeShifts(shifts);
-            }
-                if (isSet)
-                    player = (player + 1) % 2;
+            
+            //if (list_of_black_behind_board.isEmpty() && list_of_white_behind_board.isEmpty())
+            //    game_phase = NMM.I_MID_GAME_PHASE;
 
-                if (list_of_black_behind_board.isEmpty() && list_of_white_behind_board.isEmpty())
-                    game_phase = NMM.I_MID_GAME_PHASE;
-            //}
         } else if (game_phase == NMM.I_MID_GAME_PHASE)
         {
             System.out.println("Jestesmy w czesci glownej");
@@ -247,14 +238,19 @@ public class Controller {
             int idx_for = tmp.getKey().getValue();
             int val = tmp.getValue();
 
-            ImageView im = list_of_fields.get(idx_from);
-            im.setImage(null);
+            ImageView im;
 
-            if (val != NMM.I_BLANK_FIELD) {
-                String play = NMM.players.get(val);
-                im = list_of_fields.get(idx_for);
-                im.setImage(new Image("/images/" + play + ".png"));
-            }
+            if (idx_from != NMM.I_BLANK_FIELD) {
+                im = list_of_fields.get(idx_from);
+                im.setImage(null);
+
+                if (val != NMM.I_BLANK_FIELD) {
+                    String play = NMM.getNameOfPlayer(val);
+                    im = list_of_fields.get(idx_for);
+                    im.setImage(new Image("/images/" + play + ".png"));
+                }
+            } else
+                setPawnOnBoard("p"+idx_for);
         }
 
         return true; // to change
@@ -263,7 +259,7 @@ public class Controller {
     private boolean setPawnOnBoard(String id_of_clicked_place) {
         ArrayList<Integer> behind_board;
         ArrayList<ImageView> pawns;
-        String play = NMM.players.get(player);
+        String play = NMM.getNameOfPlayer(player);
 
         if (player == NMM.I_WHITE_PLAYER) {
             pawns = list_of_whites;
@@ -294,7 +290,7 @@ public class Controller {
         return true;
     }
 
-    public void newGameClicked(ActionEvent actionEvent) {
+    public void newGameClicked() {
         for (ImageView i : list_of_fields)
             i.setImage(null);
 
@@ -335,10 +331,28 @@ public class Controller {
         //return popupController.getResult();
     }
 
-    public void optionClicked(ActionEvent actionEvent) {
+    public void optionClicked() {
     }
 
-    public void closeClicked(ActionEvent actionEvent) {
+    public void closeClicked() {
         primaryStage.close();
+    }
+
+    public void nextPlayerPressed() {
+        //else {
+        //    ArrayList<Pair<Pair<Integer, Integer>, Integer>> shifts = NMM.makeMove(player); // <(idx_from, idx_for), val>
+        //    isSet = makeShifts(shifts);
+        //}
+        player = (player + 1) % 2;
+
+        if ()
+        if (list_of_black_behind_board.isEmpty() && list_of_white_behind_board.isEmpty())
+            game_phase = NMM.I_MID_GAME_PHASE;
+
+
+
+
+        if (list_of_black_behind_board.isEmpty() && list_of_white_behind_board.isEmpty())
+            game_phase = NMM.I_MID_GAME_PHASE;
     }
 }
