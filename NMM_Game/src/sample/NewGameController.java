@@ -19,9 +19,6 @@ public class NewGameController {
     @FXML
     private ChoiceBox<String> black_player;
 
-    @FXML
-    private Button start;
-
     private HashMap<String, Integer> result = new HashMap<>();
 
     public static Stage stage;
