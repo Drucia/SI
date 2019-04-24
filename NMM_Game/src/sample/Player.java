@@ -5,13 +5,15 @@ import java.util.Arrays;
 
 public class Player {
     private String name;
+    private int playerId;
     private int playerType;
     private int playerPhase;
     private int amountOdPawns;
     private ArrayList<String> history_of_moves;
     private ArrayList<Integer> pawn_behind_board;
 
-    public Player(String name, int playerType, int playerPhase) {
+    public Player(int playerId, String name, int playerType, int playerPhase) {
+        this.playerId = playerId;
         this.name = name;
         this.playerType = playerType;
         this.playerPhase = playerPhase;
@@ -56,5 +58,18 @@ public class Player {
     public void setPawnOnBoard()
     {
         pawn_behind_board.remove(0);
+    }
+
+    public int getFirstPawnBehindBoard()
+    {
+        return pawn_behind_board.get(0);
+    }
+
+    public ArrayList<Integer> getPawn_behind_board() {
+        return pawn_behind_board;
+    }
+
+    public int getPlayerId() {
+        return playerId;
     }
 }

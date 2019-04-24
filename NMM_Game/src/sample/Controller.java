@@ -18,9 +18,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Controller {
-    public static int game_phase; // first is opening phase
-    public static int player; // id of actual player 0 - white, 1 - black
-    public static int player_type; // type of player 0 - AI, 1 - manual
+    private static Player actualPlayer;
+    private static int amount_of_moves;
+    private static int actual_nb_of_move;
+    private static final int I_CHOOSE_PAWN_TO_PLACE_ON_BOARD = 0;
+    private static final int I_CHOOSE_PAWN_TO_SHIFT_FROM = 1;
+    private static final int I_CHOOSE_PAWN_TO_SHIFT_FOR = 2;
+    private static final int I_CHOOSE_PAWN_TO_DELETE = 3;
 
     @FXML
     private ImageView b2;
@@ -151,9 +155,6 @@ public class Controller {
     private ArrayList<ImageView> list_of_fields;
     private ArrayList<ImageView> list_of_blacks;
     private ArrayList<ImageView> list_of_whites;
-    //private ArrayList<Integer> list_of_black_behind_board;
-    //private ArrayList<Integer> list_of_white_behind_board;
-    //public static ArrayList<Integer> board;
     public static Stage primaryStage;
 
     @FXML
@@ -173,15 +174,9 @@ public class Controller {
                 w0, w1, w2, w3, w4, w5, w6, w7, w8
         ));
 
-        //list_of_black_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
-        //list_of_white_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
-
         Integer[] data = new Integer[24];
         Arrays.fill(data, NMM.I_BLANK_FIELD);
         NMM.updateBoard(new ArrayList<>(Arrays.asList(data)));
-
-        game_phase = NMM.I_OPEN_GAME_PHASE;
-        player = NMM.I_WHITE_PLAYER;
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("NewGame.fxml"));
@@ -202,27 +197,33 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        actualPlayer = NMM.getPlayer(NMM.I_BLACK_PLAYER);
+        nextPlayerPressed();
+    }
+
+    private void showPopup(String titile)
+    {
+
     }
 
     public void onPlaceClicked(MouseEvent mouseEvent)
     {
-        player_type = NMM.getPlayerType(player);
+        if (actual_nb_of_move < amount_of_moves) {
 
-        if (game_phase == NMM.I_OPEN_GAME_PHASE)
-        {
-            MouseButton mb = mouseEvent.getButton();
-            String id_of_clicked_place = mouseEvent.getPickResult().getIntersectedNode().getId();
-
-            if (player_type == NMM.I_MAN_PLAYER)
-                setPawnOnBoard(id_of_clicked_place); // communicate
-
-            
-            //if (list_of_black_behind_board.isEmpty() && list_of_white_behind_board.isEmpty())
-            //    game_phase = NMM.I_MID_GAME_PHASE;
-
-        } else if (game_phase == NMM.I_MID_GAME_PHASE)
-        {
-            System.out.println("Jestesmy w czesci glownej");
+            switch (actualPlayer.getPlayerPhase()) {
+                case NMM.I_OPEN_GAME_PHASE:
+                    String id_of_clicked_place = mouseEvent.getPickResult().getIntersectedNode().getId();
+                    setPawnOnBoard(id_of_clicked_place);
+                    actual_nb_of_move++;
+                    break;
+                case NMM.I_MID_GAME_PHASE:
+                    System.out.println("Jestesmy w czesci glownej!!!");
+                    NMM.checkIfCanDeleteOpponent();
+                    break;
+                case NMM.I_END_GAME_PHASE:
+                    break;
+            }
         }
     }
 
@@ -257,23 +258,13 @@ public class Controller {
     }
 
     private boolean setPawnOnBoard(String id_of_clicked_place) {
-        ArrayList<Integer> behind_board;
         ArrayList<ImageView> pawns;
-        String play = NMM.getNameOfPlayer(player);
+        String play = actualPlayer.getName();
 
-        if (player == NMM.I_WHITE_PLAYER) {
+        if (actualPlayer.getPlayerId() == NMM.I_WHITE_PLAYER)
             pawns = list_of_whites;
-            behind_board = list_of_white_behind_board;
-            //play = "white";
-        }
-        else {
+        else
             pawns = list_of_blacks;
-            behind_board = list_of_black_behind_board;
-            //play = "black";
-        }
-
-        if (behind_board.isEmpty())
-            return false;
 
         int id = Integer.parseInt(id_of_clicked_place.substring(1));
         ImageView field = list_of_fields.get(id);
@@ -281,12 +272,12 @@ public class Controller {
         if (field.getImage() != null)
             return false;
 
-        ImageView pawn = pawns.get(behind_board.get(0));
+        ImageView pawn = pawns.get(actualPlayer.getFirstPawnBehindBoard());
         pawn.setVisible(false);
         field.setImage(new Image("/images/" + play + ".png"));
-        behind_board.remove(0);
+        actualPlayer.setPawnOnBoard();
         //board.set(id, player);
-        NMM.updateFieldOfBoard(id, player);
+        NMM.updateFieldOfBoard(id, actualPlayer.getPlayerId());
         return true;
     }
 
@@ -303,11 +294,6 @@ public class Controller {
         for (int i=0; i<NMM.getBoardSize(); i++)
             NMM.updateFieldOfBoard(i, NMM.I_BLANK_FIELD);
             //board.set(i, -1);
-
-        list_of_black_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
-        list_of_white_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
-
-        player = NMM.I_WHITE_PLAYER;
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("NewGame.fxml"));
@@ -328,7 +314,9 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //return popupController.getResult();
+
+        actualPlayer = NMM.getPlayer(NMM.I_BLACK_PLAYER);
+        nextPlayerPressed();
     }
 
     public void optionClicked() {
@@ -339,20 +327,16 @@ public class Controller {
     }
 
     public void nextPlayerPressed() {
-        //else {
-        //    ArrayList<Pair<Pair<Integer, Integer>, Integer>> shifts = NMM.makeMove(player); // <(idx_from, idx_for), val>
-        //    isSet = makeShifts(shifts);
-        //}
-        player = (player + 1) % 2;
+        switchPlayers();
+        amount_of_moves = 1;
+        NMM.updateActualPhase(actualPlayer);
 
-        if ()
-        if (list_of_black_behind_board.isEmpty() && list_of_white_behind_board.isEmpty())
-            game_phase = NMM.I_MID_GAME_PHASE;
+        if (actualPlayer.getPlayerType() == NMM.I_AI_PLAYER)
+            makeShifts(NMM.playerMove(actualPlayer));
+    }
 
-
-
-
-        if (list_of_black_behind_board.isEmpty() && list_of_white_behind_board.isEmpty())
-            game_phase = NMM.I_MID_GAME_PHASE;
+    private void switchPlayers()
+    {
+        actualPlayer = NMM.getPlayer((actualPlayer.getPlayerId() + 1) % 2);
     }
 }

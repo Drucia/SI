@@ -3,7 +3,6 @@ package sample;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class NMM {
@@ -81,5 +80,20 @@ public class NMM {
     public static String getNameOfPlayer(int i)
     {
         return players.get(i).getName();
+    }
+
+    public static Player getPlayer(int i)
+    {
+        return players.get(i);
+    }
+
+    public static ArrayList<Pair<Pair<Integer, Integer>, Integer>> playerMove(Player actualPlayer) {
+        return null;
+    }
+
+    public static void updateActualPhase(Player actualPlayer) {
+    }
+
+    public static void checkIfCanDeleteOpponent() {
     }
 }

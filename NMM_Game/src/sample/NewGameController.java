@@ -37,7 +37,9 @@ public class NewGameController {
     public void startClicked(ActionEvent actionEvent) {
         result.put("w", white_player.getValue().equals("Manual") ? NMM.I_MAN_PLAYER : NMM.I_AI_PLAYER);
         result.put("b", black_player.getValue().equals("Manual") ? NMM.I_MAN_PLAYER : NMM.I_AI_PLAYER);
-        NMM.setPlayers(result.get("w"), result.get("b"));
+        Player p1 = new Player(NMM.I_WHITE_PLAYER, "white", result.get("w"), NMM.I_OPEN_GAME_PHASE);
+        Player p2 = new Player(NMM.I_BLACK_PLAYER, "black", result.get("b"), NMM.I_OPEN_GAME_PHASE);
+        NMM.setPlayers(new ArrayList<>(Arrays.asList(p1, p2)));
         stage.close();
     }
 }

@@ -1,0 +1,36 @@
+1. Wybranie typów graczy
+2. Utworzenie nowych graczy i przypisanie ich do listy graczy
+3. Rozpoczęcie gry
+Przełącz gracza, ustaw dostępne ruchy, sprawdzenie jakiego typu jest aktualny gracz (funkcja - nextPlayerPressed), sprawdzenie i ustawienie fazy gry
+1) jeżeli manualny to nic nie rób, czeka na akcje gracza manualnego
+	FAZA OPEN
+	- jak gracz nacisnie na pole i ma jeszcze dostępne ruchy
+		-> sprawdz czy pole jest puste
+		-> wygaś pole poza plansza
+		-> wstaw pionka w puste pole
+	FAZA MID
+	- jak gracz naciśnie na swojego pionka i ma jeszcze dostępne ruchy
+		-> zmien widoczność na 0.5 naciśniętego pionka
+		-> zmień obwódkę na czerwoną możliwych do ruchu pól
+	- jak gracz naciśnie na pole zaznaczone na czerwono
+		-> ustaw aktualne pole na puste
+		-> wstaw pionka w wyznaczone pole
+	- jeżeli jest młynek, zwiększ liczbę ruchów o jeden i gracz naciska na pionka przeciwnika
+		-> sprawdź czy wybrany pionek przeciwnika jest w młynku
+		-> ustaw wybrane pole na puste
+		-> ustaw widoczność pionka przeciwnika poza planszą
+	FAZA FINISH
+	- jak gracz naciśnie na swojego pionka i ma jeszcze dostępne ruchy
+		-> zmien widoczność na 0.5 naciśniętego pionka
+	- jak gracz naciśnie na puste pole
+		-> ustaw aktualne pole na puste
+		-> wstaw pionka w wyznaczone pole
+		
+	-> zapisz ruch do historii gracza
+	-> zapisz ruch na planszę
+	-> zmień liczbę pionków na planszy gracza
+2) jeżeli ai to uruchom funkcje z NMM.playerMove
+
+3) jeżeli user naciśnie przycisk następny gracz, wywołaj funkcje nextPlayerPressed
+	
+	
