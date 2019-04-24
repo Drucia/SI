@@ -8,7 +8,7 @@ public class Player {
     private int playerId;
     private int playerType;
     private int playerPhase;
-    private int amountOdPawns;
+    private int amountOfPawns;
     private ArrayList<String> history_of_moves;
     private ArrayList<Integer> pawn_behind_board;
 
@@ -17,17 +17,13 @@ public class Player {
         this.name = name;
         this.playerType = playerType;
         this.playerPhase = playerPhase;
-        this.amountOdPawns = 0;
+        this.amountOfPawns = 0;
         history_of_moves = new ArrayList<>();
         pawn_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
     }
 
     public int getPlayerType() {
         return playerType;
-    }
-
-    public void setPlayerType(int playerType) {
-        this.playerType = playerType;
     }
 
     public int getPlayerPhase() {
@@ -38,12 +34,12 @@ public class Player {
         this.playerPhase = playerPhase;
     }
 
-    public int getAmountOdPawns() {
-        return amountOdPawns;
+    public int getAmountOfPawns() {
+        return amountOfPawns;
     }
 
-    public void updateAmountOdPawns(int amountOdPawns) {
-        this.amountOdPawns += amountOdPawns;
+    public void updateAmountOfPawns(int amountOdPawns) {
+        this.amountOfPawns += amountOdPawns;
     }
 
     public void addHistory(ArrayList<String> h)

@@ -1,26 +1,25 @@
 package sample;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import javafx.scene.control.Label;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Controller {
     private static Player actualPlayer;
-    private static int amount_of_moves;
-    private static int actual_nb_of_move;
+    private static int amount_of_moves = 1;
+    private static int actual_nb_of_move = 1;
     private static final int I_CHOOSE_PAWN_TO_PLACE_ON_BOARD = 0;
     private static final int I_CHOOSE_PAWN_TO_SHIFT_FROM = 1;
     private static final int I_CHOOSE_PAWN_TO_SHIFT_FOR = 2;
@@ -152,6 +151,12 @@ public class Controller {
     @FXML
     private ImageView p21;
 
+    @FXML
+    private Label player;
+
+    @FXML
+    private Label comm;
+
     private ArrayList<ImageView> list_of_fields;
     private ArrayList<ImageView> list_of_blacks;
     private ArrayList<ImageView> list_of_whites;
@@ -178,8 +183,17 @@ public class Controller {
         Arrays.fill(data, NMM.I_BLANK_FIELD);
         NMM.updateBoard(new ArrayList<>(Arrays.asList(data)));
 
+        showPopup("Nowa Gra", "NewGame.fxml");
+
+        actualPlayer = NMM.getPlayer(NMM.I_BLACK_PLAYER);
+        amount_of_moves = actual_nb_of_move = 1;
+        nextPlayerPressed();
+    }
+
+    private void showPopup(String title, String fxml)
+    {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("NewGame.fxml"));
+        loader.setLocation(getClass().getResource(fxml));
         // initializing the controller
         Parent layout;
         try {
@@ -187,7 +201,7 @@ public class Controller {
             Scene scene = new Scene(layout);
             // this is the popup stage
             Stage popupStage = new Stage();
-            popupStage.setTitle("Nowa Gra");
+            popupStage.setTitle(title);
             // Giving the popup controller access to the popup stage (to allow the controller to close the stage)
             NewGameController.stage = popupStage;
             popupStage.initOwner(primaryStage);
@@ -197,14 +211,6 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        actualPlayer = NMM.getPlayer(NMM.I_BLACK_PLAYER);
-        nextPlayerPressed();
-    }
-
-    private void showPopup(String titile)
-    {
-
     }
 
     public void onPlaceClicked(MouseEvent mouseEvent)
@@ -224,6 +230,9 @@ public class Controller {
                 case NMM.I_END_GAME_PHASE:
                     break;
             }
+        } else {
+            comm.setText("Wykonano ruch. Wcisnij przycisk, żeby zakończyć rundę.");
+            comm.setVisible(true);
         }
     }
 
@@ -254,7 +263,7 @@ public class Controller {
                 setPawnOnBoard("p"+idx_for);
         }
 
-        return true; // to change
+        return true;
     }
 
     private boolean setPawnOnBoard(String id_of_clicked_place) {
@@ -276,12 +285,13 @@ public class Controller {
         pawn.setVisible(false);
         field.setImage(new Image("/images/" + play + ".png"));
         actualPlayer.setPawnOnBoard();
-        //board.set(id, player);
         NMM.updateFieldOfBoard(id, actualPlayer.getPlayerId());
+        actualPlayer.updateAmountOfPawns(1);
         return true;
     }
 
     public void newGameClicked() {
+        comm.setVisible(false);
         for (ImageView i : list_of_fields)
             i.setImage(null);
 
@@ -293,29 +303,11 @@ public class Controller {
 
         for (int i=0; i<NMM.getBoardSize(); i++)
             NMM.updateFieldOfBoard(i, NMM.I_BLANK_FIELD);
-            //board.set(i, -1);
 
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("NewGame.fxml"));
-        // initializing the controller
-        Parent layout;
-        try {
-            layout = loader.load();
-            Scene scene = new Scene(layout);
-            // this is the popup stage
-            Stage popupStage = new Stage();
-            popupStage.setTitle("Nowa Gra");
-            // Giving the popup controller access to the popup stage (to allow the controller to close the stage) 
-            NewGameController.stage = popupStage;
-            popupStage.initOwner(primaryStage);
-            popupStage.initModality(Modality.WINDOW_MODAL);
-            popupStage.setScene(scene);
-            popupStage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        showPopup("Nowa Gra", "NewGame.fxml");
 
         actualPlayer = NMM.getPlayer(NMM.I_BLACK_PLAYER);
+        amount_of_moves = actual_nb_of_move = 1;
         nextPlayerPressed();
     }
 
@@ -327,16 +319,25 @@ public class Controller {
     }
 
     public void nextPlayerPressed() {
-        switchPlayers();
-        amount_of_moves = 1;
-        NMM.updateActualPhase(actualPlayer);
+        if (amount_of_moves == actual_nb_of_move) {
+            comm.setVisible(false);
+            switchPlayers();
+            amount_of_moves = 1;
+            actual_nb_of_move = 0;
+            NMM.updateActualPhase(actualPlayer);
 
-        if (actualPlayer.getPlayerType() == NMM.I_AI_PLAYER)
-            makeShifts(NMM.playerMove(actualPlayer));
+            if (actualPlayer.getPlayerType() == NMM.I_AI_PLAYER)
+                makeShifts(NMM.playerMove(actualPlayer));
+        }
+        else {
+            comm.setText("Musisz wykonac ruch.");
+            comm.setVisible(true);
+        }
     }
 
     private void switchPlayers()
     {
         actualPlayer = NMM.getPlayer((actualPlayer.getPlayerId() + 1) % 2);
+        player.setText("GRACZ: " + (actualPlayer.getPlayerId() == NMM.I_BLACK_PLAYER ? "CZARNY" : "BIAŁY"));
     }
 }
