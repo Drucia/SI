@@ -77,13 +77,11 @@ public class NMM {
         }
     }
 
-    public static void checkIfCanDeleteOpponent(Player actualPlayer) { // search mills
+    public static boolean checkIfCanDeleteOpponent(Player actualPlayer) { // search mills
         String last_move = actualPlayer.getHistory_of_moves().get(actualPlayer.getHistory_of_moves().size()-1);
         String fields[] = last_move.split(" ");
-        int id_1 = Controller.list_of_fields_in_words.indexOf(fields[0]);
         int id_2 = Controller.list_of_fields_in_words.indexOf(fields[2]);
 
-
-
+        return Algorithm.isMill(board, id_2);
     }
 }

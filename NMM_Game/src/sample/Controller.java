@@ -20,10 +20,12 @@ public class Controller {
     private static Player actualPlayer;
     private static int amount_of_moves = 1;
     private static int actual_nb_of_move = 1;
+    private static int actual_move = 0;
     private static final int I_CHOOSE_PAWN_TO_PLACE_ON_BOARD = 0;
     private static final int I_CHOOSE_PAWN_TO_SHIFT_FROM = 1;
     private static final int I_CHOOSE_PAWN_TO_SHIFT_FOR = 2;
     private static final int I_CHOOSE_PAWN_TO_DELETE = 3;
+    private static final int I_NO_MOVE = 4;
 
     @FXML
     private ImageView b2;
@@ -228,12 +230,13 @@ public class Controller {
                 case NMM.I_OPEN_GAME_PHASE:
                     String id_of_clicked_place = mouseEvent.getPickResult().getIntersectedNode().getId();
                     setPawnOnBoard(id_of_clicked_place);
-                    actual_nb_of_move++;
+                    actual_move = I_NO_MOVE;
                     break;
                 case NMM.I_MID_GAME_PHASE:
                     System.out.println("Jestesmy w czesci glownej!!!");
                     //TODO
-                    NMM.checkIfCanDeleteOpponent(actualPlayer);
+                    if (NMM.checkIfCanDeleteOpponent(actualPlayer))
+                        actual_move = I_CHOOSE_PAWN_TO_DELETE;
                     break;
                 case NMM.I_END_GAME_PHASE:
                     break;
@@ -330,7 +333,7 @@ public class Controller {
     }
 
     public void nextPlayerPressed() {
-        if (amount_of_moves == actual_nb_of_move) {
+        if (actual_move == I_NO_MOVE) {
             comm.setVisible(false);
             switchPlayers();
             amount_of_moves = 1;
