@@ -11,10 +11,6 @@ public class NMM {
     public static final int I_OPEN_GAME_PHASE = 0;
     public static final int I_MID_GAME_PHASE = 1;
     public static final int I_END_GAME_PHASE = 2;
-    public static final int I_HEU_PAWNS = 1;
-    public static final int I_HEU_TWO = 2;
-    public static final int I_HEU_MOVES = 3;
-    public static final int I_HEU_BLOCKS = 4;
     public static final int I_AMOUNT_OF_PAWN = 9;
     public static final int I_AI_PLAYER = 0;
     public static final int I_MAN_PLAYER = 1;
@@ -81,7 +77,13 @@ public class NMM {
         }
     }
 
-    public static void checkIfCanDeleteOpponent() { // search mills
+    public static void checkIfCanDeleteOpponent(Player actualPlayer) { // search mills
+        String last_move = actualPlayer.getHistory_of_moves().get(actualPlayer.getHistory_of_moves().size()-1);
+        String fields[] = last_move.split(" ");
+        int id_1 = Controller.list_of_fields_in_words.indexOf(fields[0]);
+        int id_2 = Controller.list_of_fields_in_words.indexOf(fields[2]);
+
+
 
     }
 }

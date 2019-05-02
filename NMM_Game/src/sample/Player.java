@@ -44,9 +44,9 @@ public class Player {
         this.amountOfPawns += amountOdPawns;
     }
 
-    public void addHistory(ArrayList<String> h)
+    public void addHistory(String h)
     {
-        history_of_moves.addAll(h);
+        history_of_moves.add(h);
     }
 
     public String getName() {
@@ -74,5 +74,13 @@ public class Player {
 
     public int getPlayerId() {
         return playerId;
+    }
+
+    public ArrayList<Integer> getHeuristics() {
+        return heuristics;
+    }
+
+    public ArrayList<String> getHistory_of_moves() {
+        return history_of_moves;
     }
 }

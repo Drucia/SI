@@ -161,6 +161,7 @@ public class Controller {
     private ArrayList<ImageView> list_of_blacks;
     private ArrayList<ImageView> list_of_whites;
     public static Stage primaryStage;
+    public static ArrayList<String> list_of_fields_in_words;
 
     @FXML
     public void initialize()
@@ -169,6 +170,12 @@ public class Controller {
                 p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10,
                 p11, p12, p13, p14, p15, p16, p17, p18, p19,
                 p20, p21, p22, p23
+        ));
+
+        list_of_fields_in_words = new ArrayList<>(Arrays.asList(
+                "a1", "a4", "a7", "b2", "b4", "b6", "c3", "c4", "c5",
+                "d1", "d2", "d3", "d5", "d6", "d7", "e3", "e4", "e5",
+                "f2", "f4", "f6", "g1", "g4", "g7"
         ));
 
         list_of_blacks = new ArrayList<>(Arrays.asList(
@@ -225,7 +232,8 @@ public class Controller {
                     break;
                 case NMM.I_MID_GAME_PHASE:
                     System.out.println("Jestesmy w czesci glownej!!!");
-                    NMM.checkIfCanDeleteOpponent();
+                    //TODO
+                    NMM.checkIfCanDeleteOpponent(actualPlayer);
                     break;
                 case NMM.I_END_GAME_PHASE:
                     break;
@@ -236,7 +244,7 @@ public class Controller {
         }
     }
 
-    private boolean makeShifts(ArrayList<Pair<Pair<Integer, Integer>, Integer>> shifts)
+    private boolean makeShifts(ArrayList<Pair<Pair<Integer, Integer>, Integer>> shifts) // ((from, to), who) -> shift
     {
         if (shifts == null)
             return false;
@@ -245,7 +253,7 @@ public class Controller {
         {
             Pair<Pair<Integer, Integer>, Integer> tmp = shifts.get(i);
             int idx_from = tmp.getKey().getKey();
-            int idx_for = tmp.getKey().getValue();
+            int idx_to = tmp.getKey().getValue();
             int val = tmp.getValue();
 
             ImageView im;
@@ -256,11 +264,13 @@ public class Controller {
 
                 if (val != NMM.I_BLANK_FIELD) {
                     String play = NMM.getNameOfPlayer(val);
-                    im = list_of_fields.get(idx_for);
+                    im = list_of_fields.get(idx_to);
                     im.setImage(new Image("/images/" + play + ".png"));
                 }
+
+                actualPlayer.addHistory(list_of_fields_in_words.get(idx_from) + " -> " + list_of_fields_in_words.get(idx_to));
             } else
-                setPawnOnBoard("p"+idx_for);
+                setPawnOnBoard("p"+idx_to);
         }
 
         return true;
@@ -286,6 +296,7 @@ public class Controller {
         field.setImage(new Image("/images/" + play + ".png"));
         actualPlayer.setPawnOnBoard();
         NMM.updateFieldOfBoard(id, actualPlayer.getPlayerId());
+        actualPlayer.addHistory("-1 -> " + list_of_fields_in_words.get(id));
         actualPlayer.updateAmountOfPawns(1);
         return true;
     }
