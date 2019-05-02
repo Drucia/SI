@@ -96,4 +96,134 @@ public class Algorithm
 
         return neigh;
     }
+
+    public static boolean isMill(ArrayList<Integer> board, int field)
+    {
+        int value = board.get(field);
+
+        switch(field)
+        {
+            case 0:
+                if ((board.get(1) == value && board.get(2) == value) || (board.get(9) == value &&
+                        board.get(21) == value))
+                    return true;
+                break;
+            case 1:
+                if ((board.get(0) == value && board.get(2) == value) || (board.get(4) == value &&
+                        board.get(7) == value))
+                    return true;
+                break;
+            case 2:
+                if ((board.get(1) == value && board.get(0) == value) || (board.get(14) == value &&
+                        board.get(23) == value))
+                    return true;
+                break;
+            case 3:
+                if ((board.get(4) == value && board.get(5) == value) || (board.get(10) == value &&
+                        board.get(18) == value))
+                    return true;
+                break;
+            case 4:
+                if ((board.get(1) == value && board.get(7) == value) || (board.get(3) == value &&
+                        board.get(5) == value))
+                    return true;
+                break;
+            case 5:
+                if ((board.get(3) == value && board.get(4) == value) || (board.get(13) == value &&
+                        board.get(20) == value))
+                    return true;
+                break;
+            case 6:
+                if ((board.get(7) == value && board.get(8) == value) || (board.get(11) == value &&
+                        board.get(15) == value))
+                    return true;
+                break;
+            case 7:
+                if ((board.get(6) == value && board.get(8) == value) || (board.get(1) == value &&
+                        board.get(4) == value))
+                    return true;
+                break;
+            case 8:
+                if ((board.get(6) == value && board.get(7) == value) || (board.get(12) == value &&
+                        board.get(17) == value))
+                    return true;
+                break;
+            case 9:
+                if ((board.get(0) == value && board.get(21) == value) || (board.get(10) == value &&
+                        board.get(11) == value))
+                    return true;
+                break;
+            case 10:
+                if ((board.get(9) == value && board.get(11) == value) || (board.get(3) == value &&
+                        board.get(18) == value))
+                    return true;
+                break;
+            case 11:
+                if ((board.get(9) == value && board.get(10) == value) || (board.get(6) == value &&
+                        board.get(15) == value))
+                    return true;
+                break;
+            case 12:
+                if ((board.get(8) == value && board.get(17) == value) || (board.get(13) == value &&
+                        board.get(14) == value))
+                    return true;
+                break;
+            case 13:
+                if ((board.get(12) == value && board.get(14) == value) || (board.get(5) == value &&
+                        board.get(20) == value))
+                    return true;
+                break;
+            case 14:
+                if ((board.get(12) == value && board.get(13) == value) || (board.get(2) == value &&
+                        board.get(23) == value))
+                    return true;
+                break;
+            case 15:
+                if ((board.get(6) == value && board.get(11) == value) || (board.get(16) == value &&
+                        board.get(17) == value))
+                    return true;
+                break;
+            case 16:
+                if ((board.get(19) == value && board.get(22) == value) || (board.get(15) == value &&
+                        board.get(17) == value))
+                    return true;
+                break;
+            case 17:
+                if ((board.get(8) == value && board.get(12) == value) || (board.get(16) == value &&
+                        board.get(15) == value))
+                    return true;
+                break;
+            case 18:
+                if ((board.get(19) == value && board.get(20) == value) || (board.get(3) == value &&
+                        board.get(10) == value))
+                    return true;
+                break;
+            case 19:
+                if ((board.get(16) == value && board.get(22) == value) || (board.get(20) == value &&
+                        board.get(18) == value))
+                    return true;
+                break;
+            case 20:
+                if ((board.get(18) == value && board.get(19) == value) || (board.get(5) == value &&
+                        board.get(13) == value))
+                    return true;
+                break;
+            case 21:
+                if ((board.get(9) == value && board.get(0) == value) || (board.get(22) == value &&
+                        board.get(23) == value))
+                    return true;
+                break;
+            case 22:
+                if ((board.get(21) == value && board.get(23) == value) || (board.get(16) == value &&
+                        board.get(19) == value))
+                    return true;
+                break;
+            case 23:
+                if ((board.get(21) == value && board.get(22) == value) || (board.get(2) == value &&
+                        board.get(14) == value))
+                    return true;
+                break;
+        }
+        return false;
+    }
 }
