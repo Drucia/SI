@@ -56,6 +56,11 @@ public class Player {
         pawn_behind_board.remove(0);
     }
 
+    public void setPawnBehindBoard()
+    {
+        pawn_behind_board.add(amountOfPawns);
+    }
+
     public int getFirstPawnBehindBoard()
     {
         return pawn_behind_board.get(0);

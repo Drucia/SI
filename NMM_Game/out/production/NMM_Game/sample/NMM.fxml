@@ -6,13 +6,14 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="678.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<VBox prefHeight="678.0" prefWidth="795.0" style="-fx-background-color: #ffffcc;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -27,137 +28,361 @@
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="652.0" prefWidth="853.0" VBox.vgrow="ALWAYS">
          <children>
-            <ImageView fitHeight="511.0" fitWidth="546.0" layoutX="176.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="b8" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="403.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="b7" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="414.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="b6" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="423.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="b5" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="b4" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="b3" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="454.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="b2" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="463.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="b1" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="474.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/black.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w8" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w7" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w6" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w5" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w4" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w3" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w2" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="w1" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/white.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="511.0" fitWidth="546.0" layoutX="52.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/board.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="b2" fitHeight="40.0" fitWidth="40.0" layoutX="303.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="b0" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="483.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/black.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="b3" fitHeight="40.0" fitWidth="40.0" layoutX="356.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/black.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="b4" fitHeight="40.0" fitWidth="40.0" layoutX="409.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/black.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="b5" fitHeight="40.0" fitWidth="40.0" layoutX="462.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/black.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="b6" fitHeight="40.0" fitWidth="40.0" layoutX="511.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/black.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="b7" fitHeight="40.0" fitWidth="40.0" layoutX="563.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/black.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="b8" fitHeight="40.0" fitWidth="40.0" layoutX="620.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/black.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="b0" fitHeight="40.0" fitWidth="40.0" layoutX="199.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/black.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="b1" fitHeight="40.0" fitWidth="40.0" layoutX="250.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/black.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="w2" fitHeight="40.0" fitWidth="40.0" layoutX="302.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="w0" fitHeight="40.0" fitWidth="40.0" layoutX="701.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/white.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="w3" fitHeight="40.0" fitWidth="40.0" layoutX="355.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/white.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="w4" fitHeight="40.0" fitWidth="40.0" layoutX="409.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/white.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="w5" fitHeight="40.0" fitWidth="40.0" layoutX="461.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/white.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="w6" fitHeight="40.0" fitWidth="40.0" layoutX="510.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/white.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="w7" fitHeight="40.0" fitWidth="40.0" layoutX="562.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/white.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="w8" fitHeight="40.0" fitWidth="40.0" layoutX="619.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/white.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="w0" fitHeight="40.0" fitWidth="40.0" layoutX="198.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/white.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="w1" fitHeight="40.0" fitWidth="40.0" layoutX="250.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/white.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="p2" fitHeight="40.0" fitWidth="40.0" layoutX="176.0" layoutY="63.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p14" fitHeight="40.0" fitWidth="40.0" layoutX="411.0" layoutY="63.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p23" fitHeight="40.0" fitWidth="40.0" layoutX="647.0" layoutY="63.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p5" fitHeight="40.0" fitWidth="40.0" layoutX="256.0" layoutY="142.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p13" fitHeight="40.0" fitWidth="40.0" layoutX="412.0" layoutY="142.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p20" fitHeight="40.0" fitWidth="40.0" layoutX="571.0" layoutY="142.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p12" fitHeight="40.0" fitWidth="40.0" layoutX="412.0" layoutY="220.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p8" fitHeight="40.0" fitWidth="40.0" layoutX="335.0" layoutY="220.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p17" fitHeight="40.0" fitWidth="40.0" layoutX="486.0" layoutY="220.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p11" fitHeight="40.0" fitWidth="40.0" layoutX="412.0" layoutY="371.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p6" fitHeight="40.0" fitWidth="40.0" layoutX="335.0" layoutY="378.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p15" fitHeight="40.0" fitWidth="40.0" layoutX="486.0" layoutY="378.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p4" fitHeight="40.0" fitWidth="40.0" layoutX="256.0" layoutY="299.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p1" fitHeight="40.0" fitWidth="40.0" layoutX="176.0" layoutY="299.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p7" fitHeight="40.0" fitWidth="40.0" layoutX="332.0" layoutY="298.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p19" fitHeight="40.0" fitWidth="40.0" layoutX="563.0" layoutY="299.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p16" fitHeight="40.0" fitWidth="40.0" layoutX="486.0" layoutY="299.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p22" fitHeight="40.0" fitWidth="40.0" layoutX="647.0" layoutY="298.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p3" fitHeight="40.0" fitWidth="40.0" layoutX="256.0" layoutY="451.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p10" fitHeight="40.0" fitWidth="40.0" layoutX="412.0" layoutY="451.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p18" fitHeight="40.0" fitWidth="40.0" layoutX="563.0" layoutY="451.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p0" fitHeight="40.0" fitWidth="40.0" layoutX="176.0" layoutY="528.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="p9" fitHeight="40.0" fitWidth="40.0" layoutX="412.0" layoutY="528.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <Button layoutX="721.0" layoutY="280.0" mnemonicParsing="false" onAction="#nextPlayerPressed" prefHeight="31.0" prefWidth="146.0" text="Następny gracz" />
-            <Label fx:id="comm" layoutX="709.0" layoutY="319.0" prefHeight="40.0" prefWidth="168.0" text="Wykonano ruch. Wcisnij przycisk, żeby zakończyć rundę." textAlignment="CENTER" visible="false" wrapText="true">
+            <ImageView fx:id="p2" fitHeight="40.0" fitWidth="40.0" layoutX="50.0" layoutY="63.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p14" fitHeight="40.0" fitWidth="40.0" layoutX="285.0" layoutY="63.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p23" fitHeight="40.0" fitWidth="40.0" layoutX="521.0" layoutY="63.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p5" fitHeight="40.0" fitWidth="40.0" layoutX="130.0" layoutY="142.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p13" fitHeight="40.0" fitWidth="40.0" layoutX="286.0" layoutY="142.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p20" fitHeight="40.0" fitWidth="40.0" layoutX="445.0" layoutY="142.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p12" fitHeight="40.0" fitWidth="40.0" layoutX="286.0" layoutY="220.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p8" fitHeight="40.0" fitWidth="40.0" layoutX="209.0" layoutY="220.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p17" fitHeight="40.0" fitWidth="40.0" layoutX="360.0" layoutY="220.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p11" fitHeight="40.0" fitWidth="40.0" layoutX="286.0" layoutY="371.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p6" fitHeight="40.0" fitWidth="40.0" layoutX="209.0" layoutY="378.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p15" fitHeight="40.0" fitWidth="40.0" layoutX="360.0" layoutY="378.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p4" fitHeight="40.0" fitWidth="40.0" layoutX="130.0" layoutY="299.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p1" fitHeight="40.0" fitWidth="40.0" layoutX="50.0" layoutY="299.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p7" fitHeight="40.0" fitWidth="40.0" layoutX="206.0" layoutY="298.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p19" fitHeight="40.0" fitWidth="40.0" layoutX="437.0" layoutY="299.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p16" fitHeight="40.0" fitWidth="40.0" layoutX="360.0" layoutY="299.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p22" fitHeight="40.0" fitWidth="40.0" layoutX="521.0" layoutY="298.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p3" fitHeight="40.0" fitWidth="40.0" layoutX="130.0" layoutY="451.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p10" fitHeight="40.0" fitWidth="40.0" layoutX="286.0" layoutY="451.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p18" fitHeight="40.0" fitWidth="40.0" layoutX="437.0" layoutY="451.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p0" fitHeight="40.0" fitWidth="40.0" layoutX="50.0" layoutY="528.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p9" fitHeight="40.0" fitWidth="40.0" layoutX="286.0" layoutY="528.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <Button layoutX="648.0" layoutY="283.0" mnemonicParsing="false" onAction="#nextPlayerPressed" prefHeight="31.0" prefWidth="146.0" text="Następny gracz" />
+            <Label fx:id="comm" layoutX="645.0" layoutY="319.0" prefHeight="50.0" prefWidth="154.0" text="Wykonano ruch. Wcisnij przycisk, żeby zakończyć rundę." textAlignment="CENTER" visible="false" wrapText="true">
                <font>
                   <Font size="12.0" />
                </font>
             </Label>
-            <Label fx:id="player" layoutX="721.0" layoutY="220.0" prefHeight="40.0" prefWidth="146.0" text="GRACZ: BIAŁY">
+            <Label fx:id="player" layoutX="610.0" layoutY="29.0" prefHeight="40.0" prefWidth="262.0" text="GRACZ: BIAŁY">
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="System Bold" size="26.0" />
                </font></Label>
-            <ImageView fx:id="p21" fitHeight="40.0" fitWidth="40.0" layoutX="647.0" layoutY="528.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="p21" fitHeight="40.0" fitWidth="40.0" layoutX="521.0" layoutY="528.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
+            <Label alignment="CENTER" layoutX="33.0" layoutY="535.0" prefHeight="26.0" prefWidth="18.0" text="1">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="33.0" layoutY="463.0" prefHeight="26.0" prefWidth="18.0" text="2">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="33.0" layoutY="384.0" prefHeight="26.0" prefWidth="18.0" text="3">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="33.0" layoutY="304.0" prefHeight="26.0" prefWidth="18.0" text="4">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="33.0" layoutY="226.0" prefHeight="26.0" prefWidth="18.0" text="5">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="33.0" layoutY="148.0" prefHeight="26.0" prefWidth="18.0" text="6">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="33.0" layoutY="75.0" prefHeight="26.0" prefWidth="18.0" text="7">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="563.0" layoutY="534.0" prefHeight="26.0" prefWidth="18.0" text="1">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="563.0" layoutY="462.0" prefHeight="26.0" prefWidth="18.0" text="2">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="563.0" layoutY="383.0" prefHeight="26.0" prefWidth="18.0" text="3">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="563.0" layoutY="303.0" prefHeight="26.0" prefWidth="18.0" text="4">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="563.0" layoutY="225.0" prefHeight="26.0" prefWidth="18.0" text="5">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="563.0" layoutY="147.0" prefHeight="26.0" prefWidth="18.0" text="6">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="563.0" layoutY="74.0" prefHeight="26.0" prefWidth="18.0" text="7">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="70.0" layoutY="35.0" prefHeight="26.0" prefWidth="18.0" text="A">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="141.0" layoutY="35.0" prefHeight="26.0" prefWidth="18.0" text="B">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="219.0" layoutY="35.0" prefHeight="26.0" prefWidth="18.0" text="C">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="298.0" layoutY="35.0" prefHeight="26.0" prefWidth="18.0" text="D">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="370.0" layoutY="35.0" prefHeight="26.0" prefWidth="18.0" text="E">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="448.0" layoutY="35.0" prefHeight="26.0" prefWidth="18.0" text="F">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="532.0" layoutY="35.0" prefHeight="26.0" prefWidth="18.0" text="G">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="67.0" layoutY="574.0" prefHeight="26.0" prefWidth="18.0" text="A">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="138.0" layoutY="574.0" prefHeight="26.0" prefWidth="18.0" text="B">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="216.0" layoutY="574.0" prefHeight="26.0" prefWidth="18.0" text="C">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="295.0" layoutY="574.0" prefHeight="26.0" prefWidth="18.0" text="D">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="367.0" layoutY="574.0" prefHeight="26.0" prefWidth="18.0" text="E">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="445.0" layoutY="574.0" prefHeight="26.0" prefWidth="18.0" text="F">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="529.0" layoutY="574.0" prefHeight="26.0" prefWidth="18.0" text="G">
+               <effect>
+                  <Blend />
+               </effect>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
     </AnchorPane>
   </children>

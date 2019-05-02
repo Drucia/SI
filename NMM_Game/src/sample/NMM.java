@@ -19,10 +19,6 @@ public class NMM {
     private static ArrayList<Player> players;
     private static ArrayList<Integer> board = new ArrayList<>();
 
-    private static ArrayList<String> white_moves = new ArrayList<>();
-    private static ArrayList<String> black_moves = new ArrayList<>();
-
-
     public static void setPlayers(ArrayList<Player> pl)
     {
         players = pl;
@@ -81,6 +77,7 @@ public class NMM {
         }
     }
 
-    public static void checkIfCanDeleteOpponent() {
+    public static void checkIfCanDeleteOpponent() { // search mills
+
     }
 }
