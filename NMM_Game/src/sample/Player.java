@@ -9,15 +9,17 @@ public class Player {
     private int playerType;
     private int playerPhase;
     private int amountOfPawns;
+    private ArrayList<Integer> heuristics; // pawns, two, moves, blocks -> if 1 then chosen heuristic else not chosen
     private ArrayList<String> history_of_moves;
     private ArrayList<Integer> pawn_behind_board;
 
-    public Player(int playerId, String name, int playerType, int playerPhase) {
+    public Player(int playerId, String name, int playerType, int playerPhase, ArrayList<Integer> heuristics) {
         this.playerId = playerId;
         this.name = name;
         this.playerType = playerType;
         this.playerPhase = playerPhase;
         this.amountOfPawns = 0;
+        this.heuristics = heuristics;
         history_of_moves = new ArrayList<>();
         pawn_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
     }
