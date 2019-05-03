@@ -230,13 +230,12 @@ public class Controller {
                 case NMM.I_OPEN_GAME_PHASE:
                     String id_of_clicked_place = mouseEvent.getPickResult().getIntersectedNode().getId();
                     setPawnOnBoard(id_of_clicked_place);
-                    actual_move = I_NO_MOVE;
+                    actual_move = NMM.checkIfCanDeleteOpponent(actualPlayer) == true ? I_CHOOSE_PAWN_TO_DELETE : I_NO_MOVE;
                     break;
                 case NMM.I_MID_GAME_PHASE:
                     System.out.println("Jestesmy w czesci glownej!!!");
                     //TODO
-                    if (NMM.checkIfCanDeleteOpponent(actualPlayer))
-                        actual_move = I_CHOOSE_PAWN_TO_DELETE;
+                    actual_move = NMM.checkIfCanDeleteOpponent(actualPlayer) == true ? I_CHOOSE_PAWN_TO_DELETE : I_NO_MOVE;
                     break;
                 case NMM.I_END_GAME_PHASE:
                     break;
@@ -300,7 +299,7 @@ public class Controller {
         actualPlayer.setPawnOnBoard();
         NMM.updateFieldOfBoard(id, actualPlayer.getPlayerId());
         actualPlayer.addHistory("-1 -> " + list_of_fields_in_words.get(id));
-        actualPlayer.updateAmountOfPawns(1);
+
         return true;
     }
 

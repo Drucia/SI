@@ -15,6 +15,8 @@ public class NMM {
     public static final int I_AI_PLAYER = 0;
     public static final int I_MAN_PLAYER = 1;
     private static final int I_AMOUNT_OF_END_PHASE_PAWN = 3;
+    public static final int I_SECOND_FIELD = 2;
+    public static final int I_FIRST_FIELD = 0;
 
     private static ArrayList<Player> players;
     private static ArrayList<Integer> board = new ArrayList<>();
@@ -78,10 +80,6 @@ public class NMM {
     }
 
     public static boolean checkIfCanDeleteOpponent(Player actualPlayer) { // search mills
-        String last_move = actualPlayer.getHistory_of_moves().get(actualPlayer.getHistory_of_moves().size()-1);
-        String fields[] = last_move.split(" ");
-        int id_2 = Controller.list_of_fields_in_words.indexOf(fields[2]);
-
-        return Algorithm.isMill(board, id_2);
+        return Algorithm.isMill(board, actualPlayer.getLastMove(NMM.I_SECOND_FIELD));
     }
 }

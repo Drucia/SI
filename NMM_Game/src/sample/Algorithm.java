@@ -51,19 +51,21 @@ public class Algorithm
     }
 
     private static ArrayList<ArrayList<Integer>> getPossMovesForPlayer(int playerId, ArrayList<Integer> board) {
-        int playerPhase = NMM.getPlayer(playerId).getPlayerPhase();
+        Player player = NMM.getPlayer(playerId);
         ArrayList<ArrayList<Integer>> moves = new ArrayList<>();
-        //todo
-
         ArrayList<Integer> move;
 
-        if (playerPhase == NMM.I_OPEN_GAME_PHASE) {
+        if (player.getPlayerPhase() == NMM.I_OPEN_GAME_PHASE) {
             for (int i=0; i<board.size(); i++)
             {
                 if (board.get(i) == NMM.I_BLANK_FIELD) {
                     move = new ArrayList<>(board);
                     move.set(i, playerId);
-                    moves.add(move);
+
+                    if (isMill(move, i))
+                        moves.addAll(getAllMovesToBeatPawn(move, playerId));
+                    else
+                        moves.add(move);
                 }
             }
         }
@@ -73,14 +75,70 @@ public class Algorithm
             {
                 if (field == playerId)
                 {
-                    switch (playerPhase)
+                    switch (player.getPlayerPhase())
                     {
                         case NMM.I_MID_GAME_PHASE:
+
+                            for(int i=0; i<board.size(); i++)
+                            {
+                                if (board.get(i) == playerId)
+                                {
+                                    ArrayList<Integer> neigh = getNeighbours(board, i);
+
+                                    for (int n=0; n<neigh.size(); n++)
+                                    {
+                                        if (board.get(n) == NMM.I_BLANK_FIELD && n != player.getLastMove(NMM.I_FIRST_FIELD)) // different shift than last
+                                        {
+                                            move = new ArrayList<>(board);
+                                            move.set(n,playerId);
+
+                                            if (isMill(move, i))
+                                                moves.addAll(getAllMovesToBeatPawn(move, playerId));
+                                            else
+                                                moves.add(move);
+                                        }
+                                    }
+                                }
+                            }
+
                             break;
                         case NMM.I_END_GAME_PHASE:
+                            for(int i=0; i<board.size(); i++)
+                            {
+                                if (board.get(i) == playerId)
+                                {
+                                    for (int n=0; n<board.size(); n++)
+                                    {
+                                        if (board.get(n) == NMM.I_BLANK_FIELD && n != player.getLastMove(NMM.I_FIRST_FIELD)) // different shift than last
+                                        {
+                                            move = new ArrayList<>(board);
+                                            move.set(n,playerId);
+
+                                            if (isMill(move, i))
+                                                moves.addAll(getAllMovesToBeatPawn(move, playerId));
+                                            else
+                                                moves.add(move);
+                                        }
+                                    }
+                                }
+                            }
                             break;
                     }
                 }
+            }
+        }
+        return moves;
+    }
+
+    private static ArrayList<ArrayList<Integer>> getAllMovesToBeatPawn(ArrayList<Integer> move, int playerId) {
+        ArrayList<ArrayList<Integer>> moves = new ArrayList<>();
+        for (int j=0; j<move.size(); j++)
+        {
+            if (move.get(j) == playerId)
+            {
+                move = new ArrayList<>(move);
+                move.set(j, NMM.I_BLANK_FIELD);
+                moves.add(move);
             }
         }
         return moves;

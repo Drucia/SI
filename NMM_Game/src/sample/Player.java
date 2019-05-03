@@ -40,10 +40,6 @@ public class Player {
         return amountOfPawns;
     }
 
-    public void updateAmountOfPawns(int amountOdPawns) {
-        this.amountOfPawns += amountOdPawns;
-    }
-
     public void addHistory(String h)
     {
         history_of_moves.add(h);
@@ -56,11 +52,12 @@ public class Player {
     public void setPawnOnBoard()
     {
         pawn_behind_board.remove(0);
+        amountOfPawns++;
     }
 
     public void setPawnBehindBoard()
     {
-        pawn_behind_board.add(amountOfPawns);
+        pawn_behind_board.add(amountOfPawns--);
     }
 
     public int getFirstPawnBehindBoard()
@@ -82,5 +79,11 @@ public class Player {
 
     public ArrayList<String> getHistory_of_moves() {
         return history_of_moves;
+    }
+
+    public int getLastMove(int field) {
+        String last_move = history_of_moves.get(history_of_moves.size()-1);
+        String fields[] = last_move.split(" ");
+        return Controller.list_of_fields_in_words.indexOf(fields[field]);
     }
 }
