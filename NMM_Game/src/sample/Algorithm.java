@@ -1,18 +1,80 @@
 package sample;
 
+import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Algorithm
 {
-    public static void minimax()
-    {
+    private static final int I_MIN_TURN = 0;
+    private static final int I_MAX_TURN = 1;
 
+    public static Pair<ArrayList<Integer>, Double> minimax(int playerId, int flag, int depth, ArrayList<Integer> board)
+    {
+        if (isGameOver(board) || depth == 0)
+            return new Pair<>(board, evaluateFunction(playerId, board));
+
+        ArrayList<ArrayList<Integer>> children;
+        
+        if (flag == I_MAX_TURN) 
+        {
+            Pair<ArrayList<Integer>, Double> max = new Pair<>(null, Double.NEGATIVE_INFINITY);
+            children = getPossMovesForPlayer(playerId, board);
+
+            for (ArrayList<Integer> child:children) {
+                Pair<ArrayList<Integer>, Double> val = minimax(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child);
+                max = max.getValue() < val.getValue() ? val : max;
+            }
+
+            return max;
+        }
+        else { //if (flag == I_MIN_TURN)
+            Pair<ArrayList<Integer>, Double> min = new Pair<>(null, Double.POSITIVE_INFINITY);
+            children = getPossMovesForPlayer(playerId, board);
+
+            for (ArrayList<Integer> child:children) {
+                Pair<ArrayList<Integer>, Double> val = minimax(getSecondPlayerId(playerId), I_MAX_TURN, depth-1, child);
+                min = min.getValue() > val.getValue() ? val : min;
+            }
+
+            return min;
+        }
     }
 
     public static void alphabeta()
     {
 
+    }
+
+    private static int getSecondPlayerId(int playerId) {
+        return playerId == NMM.I_WHITE_PLAYER ? NMM.I_BLACK_PLAYER : NMM.I_WHITE_PLAYER;
+    }
+
+    private static ArrayList<ArrayList<Integer>> getPossMovesForPlayer(int playerId, ArrayList<Integer> board) {
+    }
+
+    private static Double evaluateFunction(int player, ArrayList<Integer> board) {
+    }
+
+    private static boolean isGameOver(ArrayList<Integer> board) {
+        Player black = NMM.getPlayer(NMM.I_BLACK_PLAYER);
+        Player white = NMM.getPlayer(NMM.I_WHITE_PLAYER);
+        return black.getAmountOfPawns() <= 2 || countPlayerMoves(NMM.I_BLACK_PLAYER, board) == 0 ||
+         white.getAmountOfPawns() <= 2 || countPlayerMoves(NMM.I_WHITE_PLAYER, board) == 0;
+    }
+
+    private static int countPlayerMoves(int iPlayer, ArrayList<Integer> board) {
+        int counter = 0;
+        for (Integer field : board)
+        {
+            if (field == iPlayer) {
+                for (Integer neigh : getNeighbours(board, field))
+                    if (board.get(neigh) == NMM.I_BLANK_FIELD)
+                        counter++;
+            }
+        }
+
+        return counter;
     }
 
     public static ArrayList<Integer> getNeighbours(ArrayList<Integer> board, int field)
