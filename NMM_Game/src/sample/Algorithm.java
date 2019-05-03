@@ -51,9 +51,44 @@ public class Algorithm
     }
 
     private static ArrayList<ArrayList<Integer>> getPossMovesForPlayer(int playerId, ArrayList<Integer> board) {
+        int playerPhase = NMM.getPlayer(playerId).getPlayerPhase();
+        ArrayList<ArrayList<Integer>> moves = new ArrayList<>();
+        //todo
+
+        ArrayList<Integer> move;
+
+        if (playerPhase == NMM.I_OPEN_GAME_PHASE) {
+            for (int i=0; i<board.size(); i++)
+            {
+                if (board.get(i) == NMM.I_BLANK_FIELD) {
+                    move = new ArrayList<>(board);
+                    move.set(i, playerId);
+                    moves.add(move);
+                }
+            }
+        }
+        else
+        {
+            for(Integer field : board)
+            {
+                if (field == playerId)
+                {
+                    switch (playerPhase)
+                    {
+                        case NMM.I_MID_GAME_PHASE:
+                            break;
+                        case NMM.I_END_GAME_PHASE:
+                            break;
+                    }
+                }
+            }
+        }
+        return moves;
     }
 
     private static Double evaluateFunction(int player, ArrayList<Integer> board) {
+        //todo
+        return null;
     }
 
     private static boolean isGameOver(ArrayList<Integer> board) {
