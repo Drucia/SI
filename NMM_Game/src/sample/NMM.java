@@ -46,9 +46,9 @@ public class NMM {
         return board;
     }
 
-    public static ArrayList<Pair<Pair<Integer, Integer>, Integer>> makeMove(int player)
+    public static ArrayList<Integer> makeMove(int player)
     {
-        return null;
+        return Algorithm.minimax(player, Algorithm.I_MAX_TURN, 7, board).getKey();
     }
 
     public static String getNameOfPlayer(int i)

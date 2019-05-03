@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Controller {
     private static Player actualPlayer;
@@ -278,6 +279,38 @@ public class Controller {
         return true;
     }
 
+    private void updateGUIBoard(ArrayList<Integer> board, int playerId)
+    {
+        ArrayList<Integer> old_board = NMM.getActualBoard();
+        ArrayList<Pair<Pair<Integer, Integer>, Integer>> shifts = new ArrayList<>();
+
+        int from, to, delete, new_val;
+        from = to = delete = new_val = NMM.I_BLANK_FIELD;
+
+        for (int i=0; i<board.size(); i++)
+        {
+            int old_val;
+
+            if ((old_val = old_board.get(i)) != (new_val = board.get(i)) && old_val == NMM.I_BLANK_FIELD)
+                to = i;
+            else if ((old_val = old_board.get(i)) != (new_val = board.get(i)) && old_val != NMM.I_BLANK_FIELD && old_val == playerId)
+                from = i;
+            else if ((old_val = old_board.get(i)) != (new_val = board.get(i)) && old_val != NMM.I_BLANK_FIELD && old_val != playerId)
+                delete = i;
+        }
+
+        Pair<Pair<Integer, Integer>, Integer> shift = new Pair<>(new Pair<>(from, to), new_val);
+        shifts.add(shift);
+
+        if (delete != NMM.I_BLANK_FIELD) {
+            shift = new Pair<>(new Pair<>(delete, NMM.I_BLANK_FIELD), NMM.I_BLANK_FIELD);
+            shifts.add(shift);
+        }
+
+        makeShifts(shifts);
+        NMM.updateBoard(board);
+    }
+
     private boolean setPawnOnBoard(String id_of_clicked_place) {
         ArrayList<ImageView> pawns;
         String play = actualPlayer.getName();
@@ -340,7 +373,8 @@ public class Controller {
             NMM.updateActualPhase(actualPlayer);
 
             if (actualPlayer.getPlayerType() == NMM.I_AI_PLAYER)
-                makeShifts(NMM.playerMove(actualPlayer));
+                updateGUIBoard(NMM.makeMove(actualPlayer.getPlayerId()), actualPlayer.getPlayerId());
+                //makeShifts(NMM.playerMove(actualPlayer));
         }
         else {
             comm.setText("Musisz wykonac ruch.");

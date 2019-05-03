@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class Algorithm
 {
     private static final int I_MIN_TURN = 0;
-    private static final int I_MAX_TURN = 1;
+    public static final int I_MAX_TURN = 1;
 
     public static Pair<ArrayList<Integer>, Double> minimax(int playerId, int flag, int depth, ArrayList<Integer> board)
     {

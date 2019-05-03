@@ -15,8 +15,8 @@
       <file leaf-file-name="NMM.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/NMM.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="10" />
+            <state relative-caret-position="187">
+              <caret line="50" column="81" selection-start-line="50" selection-start-column="81" selection-end-line="50" selection-end-column="81" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -49,10 +49,12 @@
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
+            <state relative-caret-position="146">
+              <caret line="375" selection-start-line="375" selection-end-line="375" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#9676#9677#0" expanded="true" />
+                <element signature="e#9712#9713#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -96,8 +98,8 @@
       <file leaf-file-name="Algorithm.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/Algorithm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1904">
-              <caret line="254" column="64" selection-start-line="254" selection-start-column="64" selection-end-line="254" selection-end-column="64" />
+            <state relative-caret-position="153">
+              <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -128,9 +130,9 @@
         <option value="$PROJECT_DIR$/src/sample/NMM.fxml" />
         <option value="$PROJECT_DIR$/src/sample/NewGame.fxml" />
         <option value="$PROJECT_DIR$/src/sample/Player.java" />
-        <option value="$PROJECT_DIR$/src/sample/NMM.java" />
         <option value="$PROJECT_DIR$/src/sample/NewGameController.java" />
         <option value="$PROJECT_DIR$/src/sample/Algorithm.java" />
+        <option value="$PROJECT_DIR$/src/sample/NMM.java" />
         <option value="$PROJECT_DIR$/src/sample/Controller.java" />
       </list>
     </option>
@@ -260,7 +262,7 @@
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="HDInsight Spark Submission" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49934897" weight="0.32965517" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49934897" visible="true" weight="0.32965517" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info content_ui="combo" id="Project" order="0" weight="0.5006519" />
@@ -298,6 +300,8 @@
           <caret line="282" lean-forward="true" selection-start-line="282" selection-end-line="282" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9676#9677#0" expanded="true" />
+            <element signature="e#9712#9713#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -350,6 +354,8 @@
           <caret line="329" column="73" lean-forward="true" selection-start-line="329" selection-start-column="73" selection-end-line="329" selection-end-column="73" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9676#9677#0" expanded="true" />
+            <element signature="e#9712#9713#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -400,6 +406,8 @@
           <caret line="276" column="36" selection-start-line="276" selection-start-column="36" selection-end-line="276" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9676#9677#0" expanded="true" />
+            <element signature="e#9712#9713#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -445,6 +453,8 @@
           <caret line="276" column="36" selection-start-line="276" selection-start-column="36" selection-end-line="276" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9676#9677#0" expanded="true" />
+            <element signature="e#9712#9713#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -480,6 +490,8 @@
           <caret line="276" column="36" selection-start-line="276" selection-start-column="36" selection-end-line="276" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9676#9677#0" expanded="true" />
+            <element signature="e#9712#9713#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -515,6 +527,8 @@
           <caret line="276" column="36" selection-start-line="276" selection-start-column="36" selection-end-line="276" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9676#9677#0" expanded="true" />
+            <element signature="e#9712#9713#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -540,6 +554,8 @@
           <caret line="230" column="5" lean-forward="true" selection-start-line="230" selection-start-column="5" selection-end-line="230" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9676#9677#0" expanded="true" />
+            <element signature="e#9712#9713#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -557,6 +573,8 @@
           <caret line="229" column="20" lean-forward="true" selection-start-line="229" selection-start-column="20" selection-end-line="229" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#9676#9677#0" expanded="true" />
+            <element signature="e#9712#9713#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -645,6 +663,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/NMM.fxml">
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="2652">
+          <caret line="156" column="32" selection-start-line="156" selection-start-column="32" selection-end-line="156" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -666,36 +692,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/NMM.fxml">
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="2652">
-          <caret line="156" column="32" selection-start-line="156" selection-start-column="32" selection-end-line="156" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/NewGame.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="461">
-          <caret line="43" column="36" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Algorithm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1904">
-          <caret line="254" column="64" selection-start-line="254" selection-start-column="64" selection-end-line="254" selection-end-column="64" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/NMM.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="10" />
+        <state relative-caret-position="153">
+          <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -712,12 +712,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
+    <entry file="file://$PROJECT_DIR$/src/sample/NewGame.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
+        <state relative-caret-position="461">
+          <caret line="43" column="36" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/NMM.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="50" column="81" selection-start-line="50" selection-start-column="81" selection-end-line="50" selection-end-column="81" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="375" selection-start-line="375" selection-end-line="375" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#9676#9677#0" expanded="true" />
+            <element signature="e#9712#9713#0" expanded="true" />
           </folding>
         </state>
       </provider>
