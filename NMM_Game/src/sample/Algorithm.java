@@ -23,7 +23,7 @@ public class Algorithm
 
             for (ArrayList<Integer> child:children) {
                 Pair<ArrayList<Integer>, Double> val = minimax(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child);
-                max = max.getValue() < val.getValue() ? val : max;
+                max = max.getValue() < val.getValue() ? val : new Pair<>(child, max.getValue());
             }
 
             return max;
@@ -34,7 +34,7 @@ public class Algorithm
 
             for (ArrayList<Integer> child:children) {
                 Pair<ArrayList<Integer>, Double> val = minimax(getSecondPlayerId(playerId), I_MAX_TURN, depth-1, child);
-                min = min.getValue() > val.getValue() ? val : min;
+                min = min.getValue() > val.getValue() ? val : new Pair<>(child, min.getValue());
             }
 
             return min;
