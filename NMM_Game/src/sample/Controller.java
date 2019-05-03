@@ -20,7 +20,7 @@ public class Controller {
     private static Player actualPlayer;
     private static int amount_of_moves = 1;
     private static int actual_nb_of_move = 1;
-    private static int actual_move = 0;
+    private static int actual_move = 4;
     private static final int I_CHOOSE_PAWN_TO_PLACE_ON_BOARD = 0;
     private static final int I_CHOOSE_PAWN_TO_SHIFT_FROM = 1;
     private static final int I_CHOOSE_PAWN_TO_SHIFT_FOR = 2;

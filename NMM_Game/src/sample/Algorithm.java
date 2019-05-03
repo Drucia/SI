@@ -145,15 +145,158 @@ public class Algorithm
     }
 
     private static Double evaluateFunction(int player, ArrayList<Integer> board) {
-        //todo
-        return null;
+        ArrayList<Integer> heu = NMM.getPlayer(player).getHeuristics();
+        int moves = countPlayerMoves(player, board);
+        int block = countOpponentBlockPawns(player, board);
+        int two = countTwoConfigurations(player, board);
+        int pawns = countPawns(player, board);
+        int win = isGameOver(getSecondPlayerId(player), board) ? 1000 : 0;
+
+        return (double) heu.get(0) * pawns + heu.get(1) * two + heu.get(2) * moves + heu.get(3) * block + win;
+    }
+
+    private static int countTwoConfigurations(int player, ArrayList<Integer> board) {
+        final int amount_of_lines = 16;
+        int counter = 0;
+
+        for (int i=0; i<amount_of_lines; i++)
+            if (isTwoConfigurationsInLine(i, player, board))
+                counter++;
+
+        return counter;
+    }
+
+    private static boolean isTwoConfigurationsInLine(int line, int value, ArrayList<Integer> board) {
+
+        switch(line)
+        {
+            case 0:
+                if ((board.get(0) == value && board.get(9) == value) || (board.get(0) == value &&
+                        board.get(21) == value || (board.get(21) == value && board.get(9) == value)))
+                    return true;
+                break;
+            case 1:
+                if ((board.get(3) == value && board.get(10) == value) || (board.get(3) == value &&
+                        board.get(18) == value) || (board.get(10) == value && board.get(18) == value))
+                    return true;
+                break;
+            case 2:
+                if ((board.get(6) == value && board.get(11) == value) || (board.get(6) == value &&
+                        board.get(15) == value) || (board.get(11) == value && board.get(15) == value))
+                    return true;
+                break;
+            case 3:
+                if ((board.get(1) == value && board.get(4) == value) || (board.get(1) == value &&
+                        board.get(7) == value) || (board.get(4) == value && board.get(7) == value))
+                    return true;
+                break;
+            case 4:
+                if ((board.get(16) == value && board.get(19) == value) || (board.get(16) == value &&
+                        board.get(22) == value) || (board.get(19) == value && board.get(22) == value))
+                    return true;
+                break;
+            case 5:
+                if ((board.get(8) == value && board.get(12) == value) || (board.get(8) == value &&
+                        board.get(17) == value) || (board.get(12) == value && board.get(17) == value))
+                    return true;
+                break;
+            case 6:
+                if ((board.get(5) == value && board.get(13) == value) || (board.get(5) == value &&
+                        board.get(20) == value) || (board.get(13) == value && board.get(20) == value))
+                    return true;
+                break;
+            case 7:
+                if ((board.get(2) == value && board.get(14) == value) || (board.get(2) == value &&
+                        board.get(23) == value) || (board.get(14) == value && board.get(23) == value))
+                    return true;
+                break;
+            case 8:
+                if ((board.get(6) == value && board.get(7) == value) || (board.get(12) == value &&
+                        board.get(17) == value))
+                    return true;
+                break;
+            case 9:
+                if ((board.get(0) == value && board.get(1) == value) || (board.get(0) == value &&
+                        board.get(2) == value) || (board.get(1) == value && board.get(2) == value))
+                    return true;
+                break;
+            case 10:
+                if ((board.get(3) == value && board.get(4) == value) || (board.get(3) == value &&
+                        board.get(5) == value) || (board.get(4) == value && board.get(5) == value))
+                    return true;
+                break;
+            case 11:
+                if ((board.get(6) == value && board.get(7) == value) || (board.get(6) == value &&
+                        board.get(8) == value) || (board.get(7) == value && board.get(8) == value))
+                    return true;
+                break;
+            case 12:
+                if ((board.get(9) == value && board.get(10) == value) || (board.get(9) == value &&
+                        board.get(11) == value) || (board.get(10) == value && board.get(11) == value))
+                    return true;
+                break;
+            case 13:
+                if ((board.get(12) == value && board.get(13) == value) || (board.get(12) == value &&
+                        board.get(14) == value) || (board.get(13) == value && board.get(14) == value))
+                    return true;
+                break;
+            case 14:
+                if ((board.get(15) == value && board.get(16) == value) || (board.get(16) == value &&
+                        board.get(17) == value) || (board.get(15) == value && board.get(17) == value))
+                    return true;
+                break;
+            case 15:
+                if ((board.get(18) == value && board.get(19) == value) || (board.get(19) == value &&
+                        board.get(20) == value) || (board.get(18) == value && board.get(20) == value))
+                    return true;
+                break;
+            case 16:
+                if ((board.get(21) == value && board.get(22) == value) || (board.get(21) == value &&
+                        board.get(23) == value) || (board.get(22) == value && board.get(23) == value))
+                    return true;
+                break;
+        }
+        return false;
+    }
+
+    private static int countOpponentBlockPawns(int player, ArrayList<Integer> board) {
+        int counter = 0;
+        int opposite_player = getSecondPlayerId(player);
+
+        for (int i=0; i<board.size(); i++)
+        {
+            if (board.get(i) == opposite_player)
+            {
+                ArrayList<Integer> neigh = getNeighbours(board, i);
+                int help_counter = 0;
+                for (Integer n : neigh)
+                    if (board.get(n) != NMM.I_BLANK_FIELD)
+                        help_counter++;
+
+                if (help_counter == neigh.size())
+                    counter++;
+            }
+        }
+
+        return counter;
     }
 
     private static boolean isGameOver(ArrayList<Integer> board) {
-        Player black = NMM.getPlayer(NMM.I_BLACK_PLAYER);
-        Player white = NMM.getPlayer(NMM.I_WHITE_PLAYER);
-        return black.getAmountOfPawns() <= 2 || countPlayerMoves(NMM.I_BLACK_PLAYER, board) == 0 ||
-         white.getAmountOfPawns() <= 2 || countPlayerMoves(NMM.I_WHITE_PLAYER, board) == 0;
+        return isGameOver(NMM.I_BLACK_PLAYER, board) || isGameOver(NMM.I_WHITE_PLAYER, board);
+    }
+
+    private static boolean isGameOver(int player, ArrayList<Integer> board) {
+        return countPawns(player, board) <= 2 || countPlayerMoves(player, board) == 0;
+    }
+
+    private static int countPawns(int player, ArrayList<Integer> board) {
+        int counter = 0;
+
+        for (Integer f : board)
+            if (f == player)
+                counter++;
+
+        return counter;
     }
 
     private static int countPlayerMoves(int iPlayer, ArrayList<Integer> board) {
