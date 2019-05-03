@@ -286,7 +286,7 @@ public class Algorithm
     }
 
     private static boolean isGameOver(int player, ArrayList<Integer> board) {
-        return countPawns(player, board) <= 2 || countPlayerMoves(player, board) == 0;
+        return NMM.getPlayer(player).getPlayerPhase() != NMM.I_OPEN_GAME_PHASE && (countPawns(player, board) <= 2 || countPlayerMoves(player, board) == 0);
     }
 
     private static int countPawns(int player, ArrayList<Integer> board) {

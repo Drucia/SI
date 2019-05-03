@@ -24,7 +24,7 @@ public class Controller {
     private static int actual_move = 4;
     private static final int I_CHOOSE_PAWN_TO_PLACE_ON_BOARD = 0;
     private static final int I_CHOOSE_PAWN_TO_SHIFT_FROM = 1;
-    private static final int I_CHOOSE_PAWN_TO_SHIFT_FOR = 2;
+    private static final int I_CHOOSE_PAWN_TO_SHIFT_TO = 2;
     private static final int I_CHOOSE_PAWN_TO_DELETE = 3;
     private static final int I_NO_MOVE = 4;
 
@@ -225,8 +225,9 @@ public class Controller {
 
     public void onPlaceClicked(MouseEvent mouseEvent)
     {
-        if (actual_nb_of_move < amount_of_moves) {
-
+        //if (actual_nb_of_move < amount_of_moves) {
+        if (actual_move != I_NO_MOVE)
+        {
             switch (actualPlayer.getPlayerPhase()) {
                 case NMM.I_OPEN_GAME_PHASE:
                     String id_of_clicked_place = mouseEvent.getPickResult().getIntersectedNode().getId();
@@ -368,13 +369,19 @@ public class Controller {
         if (actual_move == I_NO_MOVE) {
             comm.setVisible(false);
             switchPlayers();
-            amount_of_moves = 1;
-            actual_nb_of_move = 0;
+            //amount_of_moves = 1;
+            //actual_nb_of_move = 0;
+            if (actualPlayer.getPlayerPhase() == NMM.I_OPEN_GAME_PHASE)
+                actual_move = I_CHOOSE_PAWN_TO_PLACE_ON_BOARD;
+            else
+                actual_move = I_CHOOSE_PAWN_TO_SHIFT_FROM;
+
             NMM.updateActualPhase(actualPlayer);
 
-            if (actualPlayer.getPlayerType() == NMM.I_AI_PLAYER)
+            if (actualPlayer.getPlayerType() == NMM.I_AI_PLAYER) {
                 updateGUIBoard(NMM.makeMove(actualPlayer.getPlayerId()), actualPlayer.getPlayerId());
-                //makeShifts(NMM.playerMove(actualPlayer));
+                actual_move = I_NO_MOVE;
+            }   //makeShifts(NMM.playerMove(actualPlayer));
         }
         else {
             comm.setText("Musisz wykonac ruch.");
