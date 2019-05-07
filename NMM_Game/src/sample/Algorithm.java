@@ -23,7 +23,7 @@ public class Algorithm
 
             for (ArrayList<Integer> child:children) {
                 Pair<ArrayList<Integer>, Double> val = minimax(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child);
-                max = max.getValue() < val.getValue() ? val : new Pair<>(child, max.getValue());
+                max = max.getValue() < val.getValue() ? new Pair<>(child, val.getValue()) : max;
             }
 
             return max;
@@ -34,7 +34,7 @@ public class Algorithm
 
             for (ArrayList<Integer> child:children) {
                 Pair<ArrayList<Integer>, Double> val = minimax(getSecondPlayerId(playerId), I_MAX_TURN, depth-1, child);
-                min = min.getValue() > val.getValue() ? val : new Pair<>(child, min.getValue());
+                min = min.getValue() > val.getValue() ? new Pair<>(child, val.getValue()) : min;
             }
 
             return min;
@@ -146,24 +146,119 @@ public class Algorithm
 
     private static Double evaluateFunction(int player, ArrayList<Integer> board) {
         ArrayList<Integer> heu = NMM.getPlayer(player).getHeuristics();
-        int moves = countPlayerMoves(player, board);
-        int block = countOpponentBlockPawns(player, board);
-        int two = countTwoConfigurations(player, board);
+        int moves = countPlayerMoves(player, board);// - countPlayerMoves(getSecondPlayerId(player), board);
+        int block = countOpponentBlockPawns(player, board);// - countOpponentBlockPawns(getSecondPlayerId(player), board);
+        int two = countTwoConfigurations(player, board);// - countTwoConfigurations(getSecondPlayerId(player), board);
         int pawns = countPawns(player, board);
-        int win = isGameOver(getSecondPlayerId(player), board) ? 1000 : 0;
+        int win = isGameOver(getSecondPlayerId(player), board) ? 1000 : isGameOver(player, board) ? -1000 : 0;
+        int three = 100 * countThreeConfigurations(player,board);
 
-        return (double) heu.get(0) * pawns + heu.get(1) * two + heu.get(2) * moves + heu.get(3) * block + win;
+        return (double) heu.get(0) * pawns + heu.get(1) * two + heu.get(2) * moves + heu.get(3) * block + win + three;
+    }
+
+    private static int countThreeConfigurations(int player, ArrayList<Integer> board) {
+        final int amount_of_lines = 16;
+        int counter_f = 0;
+        int counter_s = 0;
+
+        for (int i=0; i<amount_of_lines; i++)
+            if (isThreeConfigurationsInLine(i, player, board))
+                counter_f++;
+            else if (isThreeConfigurationsInLine(i, getSecondPlayerId(player), board))
+                counter_s++;
+
+        return counter_f-counter_s;
+    }
+
+    private static boolean isThreeConfigurationsInLine(int line, int value, ArrayList<Integer> board)
+    {
+        switch(line)
+        {
+            case 0:
+                if ((board.get(0) == value && board.get(9) == value && board.get(21) == value))
+                    return true;
+                break;
+            case 1:
+                if ((board.get(3) == value && board.get(10) == value && board.get(18) == value))
+                    return true;
+                break;
+            case 2:
+                if ((board.get(6) == value && board.get(11) == value && board.get(15) == value))
+                    return true;
+                break;
+            case 3:
+                if ((board.get(1) == value && board.get(4) == value && board.get(7) == value))
+                    return true;
+                break;
+            case 4:
+                if ((board.get(16) == value && board.get(19) == value && board.get(22) == value))
+                    return true;
+                break;
+            case 5:
+                if ((board.get(8) == value && board.get(12) == value && board.get(17) == value))
+                    return true;
+                break;
+            case 6:
+                if ((board.get(5) == value && board.get(13) == value && board.get(20) == value))
+                    return true;
+                break;
+            case 7:
+                if ((board.get(2) == value && board.get(14) == value && board.get(23) == value))
+                    return true;
+                break;
+            case 8:
+                if ((board.get(6) == value && board.get(7) == value) || (board.get(12) == value &&
+                        board.get(17) == value))
+                    return true;
+                break;
+            case 9:
+                if ((board.get(0) == value && board.get(1) == value && board.get(2) == value))
+                    return true;
+                break;
+            case 10:
+                if ((board.get(3) == value && board.get(4) == value && board.get(5) == value))
+                    return true;
+                break;
+            case 11:
+                if ((board.get(6) == value && board.get(7) == value && board.get(8) == value))
+                    return true;
+                break;
+            case 12:
+                if ((board.get(9) == value && board.get(10) == value && board.get(11) == value))
+                    return true;
+                break;
+            case 13:
+                if ((board.get(12) == value && board.get(13) == value && board.get(14) == value))
+                    return true;
+                break;
+            case 14:
+                if ((board.get(15) == value && board.get(16) == value && board.get(17) == value))
+                    return true;
+                break;
+            case 15:
+                if ((board.get(18) == value && board.get(19) == value && board.get(20) == value))
+                    return true;
+                break;
+            case 16:
+                if ((board.get(21) == value && board.get(22) == value && board.get(23) == value))
+                    return true;
+                break;
+        }
+        return false;
     }
 
     private static int countTwoConfigurations(int player, ArrayList<Integer> board) {
         final int amount_of_lines = 16;
-        int counter = 0;
+        int counter_f = 0;
+        int counter_s = 0;
 
         for (int i=0; i<amount_of_lines; i++)
             if (isTwoConfigurationsInLine(i, player, board))
-                counter++;
+                counter_f++;
+        else if (isTwoConfigurationsInLine(i, getSecondPlayerId(player), board))
+                counter_s++;
 
-        return counter;
+        return counter_f - counter_s;
     }
 
     private static boolean isTwoConfigurationsInLine(int line, int value, ArrayList<Integer> board) {
@@ -260,13 +355,15 @@ public class Algorithm
     }
 
     private static int countOpponentBlockPawns(int player, ArrayList<Integer> board) {
-        int counter = 0;
+        int counter_f = 0;
+        int counter_s = 0;
+
         int opposite_player = getSecondPlayerId(player);
 
         for (int i=0; i<board.size(); i++)
         {
-            if (board.get(i) == opposite_player)
-            {
+            //if (board.get(i) == opposite_player)
+            //{
                 ArrayList<Integer> neigh = getNeighbours(board, i);
                 int help_counter = 0;
                 for (Integer n : neigh)
@@ -274,11 +371,14 @@ public class Algorithm
                         help_counter++;
 
                 if (help_counter == neigh.size())
-                    counter++;
-            }
+                    if (board.get(i) == opposite_player)
+                        counter_f++;
+                    else if (board.get(i) == player)
+                        counter_s++;
+            //}
         }
 
-        return counter;
+        return counter_f - counter_s;
     }
 
     private static boolean isGameOver(ArrayList<Integer> board) {
@@ -290,27 +390,35 @@ public class Algorithm
     }
 
     private static int countPawns(int player, ArrayList<Integer> board) {
-        int counter = 0;
+        int counter_f = 0;
+        int counter_s = 0;
 
         for (Integer f : board)
             if (f == player)
-                counter++;
+                counter_f++;
+            else if (f == getSecondPlayerId(player))
+                counter_s++;
 
-        return counter;
+        return counter_f - counter_s;
     }
 
     private static int countPlayerMoves(int iPlayer, ArrayList<Integer> board) {
-        int counter = 0;
+        int counter_f = 0;
+        int counter_s = 0;
+
         for (Integer field : board)
         {
-            if (field == iPlayer) {
+            //if (field == iPlayer) {
                 for (Integer neigh : getNeighbours(board, field))
                     if (board.get(neigh) == NMM.I_BLANK_FIELD)
-                        counter++;
-            }
+                        if (field == iPlayer)
+                            counter_f++;
+                        else if (field == getSecondPlayerId(iPlayer))
+                            counter_s++;
+            //}
         }
 
-        return counter;
+        return counter_f - counter_s;
     }
 
     public static ArrayList<Integer> getNeighbours(ArrayList<Integer> board, int field)
