@@ -96,17 +96,15 @@ public class NMM {
             endTime   = System.nanoTime();
             totalTime = endTime - startTime;
             Algorithm.addTime(0, totalTime);
-        } else {
-//            //TODO
-//            startTime = System.nanoTime();
-//            if (player.getPlayerPhase() == I_OPEN_GAME_PHASE)
-//                score = Algorithm.alphabeta(player.getPlayerId(), Algorithm.I_MAX_TURN, 4, board, new Pair<>(null, Double.NEGATIVE_INFINITY), new Pair<>(null, Double.POSITIVE_INFINITY)).getKey();
-//            else
-//                score = Algorithm.alphabeta(player.getPlayerId(), Algorithm.I_MAX_TURN, 4, board, new Pair<>(null, Double.NEGATIVE_INFINITY), new Pair<>(null, Double.POSITIVE_INFINITY)).getKey();
-//            endTime = System.nanoTime();
-//            totalTime = endTime - startTime;
-//            Algorithm.addTime(totalTime, 0);
-            score = null;
+        } else { // (p.getPlayerPhase() != I_OPEN_GAME_PHASE)
+            startTime = System.nanoTime();
+            if (player.getPlayerPhase() == I_OPEN_GAME_PHASE)
+                score = Algorithm.alphaBetaOpenPhase(player.getPlayerId(), Algorithm.I_MAX_TURN, I_DEPTH_FOR_ALG, new Node(0, Node.I_NO_MILL, board), new Node(Double.NEGATIVE_INFINITY, Node.I_NO_MILL, board), new Node(Double.POSITIVE_INFINITY, Node.I_NO_MILL, board)).getBoard();
+            else
+                score = Algorithm.alphaBetaMidEndPhase(player.getPlayerId(), Algorithm.I_MAX_TURN, I_DEPTH_FOR_ALG, new Node(0, Node.I_NO_MILL, board), new Node(Double.NEGATIVE_INFINITY, Node.I_NO_MILL, board), new Node(Double.POSITIVE_INFINITY, Node.I_NO_MILL, board)).getBoard();
+            endTime = System.nanoTime();
+            totalTime = endTime - startTime;
+            Algorithm.addTime(totalTime, 0);
         }
         return score;
     }

@@ -350,38 +350,87 @@ public class Algorithm
         }
         return false;
     }
+    public static Node alphaBetaMidEndPhase(int playerId, int flag, int depth, Node board, Node alpha, Node beta) {
+        if (isGameOver(board.getBoard()) || depth == 0) {
+            if (getPhaseForPlayer(playerId, board.getBoard()) == NMM.I_MID_GAME_PHASE)
+                return new Node(evaluateMidPhaseFunction(playerId, board), board.getMill(), board.getBoard());
+            else
+                return new Node(evaluateEndPhaseFunction(playerId, board), board.getMill(), board.getBoard());
+        }
 
-//    public static Pair<ArrayList<Integer>, Double> miniMaxiMidEndPhase(int playerId, int flag, int depth, ArrayList<Integer> board)
-//    {
-//        if (isGameOver(board) || depth == 0)
-//            return new Pair<>(board, evaluateFunction(playerId, board));
-//
-//        ArrayList<ArrayList<Integer>> children;
-//
-//        if (flag == I_MAX_TURN)
-//        {
-//            Pair<ArrayList<Integer>, Double> max = new Pair<>(null, Double.NEGATIVE_INFINITY);
-//            children = getPossMovesForPlayer(playerId, board);
-//
-//            for (ArrayList<Integer> child:children) {
-//                Pair<ArrayList<Integer>, Double> val = minimax(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child);
-//                max = max.getValue() < val.getValue() ? new Pair<>(child, val.getValue()) : max;
-//            }
-//
-//            return max;
-//        }
-//        else { //if (flag == I_MIN_TURN)
-//            Pair<ArrayList<Integer>, Double> min = new Pair<>(null, Double.POSITIVE_INFINITY);
-//            children = getPossMovesForPlayer(playerId, board);
-//
-//            for (ArrayList<Integer> child:children) {
-//                Pair<ArrayList<Integer>, Double> val = minimax(getSecondPlayerId(playerId), I_MAX_TURN, depth-1, child);
-//                min = min.getValue() > val.getValue() ? new Pair<>(child, val.getValue()) : min;
-//            }
-//
-//            return min;
-//        }
-//    }
+        ArrayList<Node> children;
+
+        if (flag == I_MAX_TURN)
+        {
+            if (getPhaseForPlayer(playerId, board.getBoard()) == NMM.I_MID_GAME_PHASE)
+                children = getPossMovesForPlayerMidPhase(playerId, board.getBoard());
+            else
+                children = getPossMovesForPlayerEndPhase(playerId, board.getBoard());
+
+            for (Node child:children) {
+                Node val = alphaBetaMidEndPhase(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child, alpha, beta);
+                if (val.getValue() > alpha.getValue())
+                    alpha = new Node(val.getValue(), Node.I_NO_MILL, child.getBoard()); // found a better best move
+                if (alpha.getValue() >= beta.getValue())
+                    return alpha; // cut off
+            }
+
+            return alpha; // this is best move
+        }
+        else { //if (flag == I_MIN_TURN)
+
+            if (getPhaseForPlayer(playerId, board.getBoard()) == NMM.I_MID_GAME_PHASE)
+                children = getPossMovesForPlayerMidPhase(playerId, board.getBoard());
+            else
+                children = getPossMovesForPlayerEndPhase(playerId, board.getBoard());
+
+            for (Node child:children) {
+                Node val = alphaBetaMidEndPhase(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child, alpha, beta);
+                if (val.getValue() < beta.getValue())
+                    beta = new Node(val.getValue(), Node.I_NO_MILL, child.getBoard()); // opponent has found a better worse move
+                if (alpha.getValue() >= beta.getValue())
+                    return beta; // cut off
+            }
+
+            return beta;
+        }
+    }
+
+    public static Node alphaBetaOpenPhase(int playerId, int flag, int depth, Node board, Node alpha, Node beta) {
+        if (isEndOfOpenPhase(depth) || depth == 0)
+            return new Node(evaluateOpenPhaseFunction(playerId, board), board.getMill(), board.getBoard());
+
+        ArrayList<Node> children;
+
+        if (flag == I_MAX_TURN)
+        {
+            children = getPossMovesForPlayerOpenPhase(playerId, board.getBoard());
+
+            for (Node child:children) {
+                Node val = alphaBetaOpenPhase(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child, alpha, beta);
+
+                if (val.getValue() > alpha.getValue())
+                    alpha = new Node(val.getValue(), Node.I_NO_MILL, child.getBoard()); // found a better best move
+                if (alpha.getValue() >= beta.getValue())
+                    return alpha; // cut off
+            }
+
+            return alpha; // this is best move
+        }
+        else { //if (flag == I_MIN_TURN)
+            children = getPossMovesForPlayerOpenPhase(playerId, board.getBoard());
+
+            for (Node child:children) {
+                Node val = alphaBetaOpenPhase(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child, alpha, beta);
+                if (val.getValue() < beta.getValue())
+                    beta = new Node(val.getValue(), Node.I_NO_MILL, child.getBoard()); // opponent has found a better worse move
+                if (alpha.getValue() >= beta.getValue())
+                    return beta; // cut off
+            }
+
+            return beta;
+        }
+    }
 
 //    public static Pair<ArrayList<Integer>, Double> alphabeta(int playerId, int flag, int depth, ArrayList<Integer> board, Pair<ArrayList<Integer>, Double> alpha, Pair<ArrayList<Integer>, Double> beta)
 //    {

@@ -2,24 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11b7c5e3-e000-410a-953f-517d50964c4e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sample/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NMM_Game/sample/Algorithm.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NMM_Game/sample/Algorithm.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NMM_Game/sample/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NMM_Game/sample/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NMM_Game/sample/NMM.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NMM_Game/sample/NMM.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NMM_Game/sample/NMM.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NMM_Game/sample/NMM.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NMM_Game/sample/NewGame.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NMM_Game/sample/NewGame.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NMM_Game/sample/NewGameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NMM_Game/sample/NewGameController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NMM_Game/sample/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NMM_Game/sample/Player.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Algorithm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/NMM.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/NMM.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/NMM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/NMM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/NewGame.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/NewGame.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/NewGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/NewGameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Player.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/NMM.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="79" column="53" lean-forward="true" selection-start-line="79" selection-start-column="53" selection-end-line="79" selection-end-column="53" />
+            <state relative-caret-position="1292">
+              <caret line="101" column="123" selection-start-line="101" selection-start-column="123" selection-end-line="101" selection-end-column="123" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1525#1526#0" expanded="true" />
@@ -49,8 +34,8 @@
                 <element signature="e#1733#1734#0" expanded="true" />
                 <element signature="e#1314#1315#0" expanded="true" />
                 <element signature="e#1342#1343#0" expanded="true" />
-                <element signature="e#3933#3934#0" expanded="true" />
-                <element signature="e#4019#4020#0" expanded="true" />
+                <element signature="e#4085#4086#0" expanded="true" />
+                <element signature="e#4171#4172#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -90,14 +75,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-308">
-              <caret line="287" selection-start-line="287" selection-end-line="287" />
+            <state relative-caret-position="120">
+              <caret line="272" column="75" selection-start-line="272" selection-start-column="75" selection-end-line="272" selection-end-column="75" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#10147#10148#0" expanded="true" />
+                <element signature="e#10150#10151#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -115,8 +100,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/Algorithm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="150" column="52" selection-start-line="150" selection-start-column="52" selection-end-line="150" selection-end-column="52" />
+            <state relative-caret-position="120">
+              <caret line="379" column="40" selection-start-line="379" selection-start-column="40" selection-end-line="379" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -182,9 +167,9 @@
         <option value="$PROJECT_DIR$/src/sample/Player.java" />
         <option value="$PROJECT_DIR$/src/sample/Node.java" />
         <option value="$PROJECT_DIR$/src/sample/NewGameController.java" />
-        <option value="$PROJECT_DIR$/src/sample/Controller.java" />
         <option value="$PROJECT_DIR$/src/sample/NMM.java" />
         <option value="$PROJECT_DIR$/src/sample/Algorithm.java" />
+        <option value="$PROJECT_DIR$/src/sample/Controller.java" />
       </list>
     </option>
   </component>
@@ -295,8 +280,8 @@
       <window_info id="Azure Explorer" order="10" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32965517" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49934897" weight="0.3286119" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.14022663" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49934897" visible="true" weight="0.3286119" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.14022663" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -326,7 +311,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/sample/Algorithm.java</url>
-          <line>452</line>
+          <line>501</line>
           <properties />
           <option name="timeStamp" value="89" />
         </line-breakpoint>
@@ -540,29 +525,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Algorithm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="150" column="52" selection-start-line="150" selection-start-column="52" selection-end-line="150" selection-end-column="52" />
+        <state relative-caret-position="120">
+          <caret line="379" column="40" selection-start-line="379" selection-start-column="40" selection-end-line="379" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-308">
-          <caret line="287" selection-start-line="287" selection-end-line="287" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#10147#10148#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/NMM.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="79" column="53" lean-forward="true" selection-start-line="79" selection-start-column="53" selection-end-line="79" selection-end-column="53" />
+        <state relative-caret-position="1292">
+          <caret line="101" column="123" selection-start-line="101" selection-start-column="123" selection-end-line="101" selection-end-column="123" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1525#1526#0" expanded="true" />
@@ -573,8 +547,19 @@
             <element signature="e#1733#1734#0" expanded="true" />
             <element signature="e#1314#1315#0" expanded="true" />
             <element signature="e#1342#1343#0" expanded="true" />
-            <element signature="e#3933#3934#0" expanded="true" />
-            <element signature="e#4019#4020#0" expanded="true" />
+            <element signature="e#4085#4086#0" expanded="true" />
+            <element signature="e#4171#4172#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="272" column="75" selection-start-line="272" selection-start-column="75" selection-end-line="272" selection-end-column="75" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#10150#10151#0" expanded="true" />
           </folding>
         </state>
       </provider>

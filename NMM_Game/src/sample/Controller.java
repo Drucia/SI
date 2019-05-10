@@ -270,11 +270,11 @@ public class Controller {
                     im = list_of_fields.get(idx_to);
                     im.setImage(new Image("/images/" + play + ".png"));
                     actualPlayer.addHistory(list_of_fields_in_words.get(idx_from) + " -> " + list_of_fields_in_words.get(idx_to));
-                    NMM.addHistory( "Gracz " + actualPlayer.getName() + ":" + list_of_fields_in_words.get(idx_from) + " -> " + list_of_fields_in_words.get(idx_to));
+                    NMM.addHistory( "Gracz " + actualPlayer.getName() + ": " + list_of_fields_in_words.get(idx_from) + " -> " + list_of_fields_in_words.get(idx_to));
                 }
                 else {
                     actualPlayer.addHistory(list_of_fields_in_words.get(idx_from) + " -> " + NMM.I_BLANK_FIELD);
-                    actualPlayer.addHistory("Gracz " + actualPlayer.getName() + ":" + list_of_fields_in_words.get(idx_from) + " -> " + NMM.I_BLANK_FIELD);
+                    actualPlayer.addHistory("Gracz " + actualPlayer.getName() + ": " + list_of_fields_in_words.get(idx_from) + " -> " + NMM.I_BLANK_FIELD);
                 }
             } else
                 setPawnOnBoard("p"+idx_to);
@@ -343,7 +343,7 @@ public class Controller {
         actualPlayer.setPawnOnBoard();
         NMM.updateFieldOfBoard(id, actualPlayer.getPlayerId());
         actualPlayer.addHistory("-1 -> " + list_of_fields_in_words.get(id));
-        NMM.addHistory("Gracz " + actualPlayer.getName() + ":" + "-1 -> " + list_of_fields_in_words.get(id));
+        NMM.addHistory("Gracz " + actualPlayer.getName() + ": " + "-1 -> " + list_of_fields_in_words.get(id));
 
         return true;
     }
