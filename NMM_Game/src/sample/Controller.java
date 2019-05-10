@@ -25,6 +25,7 @@ public class Controller {
     private static final int I_CHOOSE_PAWN_TO_SHIFT_TO = 2;
     private static final int I_CHOOSE_PAWN_TO_DELETE = 3;
     private static final int I_NO_MOVE = 4;
+    private static int id_shift_from;
 
     @FXML
     private ImageView b2;
@@ -227,16 +228,22 @@ public class Controller {
     {
         if (actual_move != I_NO_MOVE)
         {
+            String id_of_clicked_place = mouseEvent.getPickResult().getIntersectedNode().getId();
+
             switch (actualPlayer.getPlayerPhase()) {
                 case NMM.I_OPEN_GAME_PHASE:
-                    String id_of_clicked_place = mouseEvent.getPickResult().getIntersectedNode().getId();
-                    setPawnOnBoard(id_of_clicked_place);
-                    actual_move = NMM.checkIfCanDeleteOpponent(actualPlayer) == true ? I_CHOOSE_PAWN_TO_DELETE : I_NO_MOVE;
+                    if (actual_move == I_CHOOSE_PAWN_TO_PLACE_ON_BOARD)
+                        actual_move = setPawnOnBoard(id_of_clicked_place) ? NMM.checkIfCanDeleteOpponent(actualPlayer) ? I_CHOOSE_PAWN_TO_DELETE : I_NO_MOVE : actual_move;
+                    else
+                        actual_move = deletePawn(id_of_clicked_place) ? I_NO_MOVE : actual_move;
                     break;
                 case NMM.I_MID_GAME_PHASE:
-                    System.out.println("Jestesmy w czesci glownej!!!");
-                    //TODO
-                    actual_move = NMM.checkIfCanDeleteOpponent(actualPlayer) == true ? I_CHOOSE_PAWN_TO_DELETE : I_NO_MOVE;
+                    if (actual_move == I_CHOOSE_PAWN_TO_SHIFT_FROM)
+                        actual_move = shiftPawnFrom(id_of_clicked_place) ? I_CHOOSE_PAWN_TO_SHIFT_TO : actual_move;
+                    else if (actual_move == I_CHOOSE_PAWN_TO_SHIFT_TO)
+                        actual_move = shiftPawnTo(id_of_clicked_place) ? NMM.checkIfCanDeleteOpponent(actualPlayer) ? I_CHOOSE_PAWN_TO_DELETE : I_NO_MOVE : actual_move;
+                    else
+                        actual_move = deletePawn(id_of_clicked_place) ? I_NO_MOVE : actual_move;
                     break;
                 case NMM.I_END_GAME_PHASE:
                     break;
@@ -245,6 +252,59 @@ public class Controller {
             comm.setText("Wykonano ruch. Wcisnij przycisk, żeby zakończyć rundę.");
             comm.setVisible(true);
         }
+    }
+
+    private boolean deletePawn(String id_of_clicked_place) {
+        int id = Integer.parseInt(id_of_clicked_place.substring(1));
+
+        if (NMM.getActualBoard().get(id) != Algorithm.getSecondPlayerId(actualPlayer.getPlayerId()))
+            return false;
+
+        ArrayList<Pair<Pair<Integer, Integer>, Integer>> shifts = new ArrayList<>();
+        Pair<Pair<Integer, Integer>, Integer> shift = new Pair<>(new Pair<>(id, NMM.I_BLANK_FIELD), NMM.I_BLANK_FIELD);
+        shifts.add(shift);
+
+        makeShifts(shifts);
+        NMM.updateFieldOfBoard(id, NMM.I_BLANK_FIELD);
+
+        return true;
+    }
+
+    private boolean shiftPawnTo(String id_of_clicked_place) {
+        int id = Integer.parseInt(id_of_clicked_place.substring(1));
+
+//        if (NMM.getActualBoard().get(id) != NMM.I_BLANK_FIELD && !Algorithm.getNeighbours(id).contains(id))
+//            return false;
+//
+        if (NMM.getActualBoard().get(id) == actualPlayer.getPlayerId())
+        {
+            id_shift_from = id;
+            return false;
+        }
+        else if (!Algorithm.getNeighbours(id).contains(id) && actualPlayer.getLastMove(NMM.I_FIRST_FIELD) == id)
+            return false; // TODO
+
+        ArrayList<Pair<Pair<Integer, Integer>, Integer>> shifts = new ArrayList<>();
+        Pair<Pair<Integer, Integer>, Integer> shift = new Pair<>(new Pair<>(id_shift_from, id), actualPlayer.getPlayerId());
+        shifts.add(shift);
+
+        makeShifts(shifts);
+        NMM.updateFieldOfBoard(id_shift_from, NMM.I_BLANK_FIELD);
+        NMM.updateFieldOfBoard(id, actualPlayer.getPlayerId());
+        id_shift_from = I_NO_MOVE;
+
+        return true;
+    }
+
+    private boolean shiftPawnFrom(String id_of_clicked_place) {
+        int id = Integer.parseInt(id_of_clicked_place.substring(1));
+
+        if (NMM.getActualBoard().get(id) != actualPlayer.getPlayerId())
+            return false;
+
+        id_shift_from = id;
+
+        return true;
     }
 
     private boolean makeShifts(ArrayList<Pair<Pair<Integer, Integer>, Integer>> shifts) // ((from, to), who) -> shift
@@ -274,7 +334,7 @@ public class Controller {
                 }
                 else {
                     actualPlayer.addHistory(list_of_fields_in_words.get(idx_from) + " -> " + NMM.I_BLANK_FIELD);
-                    actualPlayer.addHistory("Gracz " + actualPlayer.getName() + ": " + list_of_fields_in_words.get(idx_from) + " -> " + NMM.I_BLANK_FIELD);
+                    NMM.addHistory("Gracz " + actualPlayer.getName() + ": " + list_of_fields_in_words.get(idx_from) + " -> " + NMM.I_BLANK_FIELD);
                 }
             } else
                 setPawnOnBoard("p"+idx_to);

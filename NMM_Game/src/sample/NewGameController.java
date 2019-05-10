@@ -54,10 +54,10 @@ public class NewGameController {
     }
 
     public void startClicked(ActionEvent actionEvent) {
-        ArrayList<Integer> w_heu = new ArrayList<>(Arrays.asList(w_h_pawns.isSelected() ? 18:0, w_h_two.isSelected() ? 26:0, w_h_moves.isSelected() ? 1:0, w_h_blocks.isSelected() ? 6:0,
-                12,7,14,43,10,8,7,42,1086,10,1,16, 1190));
-        ArrayList<Integer> b_heu = new ArrayList<>(Arrays.asList(b_h_pawns.isSelected() ? 18:0, b_h_two.isSelected() ? 26:0, b_h_moves.isSelected() ? 1:0, b_h_blocks.isSelected() ? 6:0,
-                12,7,14,43,10,8,7,42,1086,10,1,16, 1190));
+        ArrayList<Integer> w_heu = new ArrayList<>(Arrays.asList(w_h_pawns.isSelected() ? 118:0, w_h_two.isSelected() ? 26:0, w_h_moves.isSelected() ? 1:0, w_h_blocks.isSelected() ? 6:0,
+                312,7,141,43,10,8,7,42,1086,10,1,16, 1190));
+        ArrayList<Integer> b_heu = new ArrayList<>(Arrays.asList(b_h_pawns.isSelected() ? 118:0, b_h_two.isSelected() ? 26:0, b_h_moves.isSelected() ? 1:0, b_h_blocks.isSelected() ? 6:0,
+                312,7,141,43,10,8,7,42,1086,10,1,16, 1190));
         Player p1 = new Player(NMM.I_WHITE_PLAYER, "white", white_player.getValue().equals("Manual") ? NMM.I_MAN_PLAYER : NMM.I_AI_PLAYER, NMM.I_OPEN_GAME_PHASE,
                 w_alg.getValue().equals("Mini Maxi") ? NMM.I_MINI_MAXI_ALG : NMM.I_ALPHA_BETA_ALG, w_heu);
         Player p2 = new Player(NMM.I_BLACK_PLAYER, "black", black_player.getValue().equals("Manual") ? NMM.I_MAN_PLAYER : NMM.I_AI_PLAYER, NMM.I_OPEN_GAME_PHASE,

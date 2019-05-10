@@ -30,23 +30,23 @@ public class Algorithm
 
         if (flag == I_MAX_TURN)
         {
-            Node max = new Node(Double.NEGATIVE_INFINITY, 0, null);
+            Node max = new Node(Double.NEGATIVE_INFINITY, Node.I_NO_MILL, null);
             children = getPossMovesForPlayerOpenPhase(playerId, board.getBoard());
 
             for (Node child:children) {
                 Node val = miniMaxiOpenPhase(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child);
-                max = max.getValue() < val.getValue() ? new Node(val.getValue(), 0, child.getBoard()) : max;
+                max = max.getValue() < val.getValue() ? new Node(val.getValue(), Node.I_NO_MILL, child.getBoard()) : max;
             }
 
             return max;
         }
         else { //if (flag == I_MIN_TURN)
-            Node min = new Node(Double.POSITIVE_INFINITY, 0, null);
+            Node min = new Node(Double.POSITIVE_INFINITY, Node.I_NO_MILL, null);
             children = getPossMovesForPlayerOpenPhase(playerId, board.getBoard());
 
             for (Node child:children) {
                 Node val = miniMaxiOpenPhase(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child);
-                min = min.getValue() > val.getValue() ? new Node(val.getValue(), 0, child.getBoard()) : min;
+                min = min.getValue() > val.getValue() ? new Node(val.getValue(), Node.I_NO_MILL, child.getBoard()) : min;
             }
 
             return min;
@@ -66,7 +66,7 @@ public class Algorithm
 
         if (flag == I_MAX_TURN)
         {
-            Node max = new Node(Double.NEGATIVE_INFINITY, 0, null);
+            Node max = new Node(Double.NEGATIVE_INFINITY, Node.I_NO_MILL, null);
 
             if (getPhaseForPlayer(playerId, board.getBoard()) == NMM.I_MID_GAME_PHASE)
                 children = getPossMovesForPlayerMidPhase(playerId, board.getBoard());
@@ -75,13 +75,13 @@ public class Algorithm
 
             for (Node child:children) {
                 Node val = miniMaxiMidEndPhase(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child);
-                max = max.getValue() < val.getValue() ? new Node(val.getValue(), 0, child.getBoard()) : max;
+                max = max.getValue() < val.getValue() ? new Node(val.getValue(), Node.I_NO_MILL, child.getBoard()) : max;
             }
 
             return max;
         }
         else { //if (flag == I_MIN_TURN)
-            Node min = new Node(Double.POSITIVE_INFINITY, 0, null);
+            Node min = new Node(Double.POSITIVE_INFINITY, Node.I_NO_MILL, null);
 
             if (getPhaseForPlayer(playerId, board.getBoard()) == NMM.I_MID_GAME_PHASE)
                 children = getPossMovesForPlayerMidPhase(playerId, board.getBoard());
@@ -90,7 +90,7 @@ public class Algorithm
 
             for (Node child:children) {
                 Node val = miniMaxiMidEndPhase(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child);
-                min = min.getValue() > val.getValue() ? new Node(val.getValue(), 0, child.getBoard()) : min;
+                min = min.getValue() > val.getValue() ? new Node(val.getValue(), Node.I_NO_MILL, child.getBoard()) : min;
             }
 
             return min;
@@ -165,7 +165,7 @@ public class Algorithm
         int closed_morris = board.getMill() == Node.I_CLOSED_MILL ? 1 : 0;
         int two_conf = countTwoConfigurations(player, board.getBoard());
         int three_conf = 0; //TODO
-        int win = isGameOver(getSecondPlayerId(player), board.getBoard()) ? 1 : 0; // ??
+        int win = isGameOver(getSecondPlayerId(player), board.getBoard()) ? 1 : isGameOver(player, board.getBoard()) ? -1 : 0;
 
         return heu.get(13) * closed_morris + heu.get(14) * two_conf + heu.get(15) * three_conf + heu.get(16) * win;
     }
@@ -175,10 +175,10 @@ public class Algorithm
         int closed_morris = board.getMill() == Node.I_CLOSED_MILL ? 1 : 0;
         int morris_number = countMorris(player, board.getBoard());
         int block_opp_pieces = countOpponentBlockPawns(player, board.getBoard());
-        int pieces_number = countPawns(player, board.getBoard());
+        int pieces_number = countPawnsOfPlayer(player, board.getBoard()); //countPawns(player, board.getBoard());
         int opened_morris = 0; //TODO
         int double_morris = board.getMill() == Node.I_DOUBLE_MILL ? 1 : 0;
-        int win = isGameOver(getSecondPlayerId(player), board.getBoard()) ? 1 : 0; // ??
+        int win = isGameOver(getSecondPlayerId(player), board.getBoard()) ? 1 : isGameOver(player, board.getBoard()) ? -1 : 0;
 
         return heu.get(6) * closed_morris + heu.get(7) * morris_number + heu.get(8) * block_opp_pieces + heu.get(9) *
                 pieces_number + heu.get(10) * opened_morris + heu.get(11) * double_morris + heu.get(12) * win;
@@ -193,7 +193,7 @@ public class Algorithm
         int closed_morris = board.getMill() == Node.I_CLOSED_MILL ? 1 : 0;
         int morris_number = countMorris(player, board.getBoard());
         int block_opp_pieces = countOpponentBlockPawns(player, board.getBoard());
-        int pieces_number = countPawns(player, board.getBoard());
+        int pieces_number = countPawnsOfPlayer(player, board.getBoard()); //countPawns(player, board.getBoard());
         int two_conf = countTwoConfigurations(player, board.getBoard());
         int three_conf = 0; //TODO
 
@@ -432,125 +432,9 @@ public class Algorithm
         }
     }
 
-//    public static Pair<ArrayList<Integer>, Double> alphabeta(int playerId, int flag, int depth, ArrayList<Integer> board, Pair<ArrayList<Integer>, Double> alpha, Pair<ArrayList<Integer>, Double> beta)
-//    {
-//        if (isGameOver(board) || depth == 0)
-//            return new Pair<>(board, evaluateFunction(playerId, board));
-//
-//        ArrayList<ArrayList<Integer>> children;
-//
-//        if (flag == I_MAX_TURN)
-//        {
-//            children = getPossMovesForPlayer(playerId, board);
-//
-//            for (ArrayList<Integer> child:children) {
-//                Pair<ArrayList<Integer>, Double> val = alphabeta(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child, alpha, beta);
-//                if (val.getValue() > alpha.getValue())
-//                        alpha = new Pair<>(child, val.getValue()); // found a better best move
-//                if (alpha.getValue() >= beta.getValue())
-//                    return alpha; // cut off
-//            }
-//
-//            return alpha; // this is best move
-//        }
-//        else { //if (flag == I_MIN_TURN)
-//            children = getPossMovesForPlayer(playerId, board);
-//
-//            for (ArrayList<Integer> child:children) {
-//                Pair<ArrayList<Integer>, Double> val = alphabeta(getSecondPlayerId(playerId), I_MAX_TURN, depth-1, child, alpha, beta);
-//                if (val.getValue() < beta.getValue())
-//                    beta = new Pair<>(child, val.getValue()); // opponent has found a better worse move
-//                if (alpha.getValue() >= beta.getValue())
-//                    return beta; // cut off
-//            }
-//
-//            return beta;
-//        }
-//    }
-
-    private static int getSecondPlayerId(int playerId) {
+    public static int getSecondPlayerId(int playerId) {
         return playerId == NMM.I_WHITE_PLAYER ? NMM.I_BLACK_PLAYER : NMM.I_WHITE_PLAYER;
     }
-
-//    private static ArrayList<ArrayList<Integer>> getPossMovesForPlayer(int playerId, ArrayList<Integer> board) {
-//        Player player = NMM.getPlayer(playerId);
-//        ArrayList<ArrayList<Integer>> moves = new ArrayList<>();
-//        ArrayList<Integer> move;
-//
-//        if (player.getPlayerPhase() == NMM.I_OPEN_GAME_PHASE) {
-//            for (int i=0; i<board.size(); i++)
-//            {
-//                if (board.get(i) == NMM.I_BLANK_FIELD) {
-//                    move = new ArrayList<>(board);
-//                    move.set(i, playerId);
-//
-//                    if (isMill(move, i))
-//                        moves.addAll(getAllMovesToBeatPawn(move, getSecondPlayerId(playerId)));
-//                    else
-//                        moves.add(move);
-//                }
-//            }
-//        }
-//        else
-//        {
-//            for(Integer field : board)
-//            {
-//                if (field == playerId)
-//                {
-//                    switch (player.getPlayerPhase())
-//                    {
-//                        case NMM.I_MID_GAME_PHASE:
-//
-//                            for(int i=0; i<board.size(); i++)
-//                            {
-//                                if (board.get(i) == playerId)
-//                                {
-//                                    ArrayList<Integer> neigh = getNeighbours(i);
-//
-//                                    for (int n=0; n<neigh.size(); n++)
-//                                    {
-//                                        if (board.get(n) == NMM.I_BLANK_FIELD && n != player.getLastMove(NMM.I_FIRST_FIELD)) // different shift than last
-//                                        {
-//                                            move = new ArrayList<>(board);
-//                                            move.set(n,playerId);
-//
-//                                            if (isMill(move, i))
-//                                                moves.addAll(getAllMovesToBeatPawn(move, getSecondPlayerId(playerId)));
-//                                            else
-//                                                moves.add(move);
-//                                        }
-//                                    }
-//                                }
-//                            }
-//
-//                            break;
-//                        case NMM.I_END_GAME_PHASE:
-//                            for(int i=0; i<board.size(); i++)
-//                            {
-//                                if (board.get(i) == playerId)
-//                                {
-//                                    for (int n=0; n<board.size(); n++)
-//                                    {
-//                                        if (board.get(n) == NMM.I_BLANK_FIELD && n != player.getLastMove(NMM.I_FIRST_FIELD)) // different shift than last
-//                                        {
-//                                            move = new ArrayList<>(board);
-//                                            move.set(n,playerId);
-//
-//                                            if (isMill(move, i))
-//                                                moves.addAll(getAllMovesToBeatPawn(move, getSecondPlayerId(playerId)));
-//                                            else
-//                                                moves.add(move);
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                            break;
-//                    }
-//                }
-//            }
-//        }
-//        return moves;
-//    }
 
     private static ArrayList<ArrayList<Integer>> getAllMovesToBeatPawn(ArrayList<Integer> move, int playerId) {
         ArrayList<ArrayList<Integer>> moves = new ArrayList<>();
@@ -594,15 +478,15 @@ public class Algorithm
     private static int countMorris(int player, ArrayList<Integer> board) {
         final int amount_of_lines = 16;
         int counter_f = 0;
-        int counter_s = 0;
+        //int counter_s = 0;
 
         for (int i=0; i<amount_of_lines; i++)
             if (isMorrisInLine(i, player, board))
                 counter_f++;
-            else if (isMorrisInLine(i, getSecondPlayerId(player), board))
-                counter_s++;
+            //else if (isMorrisInLine(i, getSecondPlayerId(player), board))
+            //    counter_s++;
 
-        return counter_f-counter_s;
+        return counter_f;//-counter_s;
     }
 
     private static boolean isMorrisInLine(int line, int value, ArrayList<Integer> board)
