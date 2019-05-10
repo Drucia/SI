@@ -19,9 +19,7 @@ import java.util.HashMap;
 
 public class Controller {
     private static Player actualPlayer;
-    private static int amount_of_moves = 1;
-    private static int actual_nb_of_move = 1;
-    private static int actual_move = 4;
+    private static int actual_move;
     private static final int I_CHOOSE_PAWN_TO_PLACE_ON_BOARD = 0;
     private static final int I_CHOOSE_PAWN_TO_SHIFT_FROM = 1;
     private static final int I_CHOOSE_PAWN_TO_SHIFT_TO = 2;
@@ -189,15 +187,17 @@ public class Controller {
                 w0, w1, w2, w3, w4, w5, w6, w7, w8
         ));
 
-        Integer[] data = new Integer[24];
-        Arrays.fill(data, NMM.I_BLANK_FIELD);
-        NMM.updateBoard(new ArrayList<>(Arrays.asList(data)));
+        NMM.newGame();
 
         showPopup("Nowa Gra", "NewGame.fxml");
 
-        actualPlayer = NMM.getPlayer(NMM.I_BLACK_PLAYER);
-        amount_of_moves = actual_nb_of_move = 1;
-        nextPlayerPressed();
+        if (NewGameController.isClose)
+            primaryStage.close();
+        else {
+            actualPlayer = NMM.getPlayer(NMM.I_BLACK_PLAYER);
+            actual_move = I_NO_MOVE;
+            nextPlayerPressed();
+        }
     }
 
     private void showPopup(String title, String fxml)
@@ -225,7 +225,6 @@ public class Controller {
 
     public void onPlaceClicked(MouseEvent mouseEvent)
     {
-        //if (actual_nb_of_move < amount_of_moves) {
         if (actual_move != I_NO_MOVE)
         {
             switch (actualPlayer.getPlayerPhase()) {
@@ -266,13 +265,17 @@ public class Controller {
                 im = list_of_fields.get(idx_from);
                 im.setImage(null);
 
-                if (val != NMM.I_BLANK_FIELD) {
+                if (idx_to != NMM.I_BLANK_FIELD) {
                     String play = NMM.getNameOfPlayer(val);
                     im = list_of_fields.get(idx_to);
                     im.setImage(new Image("/images/" + play + ".png"));
+                    actualPlayer.addHistory(list_of_fields_in_words.get(idx_from) + " -> " + list_of_fields_in_words.get(idx_to));
+                    NMM.addHistory( "Gracz " + actualPlayer.getName() + ":" + list_of_fields_in_words.get(idx_from) + " -> " + list_of_fields_in_words.get(idx_to));
                 }
-
-                actualPlayer.addHistory(list_of_fields_in_words.get(idx_from) + " -> " + list_of_fields_in_words.get(idx_to));
+                else {
+                    actualPlayer.addHistory(list_of_fields_in_words.get(idx_from) + " -> " + NMM.I_BLANK_FIELD);
+                    actualPlayer.addHistory("Gracz " + actualPlayer.getName() + ":" + list_of_fields_in_words.get(idx_from) + " -> " + NMM.I_BLANK_FIELD);
+                }
             } else
                 setPawnOnBoard("p"+idx_to);
         }
@@ -290,14 +293,21 @@ public class Controller {
 
         for (int i=0; i<board.size(); i++)
         {
-            int old_val;
+            int old_val = old_board.get(i);
+            int curr_new_val = board.get(i);
 
-            if ((old_val = old_board.get(i)) != (new_val = board.get(i)) && old_val == NMM.I_BLANK_FIELD)
-                to = i;
-            else if ((old_val = old_board.get(i)) != (new_val = board.get(i)) && old_val != NMM.I_BLANK_FIELD && old_val == playerId)
-                from = i;
-            else if ((old_val = old_board.get(i)) != (new_val = board.get(i)) && old_val != NMM.I_BLANK_FIELD && old_val != playerId)
-                delete = i;
+            if (old_val != curr_new_val) // if is different
+            {
+                if (old_val == NMM.I_BLANK_FIELD) // it was set pawn behind board
+                {
+                    to = i;
+                    new_val = curr_new_val;
+                }
+                else if (old_val == playerId)
+                    from = i;
+                else
+                    delete = i;
+            }
         }
 
         Pair<Pair<Integer, Integer>, Integer> shift = new Pair<>(new Pair<>(from, to), new_val);
@@ -333,6 +343,7 @@ public class Controller {
         actualPlayer.setPawnOnBoard();
         NMM.updateFieldOfBoard(id, actualPlayer.getPlayerId());
         actualPlayer.addHistory("-1 -> " + list_of_fields_in_words.get(id));
+        NMM.addHistory("Gracz " + actualPlayer.getName() + ":" + "-1 -> " + list_of_fields_in_words.get(id));
 
         return true;
     }
@@ -348,13 +359,12 @@ public class Controller {
         for (ImageView i : list_of_blacks)
             i.setVisible(true);
 
-        for (int i=0; i<NMM.getBoardSize(); i++)
-            NMM.updateFieldOfBoard(i, NMM.I_BLANK_FIELD);
+        NMM.newGame();
 
         showPopup("Nowa Gra", "NewGame.fxml");
 
         actualPlayer = NMM.getPlayer(NMM.I_BLACK_PLAYER);
-        amount_of_moves = actual_nb_of_move = 1;
+        actual_move = I_NO_MOVE;
         nextPlayerPressed();
     }
 
@@ -369,19 +379,23 @@ public class Controller {
         if (actual_move == I_NO_MOVE) {
             comm.setVisible(false);
             switchPlayers();
-            //amount_of_moves = 1;
-            //actual_nb_of_move = 0;
-            if (actualPlayer.getPlayerPhase() == NMM.I_OPEN_GAME_PHASE)
-                actual_move = I_CHOOSE_PAWN_TO_PLACE_ON_BOARD;
-            else
-                actual_move = I_CHOOSE_PAWN_TO_SHIFT_FROM;
 
-            NMM.updateActualPhase(actualPlayer);
+            switch (actualPlayer.getPlayerType())
+            {
+                case NMM.I_MAN_PLAYER:
+                    if (actualPlayer.getPlayerPhase() == NMM.I_OPEN_GAME_PHASE)
+                        actual_move = I_CHOOSE_PAWN_TO_PLACE_ON_BOARD;
+                    else
+                        actual_move = I_CHOOSE_PAWN_TO_SHIFT_FROM;
+                    break;
+                case NMM.I_AI_PLAYER:
+                    updateGUIBoard(NMM.makeMove(actualPlayer), actualPlayer.getPlayerId());
+                    actual_move = I_NO_MOVE;
+                    break;
+            }
 
-            if (actualPlayer.getPlayerType() == NMM.I_AI_PLAYER) {
-                updateGUIBoard(NMM.makeMove(actualPlayer.getPlayerId()), actualPlayer.getPlayerId());
-                actual_move = I_NO_MOVE;
-            }   //makeShifts(NMM.playerMove(actualPlayer));
+            if (NMM.isGameOver() && actualPlayer.getPlayerPhase() != NMM.I_OPEN_GAME_PHASE)
+                showPopup("Koniec Gry", "NewGame.fxml");
         }
         else {
             comm.setText("Musisz wykonac ruch.");
@@ -393,5 +407,7 @@ public class Controller {
     {
         actualPlayer = NMM.getPlayer((actualPlayer.getPlayerId() + 1) % 2);
         player.setText("GRACZ: " + (actualPlayer.getPlayerId() == NMM.I_BLACK_PLAYER ? "CZARNY" : "BIAŁY"));
+        NMM.incrementGameCounter();
+        NMM.updateActualPhase(actualPlayer);
     }
 }

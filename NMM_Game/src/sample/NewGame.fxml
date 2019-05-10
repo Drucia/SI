@@ -10,9 +10,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="284.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NewGameController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NewGameController">
    <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="284.0" prefWidth="480.0">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="480.0">
          <children>
             <Label layoutX="35.0" layoutY="33.0" text="Białe pionki: ">
                <effect>
@@ -30,18 +30,22 @@
                </font></Label>
             <ChoiceBox fx:id="white_player" layoutX="34.0" layoutY="62.0" prefWidth="150.0" />
             <ChoiceBox fx:id="black_player" layoutX="267.0" layoutY="62.0" prefWidth="150.0" />
-            <Button fx:id="start" layoutX="143.0" layoutY="234.0" mnemonicParsing="false" onAction="#startClicked" prefHeight="26.0" prefWidth="166.0" text="START" />
+            <Button fx:id="start" layoutX="149.0" layoutY="312.0" mnemonicParsing="false" onAction="#startClicked" prefHeight="26.0" prefWidth="166.0" text="START" />
             <CheckBox fx:id="w_h_pawns" layoutX="41.0" layoutY="125.0" mnemonicParsing="false" selected="true" text="liczba pionków" />
             <Label layoutX="41.0" layoutY="102.0" text="Heurystyki:" />
             <Label layoutX="273.0" layoutY="102.0" text="Heurystyki:" />
             <CheckBox fx:id="w_h_two" layoutX="41.0" layoutY="149.0" mnemonicParsing="false" selected="true" text="liczba podwójnych" />
             <CheckBox fx:id="w_h_moves" layoutX="41.0" layoutY="171.0" mnemonicParsing="false" selected="true" text="liczba ruchów" />
             <CheckBox fx:id="w_h_blocks" layoutX="41.0" layoutY="195.0" mnemonicParsing="false" selected="true" text="liczba zablokowanych" />
-            <Line endX="6.800018310546875" endY="89.60000610351562" layoutX="226.0" layoutY="120.0" startX="6.800018310546875" startY="-77.59998321533203" stroke="#000000b6" />
+            <Line endX="6.800018310546875" endY="159.60000610351562" layoutX="226.0" layoutY="120.0" startX="6.800018310546875" startY="-77.59998321533203" stroke="#000000b6" />
             <CheckBox fx:id="b_h_pawns" layoutX="273.0" layoutY="123.0" mnemonicParsing="false" selected="true" text="liczba pionków" />
             <CheckBox fx:id="b_h_two" layoutX="273.0" layoutY="147.0" mnemonicParsing="false" selected="true" text="liczba podwójnych" />
             <CheckBox fx:id="b_h_moves" layoutX="273.0" layoutY="169.0" mnemonicParsing="false" selected="true" text="liczba ruchów" />
             <CheckBox fx:id="b_h_blocks" layoutX="273.0" layoutY="193.0" mnemonicParsing="false" selected="true" text="liczba zablokowanych" />
+            <Label layoutX="41.0" layoutY="230.0" text="Algorytm:" />
+            <Label layoutX="276.0" layoutY="230.0" text="Algorytm:" />
+            <ChoiceBox fx:id="w_alg" layoutX="41.0" layoutY="255.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="b_alg" layoutX="276.0" layoutY="255.0" prefWidth="150.0" />
          </children>
       </AnchorPane>
    </children>
