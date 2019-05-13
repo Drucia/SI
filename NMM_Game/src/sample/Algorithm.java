@@ -7,19 +7,19 @@ public class Algorithm
 {
     private static final int I_MIN_TURN = 0;
     public static final int I_MAX_TURN = 1;
-    private static long time_minimax;
-    private static long time_alphabeta;
+    //private static long time_minimax;
+    //private static long time_alphabeta;
 
-    public static void setConst(long t_a, long t_m)
-    {
-        time_minimax = t_a;
-        time_alphabeta = t_m;
-    }
-
-    public static void addTime(long t_a, long t_m){
-        time_minimax += t_a;
-        time_alphabeta += t_m;
-    }
+//    public static void setConst(long t_a, long t_m)
+//    {
+//        time_minimax = t_a;
+//        time_alphabeta = t_m;
+//    }
+//
+//    public static void addTime(long t_a, long t_m){
+//        time_minimax += t_a;
+//        time_alphabeta += t_m;
+//    }
 
     public static Node miniMaxiOpenPhase(int playerId, int flag, int depth, Node board)
     {
@@ -164,7 +164,7 @@ public class Algorithm
         ArrayList<Integer> heu = NMM.getPlayer(player).getHeuristics(); // for end phase 13, 14, 15, 16
         int closed_morris = board.getMill() == Node.I_CLOSED_MILL ? 1 : 0;
         int two_conf = countTwoConfigurations(player, board.getBoard());
-        int three_conf = 0; //TODO
+        int three_conf = two_conf;
         int win = isGameOver(getSecondPlayerId(player), board.getBoard()) ? 1 : isGameOver(player, board.getBoard()) ? -1 : 0;
 
         return heu.get(13) * closed_morris + heu.get(14) * two_conf + heu.get(15) * three_conf + heu.get(16) * win;
@@ -175,8 +175,8 @@ public class Algorithm
         int closed_morris = board.getMill() == Node.I_CLOSED_MILL ? 1 : 0;
         int morris_number = countMorris(player, board.getBoard());
         int block_opp_pieces = countOpponentBlockPawns(player, board.getBoard());
-        int pieces_number = countPawnsOfPlayer(player, board.getBoard()); //countPawns(player, board.getBoard());
-        int opened_morris = 0; //TODO
+        int pieces_number = countPawnsOfPlayer(player, board.getBoard());
+        int opened_morris = countThreeConfigurations(player, board.getBoard());
         int double_morris = board.getMill() == Node.I_DOUBLE_MILL ? 1 : 0;
         int win = isGameOver(getSecondPlayerId(player), board.getBoard()) ? 1 : isGameOver(player, board.getBoard()) ? -1 : 0;
 
@@ -193,11 +193,110 @@ public class Algorithm
         int closed_morris = board.getMill() == Node.I_CLOSED_MILL ? 1 : 0;
         int morris_number = countMorris(player, board.getBoard());
         int block_opp_pieces = countOpponentBlockPawns(player, board.getBoard());
-        int pieces_number = countPawnsOfPlayer(player, board.getBoard()); //countPawns(player, board.getBoard());
+        int pieces_number = countPawnsOfPlayer(player, board.getBoard());
         int two_conf = countTwoConfigurations(player, board.getBoard());
-        int three_conf = 0; //TODO
+        int three_conf = two_conf;
 
         return heu.get(0) * closed_morris + heu.get(1) * morris_number + heu.get(2) * block_opp_pieces + heu.get(3) * pieces_number + heu.get(4) * two_conf + heu.get(5) * three_conf;
+    }
+
+    private static int countThreeConfigurations(int player, ArrayList<Integer> board) {
+        final int amount_of_lines = 16;
+        int counter = 0;
+
+        for (int i=0; i<amount_of_lines; i++)
+            if (isTwoConfigurationsInLine(i, player, board))
+                if(isThreeConfiguration(i, player, board))
+                    counter++;
+
+        return counter;
+    }
+
+    private static boolean isThreeConfiguration(int line, int value, ArrayList<Integer> board) {
+        switch (line)
+        {
+            case 0:
+                if ((board.get(0) == value && board.get(9) == value && board.get(21) == NMM.I_BLANK_FIELD && board.get(22) == value) || (board.get(0) == value &&
+                        board.get(21) == value && board.get(9) == NMM.I_BLANK_FIELD && board.get(10) == value) || (board.get(21) == value && board.get(9) == value && board.get(0) == NMM.I_BLANK_FIELD && board.get(1) == value))
+                    return true;
+                break;
+            case 1:
+                if ((board.get(3) == value && board.get(10) == value && board.get(18) == NMM.I_BLANK_FIELD && board.get(19) == value) || ((board.get(3) == value &&
+                board.get(18) == value && board.get(10) == NMM.I_BLANK_FIELD) && (board.get(11) == value || board.get(9) == value)) || (board.get(10) == value && board.get(18) == value && board.get(3) == NMM.I_BLANK_FIELD && board.get(4) == value))
+                    return true;
+            break;
+            case 2:
+                if ((board.get(6) == value && board.get(11) == value && board.get(15) == NMM.I_BLANK_FIELD && board.get(16) == value) || (board.get(6) == value &&
+                board.get(15) == value && board.get(11) == NMM.I_BLANK_FIELD && board.get(10) == value) || (board.get(11) == value && board.get(15) == value && board.get(6) == NMM.I_BLANK_FIELD && board.get(7) == value))
+                    return true;
+            break;
+        case 3:
+                if (((board.get(1) == value && board.get(4) == value && board.get(7) == NMM.I_BLANK_FIELD) && (board.get(8) == value || board.get(6) == value)) || ((board.get(1) == value &&
+                board.get(7) == value && board.get(4) == NMM.I_BLANK_FIELD) && (board.get(5) == value || board.get(3) == value)) || ((board.get(4) == value && board.get(7) == value && board.get(1) == NMM.I_BLANK_FIELD) && (board.get(0) == value || board.get(2) == value)))
+                    return true;
+            break;
+        case 4:
+                if (((board.get(16) == value && board.get(19) == value && board.get(22) == NMM.I_BLANK_FIELD) && (board.get(21) == value || board.get(23) == value)) || ((board.get(16) == value &&
+                board.get(22) == value && board.get(19) == NMM.I_BLANK_FIELD) && (board.get(18) == value || board.get(20) == value)) || ((board.get(19) == value && board.get(22) == value && board.get(16) == NMM.I_BLANK_FIELD) && (board.get(15) == value || board.get(17) == value)))
+                    return true;
+            break;
+        case 5:
+                if ((board.get(8) == value && board.get(12) == value && board.get(17) == NMM.I_BLANK_FIELD && board.get(16) == value) || (board.get(8) == value &&
+                board.get(17) == value && board.get(12) == NMM.I_BLANK_FIELD && board.get(13) == value) || (board.get(12) == value && board.get(17) == value && board.get(8) == NMM.I_BLANK_FIELD && board.get(7) == value))
+                    return true;
+            break;
+        case 6:
+                if ((board.get(5) == value && board.get(13) == value && board.get(20) == NMM.I_BLANK_FIELD && board.get(19) == value) || ((board.get(5) == value &&
+                board.get(20) == value && board.get(13) == NMM.I_BLANK_FIELD) && (board.get(14) == value || board.get(12) == value)) || (board.get(13) == value && board.get(20) == value && board.get(5) == NMM.I_BLANK_FIELD && board.get(4) == value))
+                    return true;
+            break;
+        case 7:
+                if ((board.get(2) == value && board.get(14) == value && board.get(23) == NMM.I_BLANK_FIELD && board.get(22) == value) || (board.get(2) == value &&
+                board.get(23) == value && board.get(14) == NMM.I_BLANK_FIELD && board.get(13) == value) || (board.get(14) == value && board.get(23) == value && board.get(2) == NMM.I_BLANK_FIELD && board.get(1) == value))
+                    return true;
+            break;
+        case 8:
+                if ((board.get(0) == value && board.get(1) == value && board.get(2) == NMM.I_BLANK_FIELD && board.get(14) == value) || (board.get(0) == value &&
+                    board.get(2) == value && board.get(1) == NMM.I_BLANK_FIELD && board.get(4) == value) || (board.get(1) == value && board.get(2) == value && board.get(0) == NMM.I_BLANK_FIELD && board.get(9) == value))
+                    return true;
+            break;
+        case 9:
+                if ((board.get(3) == value && board.get(4) == value && board.get(5) == NMM.I_BLANK_FIELD && board.get(13) == value) || ((board.get(3) == value &&
+                    board.get(5) == value && board.get(4) == NMM.I_BLANK_FIELD) && (board.get(1) == value || board.get(7) == value)) || (board.get(4) == value && board.get(5) == value && board.get(3) == NMM.I_BLANK_FIELD && board.get(10) == value))
+                    return true;
+            break;
+        case 10:
+                if ((board.get(6) == value && board.get(7) == value && board.get(8) == NMM.I_BLANK_FIELD && board.get(12) == value) || (board.get(6) == value &&
+                    board.get(8) == value && board.get(7) == NMM.I_BLANK_FIELD && board.get(4) == value) || (board.get(7) == value && board.get(8) == value && board.get(6) == NMM.I_BLANK_FIELD && board.get(11) == value))
+                    return true;
+            break;
+        case 11:
+                if (((board.get(9) == value && board.get(10) == value && board.get(11) == NMM.I_BLANK_FIELD) && (board.get(6) == value || board.get(15) == value)) || ((board.get(9) == value &&
+                board.get(11) == value && board.get(10) == NMM.I_BLANK_FIELD) && (board.get(3) == value || board.get(18) == value)) || ((board.get(10) == value && board.get(11) == value && board.get(9) == NMM.I_BLANK_FIELD) && (board.get(0) == value || board.get(21) == value)))
+                    return true;
+            break;
+        case 12:
+                if (((board.get(12) == value && board.get(13) == value && board.get(14) == NMM.I_BLANK_FIELD) && (board.get(2) == value || board.get(23) == value)) || ((board.get(12) == value &&
+                board.get(14) == value && board.get(13) == NMM.I_BLANK_FIELD) && (board.get(5) == value || board.get(20) == value)) || ((board.get(13) == value && board.get(14) == value && board.get(12) == NMM.I_BLANK_FIELD) && (board.get(8) == value || board.get(17) == value)))
+                    return true;
+            break;
+        case 13:
+                if ((board.get(15) == value && board.get(16) == value && board.get(17) == NMM.I_BLANK_FIELD && board.get(12) == value) || (board.get(16) == value &&
+                board.get(17) == value && board.get(15) == NMM.I_BLANK_FIELD && board.get(11) == value) || (board.get(15) == value && board.get(17) == value && board.get(16) == NMM.I_BLANK_FIELD && board.get(19) == value))
+                    return true;
+            break;
+        case 14:
+                if ((board.get(18) == value && board.get(19) == value && board.get(20) == NMM.I_BLANK_FIELD && board.get(13) == value) || (board.get(19) == value &&
+                board.get(20) == value && board.get(18) == NMM.I_BLANK_FIELD && board.get(10) == value) || ((board.get(18) == value && board.get(20) == value && board.get(19) == NMM.I_BLANK_FIELD) && (board.get(16) == value || board.get(22) == value)))
+                    return true;
+            break;
+        case 15:
+                if ((board.get(21) == value && board.get(22) == value && board.get(23) == NMM.I_BLANK_FIELD && board.get(14) == value) || (board.get(21) == value &&
+                board.get(23) == value && board.get(22) == NMM.I_BLANK_FIELD && board.get(19) == value) || (board.get(22) == value && board.get(23) == value && board.get(21) == NMM.I_BLANK_FIELD && board.get(9) == value))
+                    return true;
+            break;
+    }
+        return false;
     }
 
     private static ArrayList<Node> getPossMovesForPlayerOpenPhase(int playerId, ArrayList<Integer> board) {
@@ -436,20 +535,6 @@ public class Algorithm
         return playerId == NMM.I_WHITE_PLAYER ? NMM.I_BLACK_PLAYER : NMM.I_WHITE_PLAYER;
     }
 
-    private static ArrayList<ArrayList<Integer>> getAllMovesToBeatPawn(ArrayList<Integer> move, int playerId) {
-        ArrayList<ArrayList<Integer>> moves = new ArrayList<>();
-        for (int j=0; j<move.size(); j++)
-        {
-            if (move.get(j) == playerId)
-            {
-                ArrayList<Integer> new_move = new ArrayList<>(move);
-                new_move.set(j, NMM.I_BLANK_FIELD);
-                moves.add(new_move);
-            }
-        }
-        return moves;
-    }
-
     private static ArrayList<Integer> beatPawnMove(ArrayList<Integer> move, int playerId, int how_much) {
         ArrayList<Integer> new_move = new ArrayList<>(move);
 
@@ -463,30 +548,15 @@ public class Algorithm
         return new_move;
     }
 
-    private static Double evaluateFunction(int player, ArrayList<Integer> board) {
-        ArrayList<Integer> heu = NMM.getPlayer(player).getHeuristics();
-        int moves = countMoves(player, board);
-        int block = countOpponentBlockPawns(player, board);
-        int two = countTwoConfigurations(player, board);
-        int pawns = countPawns(player, board);
-        int win = isGameOver(getSecondPlayerId(player), board) ? 1000 : isGameOver(player, board) ? -1000 : 0;
-        int three = 413 * countMorris(player,board);
-
-        return (double) heu.get(0) * pawns + heu.get(1) * two + heu.get(2) * moves + heu.get(3) * block + win + three;
-    }
-
     private static int countMorris(int player, ArrayList<Integer> board) {
         final int amount_of_lines = 16;
         int counter_f = 0;
-        //int counter_s = 0;
 
         for (int i=0; i<amount_of_lines; i++)
             if (isMorrisInLine(i, player, board))
                 counter_f++;
-            //else if (isMorrisInLine(i, getSecondPlayerId(player), board))
-            //    counter_s++;
 
-        return counter_f;//-counter_s;
+        return counter_f;
     }
 
     private static boolean isMorrisInLine(int line, int value, ArrayList<Integer> board)
@@ -564,15 +634,12 @@ public class Algorithm
     private static int countTwoConfigurations(int player, ArrayList<Integer> board) {
         final int amount_of_lines = 16;
         int counter_f = 0;
-        int counter_s = 0;
 
         for (int i=0; i<amount_of_lines; i++)
             if (isTwoConfigurationsInLine(i, player, board))
                 counter_f++;
-        else if (isTwoConfigurationsInLine(i, getSecondPlayerId(player), board))
-                counter_s++;
 
-        return counter_f - counter_s;
+        return counter_f;
     }
 
     private static boolean isTwoConfigurationsInLine(int line, int value, ArrayList<Integer> board) {
@@ -595,68 +662,68 @@ public class Algorithm
                     return true;
                 break;
             case 3:
-                if ((board.get(1) == value && board.get(4) == value) || (board.get(1) == value &&
-                        board.get(7) == value) || (board.get(4) == value && board.get(7) == value))
+                if ((board.get(1) == value && board.get(4) == value && board.get(7) == NMM.I_BLANK_FIELD) || (board.get(1) == value &&
+                        board.get(7) == value && board.get(4) == NMM.I_BLANK_FIELD) || (board.get(4) == value && board.get(7) == value && board.get(1) == NMM.I_BLANK_FIELD))
                     return true;
                 break;
             case 4:
-                if ((board.get(16) == value && board.get(19) == value) || (board.get(16) == value &&
-                        board.get(22) == value) || (board.get(19) == value && board.get(22) == value))
+                if ((board.get(16) == value && board.get(19) == value && board.get(22) == NMM.I_BLANK_FIELD) || (board.get(16) == value &&
+                        board.get(22) == value && board.get(19) == NMM.I_BLANK_FIELD) || (board.get(19) == value && board.get(22) == value && board.get(16) == NMM.I_BLANK_FIELD))
                     return true;
                 break;
             case 5:
-                if ((board.get(8) == value && board.get(12) == value) || (board.get(8) == value &&
-                        board.get(17) == value) || (board.get(12) == value && board.get(17) == value))
+                if ((board.get(8) == value && board.get(12) == value && board.get(17) == NMM.I_BLANK_FIELD) || (board.get(8) == value &&
+                        board.get(17) == value && board.get(12) == NMM.I_BLANK_FIELD) || (board.get(12) == value && board.get(17) == value && board.get(8) == NMM.I_BLANK_FIELD))
                     return true;
                 break;
             case 6:
-                if ((board.get(5) == value && board.get(13) == value) || (board.get(5) == value &&
-                        board.get(20) == value) || (board.get(13) == value && board.get(20) == value))
+                if ((board.get(5) == value && board.get(13) == value && board.get(20) == NMM.I_BLANK_FIELD) || (board.get(5) == value &&
+                        board.get(20) == value && board.get(13) == NMM.I_BLANK_FIELD) || (board.get(13) == value && board.get(20) == value && board.get(5) == NMM.I_BLANK_FIELD))
                     return true;
                 break;
             case 7:
-                if ((board.get(2) == value && board.get(14) == value) || (board.get(2) == value &&
-                        board.get(23) == value) || (board.get(14) == value && board.get(23) == value))
+                if ((board.get(2) == value && board.get(14) == value && board.get(23) == NMM.I_BLANK_FIELD) || (board.get(2) == value &&
+                        board.get(23) == value && board.get(14) == NMM.I_BLANK_FIELD) || (board.get(14) == value && board.get(23) == value && board.get(2) == NMM.I_BLANK_FIELD))
                     return true;
                 break;
             case 8:
-                if ((board.get(0) == value && board.get(1) == value) || (board.get(0) == value &&
-                        board.get(2) == value) || (board.get(1) == value && board.get(2) == value))
+                if ((board.get(0) == value && board.get(1) == value && board.get(2) == NMM.I_BLANK_FIELD) || (board.get(0) == value &&
+                        board.get(2) == value && board.get(1) == NMM.I_BLANK_FIELD) || (board.get(1) == value && board.get(2) == value && board.get(0) == NMM.I_BLANK_FIELD))
                     return true;
                 break;
             case 9:
-                if ((board.get(3) == value && board.get(4) == value) || (board.get(3) == value &&
-                        board.get(5) == value) || (board.get(4) == value && board.get(5) == value))
+                if ((board.get(3) == value && board.get(4) == value && board.get(5) == NMM.I_BLANK_FIELD) || (board.get(3) == value &&
+                        board.get(5) == value && board.get(4) == NMM.I_BLANK_FIELD) || (board.get(4) == value && board.get(5) == value && board.get(3) == NMM.I_BLANK_FIELD))
                     return true;
                 break;
             case 10:
-                if ((board.get(6) == value && board.get(7) == value) || (board.get(6) == value &&
-                        board.get(8) == value) || (board.get(7) == value && board.get(8) == value))
+                if ((board.get(6) == value && board.get(7) == value && board.get(8) == NMM.I_BLANK_FIELD) || (board.get(6) == value &&
+                        board.get(8) == value && board.get(7) == NMM.I_BLANK_FIELD) || (board.get(7) == value && board.get(8) == value && board.get(6) == NMM.I_BLANK_FIELD))
                     return true;
                 break;
             case 11:
-                if ((board.get(9) == value && board.get(10) == value) || (board.get(9) == value &&
-                        board.get(11) == value) || (board.get(10) == value && board.get(11) == value))
+                if ((board.get(9) == value && board.get(10) == value && board.get(11) == NMM.I_BLANK_FIELD) || (board.get(9) == value &&
+                        board.get(11) == value && board.get(10) == NMM.I_BLANK_FIELD) || (board.get(10) == value && board.get(11) == value && board.get(9) == NMM.I_BLANK_FIELD))
                     return true;
                 break;
             case 12:
-                if ((board.get(12) == value && board.get(13) == value) || (board.get(12) == value &&
-                        board.get(14) == value) || (board.get(13) == value && board.get(14) == value))
+                if ((board.get(12) == value && board.get(13) == value && board.get(14) == NMM.I_BLANK_FIELD) || (board.get(12) == value &&
+                        board.get(14) == value && board.get(13) == NMM.I_BLANK_FIELD) || (board.get(13) == value && board.get(14) == value && board.get(12) == NMM.I_BLANK_FIELD))
                     return true;
                 break;
             case 13:
-                if ((board.get(15) == value && board.get(16) == value) || (board.get(16) == value &&
-                        board.get(17) == value) || (board.get(15) == value && board.get(17) == value))
+                if ((board.get(15) == value && board.get(16) == value && board.get(17) == NMM.I_BLANK_FIELD) || (board.get(16) == value &&
+                        board.get(17) == value && board.get(15) == NMM.I_BLANK_FIELD) || (board.get(15) == value && board.get(17) == value && board.get(16) == NMM.I_BLANK_FIELD))
                     return true;
                 break;
             case 14:
-                if ((board.get(18) == value && board.get(19) == value) || (board.get(19) == value &&
-                        board.get(20) == value) || (board.get(18) == value && board.get(20) == value))
+                if ((board.get(18) == value && board.get(19) == value && board.get(20) == NMM.I_BLANK_FIELD) || (board.get(19) == value &&
+                        board.get(20) == value && board.get(18) == NMM.I_BLANK_FIELD) || (board.get(18) == value && board.get(20) == value && board.get(19) == NMM.I_BLANK_FIELD))
                     return true;
                 break;
             case 15:
-                if ((board.get(21) == value && board.get(22) == value) || (board.get(21) == value &&
-                        board.get(23) == value) || (board.get(22) == value && board.get(23) == value))
+                if ((board.get(21) == value && board.get(22) == value && board.get(23) == NMM.I_BLANK_FIELD) || (board.get(21) == value &&
+                        board.get(23) == value && board.get(22) == NMM.I_BLANK_FIELD) || (board.get(22) == value && board.get(23) == value && board.get(21) == NMM.I_BLANK_FIELD))
                     return true;
                 break;
         }
@@ -701,7 +768,7 @@ public class Algorithm
                     return true;
                 break;
             case NMM.I_END_GAME_PHASE:
-                if (countPawnsOfPlayer(player, board) <= 2 || p.getCounter_of_moves() > 40)
+                if (countPawnsOfPlayer(player, board) <= 2 || p.getCounter_of_moves() > 60)
                     return true;
                 break;
         }
@@ -716,7 +783,7 @@ public class Algorithm
             return NMM.I_END_GAME_PHASE;
     }
 
-    private static int countPawns(int player, ArrayList<Integer> board) {
+    public static int countPawns(int player, ArrayList<Integer> board) {
         int counter_f = 0;
         int counter_s = 0;
 

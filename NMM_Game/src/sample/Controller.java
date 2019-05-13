@@ -214,7 +214,11 @@ public class Controller {
             Stage popupStage = new Stage();
             popupStage.setTitle(title);
             // Giving the popup controller access to the popup stage (to allow the controller to close the stage)
-            NewGameController.stage = popupStage;
+
+            if (title.equals("Nowa Gra"))
+                NewGameController.stage = popupStage;
+            else
+                GameOverController.stage = popupStage;
             popupStage.initOwner(primaryStage);
             popupStage.initModality(Modality.WINDOW_MODAL);
             popupStage.setScene(scene);
@@ -314,6 +318,7 @@ public class Controller {
 
         for (int i=0; i<shifts.size(); i++)
         {
+            actualPlayer.increment_moves();
             Pair<Pair<Integer, Integer>, Integer> tmp = shifts.get(i);
             int idx_from = tmp.getKey().getKey();
             int idx_to = tmp.getKey().getValue();
@@ -454,8 +459,13 @@ public class Controller {
                     break;
             }
 
-            if (NMM.isGameOver() && actualPlayer.getPlayerPhase() != NMM.I_OPEN_GAME_PHASE)
-                showPopup("Koniec Gry", "NewGame.fxml");
+            if (NMM.isGameOver() && actualPlayer.getPlayerPhase() != NMM.I_OPEN_GAME_PHASE) {
+                GameOverController.n_game = false;
+                showPopup("Koniec Gry", "GameOver.fxml");
+
+                if (GameOverController.n_game)
+                    newGameClicked();
+            }
         }
         else {
             comm.setText("Musisz wykonac ruch.");

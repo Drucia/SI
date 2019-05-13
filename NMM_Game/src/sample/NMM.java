@@ -19,6 +19,7 @@ public class NMM {
     public static final int I_SECOND_FIELD = 2;
     public static final int I_FIRST_FIELD = 0;
     public static final int I_DEPTH_FOR_ALG = 4;
+    public static final int I_DRAW = 10;
 
     private static ArrayList<Player> players;
     private static ArrayList<Integer> board;
@@ -41,7 +42,11 @@ public class NMM {
         game_counter = 0;
 
         // clear time in algorithm
-        Algorithm.setConst(0, 0);
+        //Algorithm.setConst(0, 0);
+    }
+
+    public static ArrayList<String> getHistory_of_moves() {
+        return history_of_moves;
     }
 
     public static void incrementGameCounter() {
@@ -95,7 +100,8 @@ public class NMM {
                 score = Algorithm.miniMaxiMidEndPhase(player.getPlayerId(), Algorithm.I_MAX_TURN, I_DEPTH_FOR_ALG, new Node(0, Node.I_NO_MILL, board)).getBoard();
             endTime   = System.nanoTime();
             totalTime = endTime - startTime;
-            Algorithm.addTime(0, totalTime);
+            player.addTime(totalTime);
+
         } else { // (p.getPlayerPhase() != I_OPEN_GAME_PHASE)
             startTime = System.nanoTime();
             if (player.getPlayerPhase() == I_OPEN_GAME_PHASE)
@@ -104,9 +110,15 @@ public class NMM {
                 score = Algorithm.alphaBetaMidEndPhase(player.getPlayerId(), Algorithm.I_MAX_TURN, I_DEPTH_FOR_ALG, new Node(0, Node.I_NO_MILL, board), new Node(Double.NEGATIVE_INFINITY, Node.I_NO_MILL, board), new Node(Double.POSITIVE_INFINITY, Node.I_NO_MILL, board)).getBoard();
             endTime = System.nanoTime();
             totalTime = endTime - startTime;
-            Algorithm.addTime(totalTime, 0);
+            player.addTime(totalTime);
         }
         return score;
+    }
+
+    public static int getWinner()
+    {
+        int pawns = Algorithm.countPawns(I_WHITE_PLAYER, board);
+        return pawns > 0 ? I_WHITE_PLAYER : (pawns < 0 ? I_BLACK_PLAYER : I_DRAW);
     }
 
     public static String getNameOfPlayer(int i)

@@ -11,6 +11,7 @@ public class Player {
     private int amountOfPawns;
     private int algorithm;
     private int counter_of_moves;
+    private long time;
     private ArrayList<Integer> heuristics;
     // ---- OPENING PHASE ----
     // closed morris, morris number, number of block pieces, pieces number, two conf, three conf
@@ -31,8 +32,17 @@ public class Player {
         this.counter_of_moves = 0;
         this.algorithm = algorithm;
         this.heuristics = heuristics;
+        this.time = 0;
         history_of_moves = new ArrayList<>();
         pawn_behind_board = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8));
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void addTime(long time) {
+        this.time += time;
     }
 
     public int getAlgorithm() {
@@ -72,14 +82,13 @@ public class Player {
         amountOfPawns++;
     }
 
+    public void increment_moves() {
+        this.counter_of_moves++;
+    }
+
     public int getCounter_of_moves() {
         return counter_of_moves;
     }
-
-//    public void setPawnBehindBoard()
-//    {
-//        pawn_behind_board.add(amountOfPawns--);
-//    }
 
     public int getFirstPawnBehindBoard()
     {
