@@ -10,42 +10,102 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NewGameController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="681.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NewGameController">
    <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="480.0">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="681.0" prefWidth="630.0">
          <children>
-            <Label layoutX="35.0" layoutY="33.0" text="Białe pionki: ">
+            <Label layoutX="128.0" layoutY="14.0" text="Białe pionki: ">
                <effect>
                   <Blend />
                </effect>
                <font>
                   <Font size="15.0" />
                </font></Label>
-            <Label layoutX="267.0" layoutY="33.0" text="Czarne pionki: ">
+            <ChoiceBox fx:id="white_player" layoutX="95.0" layoutY="44.0" prefWidth="150.0" />
+            <Button fx:id="start" layoutX="232.0" layoutY="641.0" mnemonicParsing="false" onAction="#startClicked" prefHeight="26.0" prefWidth="166.0" text="START" />
+            <CheckBox fx:id="w_close_morris_o" layoutX="41.0" layoutY="106.0" mnemonicParsing="false" selected="true" text="ułożony młynek" />
+            <Label fx:id="w_open_label" layoutX="35.0" layoutY="83.0" text="Heurystyki fazy OPEN:">
+               <effect>
+                  <Blend />
+               </effect></Label>
+            <CheckBox fx:id="w_number_of_morris_o" layoutX="41.0" layoutY="130.0" mnemonicParsing="false" selected="true" text="liczba młynków" />
+            <CheckBox fx:id="w_number_of_blocked_o" layoutX="41.0" layoutY="152.0" mnemonicParsing="false" selected="true" text="liczba zablokowanych" />
+            <CheckBox fx:id="w_number_of_pawns_o" layoutX="41.0" layoutY="176.0" mnemonicParsing="false" selected="true" text="liczba pionków" />
+            <Line endX="6.800048828125" endY="473.20001220703125" layoutX="299.0" layoutY="123.0" startX="6.800018310546875" startY="-77.59998321533203" stroke="#000000b6" />
+            <Label fx:id="w_alg_label" layoutX="35.0" layoutY="572.0" text="Algorytm:">
+               <effect>
+                  <Blend />
+               </effect></Label>
+            <Label fx:id="b_alg_label" layoutX="363.0" layoutY="572.0" text="Algorytm:">
+               <effect>
+                  <Blend />
+               </effect></Label>
+            <ChoiceBox fx:id="w_alg" layoutX="34.0" layoutY="597.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="b_alg" layoutX="362.0" layoutY="597.0" prefWidth="150.0" />
+            <CheckBox fx:id="w_number_of_two_o" layoutX="41.0" layoutY="200.0" mnemonicParsing="false" selected="true" text="liczba 2-konfiguracji" />
+            <CheckBox fx:id="w_number_of_three_o" layoutX="41.0" layoutY="224.0" mnemonicParsing="false" selected="true" text="liczba 3-konfiguracji" />
+            <Label fx:id="w_mid_label" layoutX="35.0" layoutY="255.0" text="Heurystyki fazy MID:">
+               <effect>
+                  <Blend />
+               </effect>
+            </Label>
+            <CheckBox fx:id="w_close_morris_m" layoutX="41.0" layoutY="278.0" mnemonicParsing="false" selected="true" text="ułożony młynek" />
+            <CheckBox fx:id="w_number_of_morris_m" layoutX="41.0" layoutY="302.0" mnemonicParsing="false" selected="true" text="liczba młynków" />
+            <CheckBox fx:id="w_number_of_blocked_m" layoutX="41.0" layoutY="325.0" mnemonicParsing="false" selected="true" text="liczba zablokowanych" />
+            <CheckBox fx:id="w_number_of_pawns_m" layoutX="41.0" layoutY="349.0" mnemonicParsing="false" selected="true" text="liczba pionków" />
+            <CheckBox fx:id="w_open_morris_m" layoutX="41.0" layoutY="373.0" mnemonicParsing="false" selected="true" text="otwarty młynek" />
+            <CheckBox fx:id="w_double_morris_m" layoutX="41.0" layoutY="397.0" mnemonicParsing="false" selected="true" text="podwójny młynek" />
+            <CheckBox fx:id="w_win_m" layoutX="41.0" layoutY="421.0" mnemonicParsing="false" selected="true" text="konfiguracja zwycięzka" />
+            <Label fx:id="w_end_label" layoutX="34.0" layoutY="449.0" text="Heurystyki fazy END:">
+               <effect>
+                  <Blend />
+               </effect>
+            </Label>
+            <CheckBox fx:id="w_close_morris_e" layoutX="40.0" layoutY="472.0" mnemonicParsing="false" selected="true" text="ułożony młynek" />
+            <CheckBox fx:id="w_number_of_two_e" layoutX="40.0" layoutY="496.0" mnemonicParsing="false" selected="true" text="liczba 2-konfiguracji" />
+            <CheckBox fx:id="w_number_of_three_e" layoutX="40.0" layoutY="519.0" mnemonicParsing="false" selected="true" text="liczba 3-konfiguracji" />
+            <CheckBox fx:id="w_win_e" layoutX="40.0" layoutY="543.0" mnemonicParsing="false" selected="true" text="konfiguracja zwycięzka" />
+            <Label layoutX="428.0" layoutY="16.0" text="Czarne pionki: ">
                <effect>
                   <Blend />
                </effect>
                <font>
                   <Font size="15.0" />
-               </font></Label>
-            <ChoiceBox fx:id="white_player" layoutX="34.0" layoutY="62.0" prefWidth="150.0" />
-            <ChoiceBox fx:id="black_player" layoutX="267.0" layoutY="62.0" prefWidth="150.0" />
-            <Button fx:id="start" layoutX="149.0" layoutY="312.0" mnemonicParsing="false" onAction="#startClicked" prefHeight="26.0" prefWidth="166.0" text="START" />
-            <CheckBox fx:id="w_h_pawns" layoutX="41.0" layoutY="125.0" mnemonicParsing="false" selected="true" text="liczba pionków" />
-            <Label layoutX="41.0" layoutY="102.0" text="Heurystyki:" />
-            <Label layoutX="273.0" layoutY="102.0" text="Heurystyki:" />
-            <CheckBox fx:id="w_h_two" layoutX="41.0" layoutY="149.0" mnemonicParsing="false" selected="true" text="liczba podwójnych" />
-            <CheckBox fx:id="w_h_moves" layoutX="41.0" layoutY="171.0" mnemonicParsing="false" selected="true" text="liczba ruchów" />
-            <CheckBox fx:id="w_h_blocks" layoutX="41.0" layoutY="195.0" mnemonicParsing="false" selected="true" text="liczba zablokowanych" />
-            <Line endX="6.800018310546875" endY="159.60000610351562" layoutX="226.0" layoutY="120.0" startX="6.800018310546875" startY="-77.59998321533203" stroke="#000000b6" />
-            <CheckBox fx:id="b_h_pawns" layoutX="273.0" layoutY="123.0" mnemonicParsing="false" selected="true" text="liczba pionków" />
-            <CheckBox fx:id="b_h_two" layoutX="273.0" layoutY="147.0" mnemonicParsing="false" selected="true" text="liczba podwójnych" />
-            <CheckBox fx:id="b_h_moves" layoutX="273.0" layoutY="169.0" mnemonicParsing="false" selected="true" text="liczba ruchów" />
-            <CheckBox fx:id="b_h_blocks" layoutX="273.0" layoutY="193.0" mnemonicParsing="false" selected="true" text="liczba zablokowanych" />
-            <Label layoutX="41.0" layoutY="230.0" text="Algorytm:" />
-            <Label layoutX="276.0" layoutY="230.0" text="Algorytm:" />
-            <ChoiceBox fx:id="w_alg" layoutX="41.0" layoutY="255.0" prefWidth="150.0" />
-            <ChoiceBox fx:id="b_alg" layoutX="276.0" layoutY="255.0" prefWidth="150.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="black_player" layoutX="395.0" layoutY="46.0" prefWidth="150.0" />
+            <CheckBox fx:id="b_close_morris_o" layoutX="369.0" layoutY="105.0" mnemonicParsing="false" selected="true" text="ułożony młynek" />
+            <Label fx:id="b_open_label" layoutX="363.0" layoutY="82.0" text="Heurystyki fazy OPEN:">
+               <effect>
+                  <Blend />
+               </effect>
+            </Label>
+            <CheckBox fx:id="b_number_of_morris_o" layoutX="369.0" layoutY="129.0" mnemonicParsing="false" selected="true" text="liczba młynków" />
+            <CheckBox fx:id="b_number_of_blocked_o" layoutX="369.0" layoutY="151.0" mnemonicParsing="false" selected="true" text="liczba zablokowanych" />
+            <CheckBox fx:id="b_number_of_pawns_o" layoutX="369.0" layoutY="175.0" mnemonicParsing="false" selected="true" text="liczba pionków" />
+            <CheckBox fx:id="b_number_of_two_o" layoutX="369.0" layoutY="199.0" mnemonicParsing="false" selected="true" text="liczba 2-konfiguracji" />
+            <CheckBox fx:id="b_number_of_three_o" layoutX="369.0" layoutY="223.0" mnemonicParsing="false" selected="true" text="liczba 3-konfiguracji" />
+            <Label fx:id="b_mid_label" layoutX="363.0" layoutY="254.0" text="Heurystyki fazy MID:">
+               <effect>
+                  <Blend />
+               </effect>
+            </Label>
+            <CheckBox fx:id="b_close_morris_m" layoutX="369.0" layoutY="277.0" mnemonicParsing="false" selected="true" text="ułożony młynek" />
+            <CheckBox fx:id="b_number_of_morris_m" layoutX="369.0" layoutY="301.0" mnemonicParsing="false" selected="true" text="liczba młynków" />
+            <CheckBox fx:id="b_number_of_blocked_m" layoutX="369.0" layoutY="324.0" mnemonicParsing="false" selected="true" text="liczba zablokowanych" />
+            <CheckBox fx:id="b_number_of_pawns_m" layoutX="369.0" layoutY="348.0" mnemonicParsing="false" selected="true" text="liczba pionków" />
+            <CheckBox fx:id="b_open_morris_m" layoutX="369.0" layoutY="372.0" mnemonicParsing="false" selected="true" text="otwarty młynek" />
+            <CheckBox fx:id="b_double_morris_m" layoutX="369.0" layoutY="396.0" mnemonicParsing="false" selected="true" text="podwójny młynek" />
+            <CheckBox fx:id="b_win_m" layoutX="369.0" layoutY="420.0" mnemonicParsing="false" selected="true" text="konfiguracja zwycięzka" />
+            <Label fx:id="b_end_label" layoutX="362.0" layoutY="448.0" text="Heurystyki fazy END:">
+               <effect>
+                  <Blend />
+               </effect>
+            </Label>
+            <CheckBox fx:id="b_close_morris_e" layoutX="368.0" layoutY="471.0" mnemonicParsing="false" selected="true" text="ułożony młynek" />
+            <CheckBox fx:id="b_number_of_two_e" layoutX="368.0" layoutY="495.0" mnemonicParsing="false" selected="true" text="liczba 2-konfiguracji" />
+            <CheckBox fx:id="b_number_of_three_e" layoutX="368.0" layoutY="518.0" mnemonicParsing="false" selected="true" text="liczba 3-konfiguracji" />
+            <CheckBox fx:id="b_win_e" layoutX="368.0" layoutY="542.0" mnemonicParsing="false" selected="true" text="konfiguracja zwycięzka" />
          </children>
       </AnchorPane>
    </children>

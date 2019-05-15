@@ -2,24 +2,12 @@ package sample;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Algorithm
 {
     private static final int I_MIN_TURN = 0;
     public static final int I_MAX_TURN = 1;
-    //private static long time_minimax;
-    //private static long time_alphabeta;
-
-//    public static void setConst(long t_a, long t_m)
-//    {
-//        time_minimax = t_a;
-//        time_alphabeta = t_m;
-//    }
-//
-//    public static void addTime(long t_a, long t_m){
-//        time_minimax += t_a;
-//        time_alphabeta += t_m;
-//    }
 
     public static Node miniMaxiOpenPhase(int playerId, int flag, int depth, Node board)
     {
@@ -108,7 +96,7 @@ public class Algorithm
             {
                 for (int n=0; n<board.size(); n++)
                 {
-                    if (board.get(n) == NMM.I_BLANK_FIELD && n != player.getLastMove(NMM.I_FIRST_FIELD)) // different shift than last
+                    if (board.get(n) == NMM.I_BLANK_FIELD && (n != player.getLastMove(NMM.I_FIELD_FROM) && i != player.getLastMove(NMM.I_FIELD_TO))) // different shift than last
                     {
                         move = new ArrayList<>(board);
                         move.set(n,playerId);
@@ -140,7 +128,7 @@ public class Algorithm
                 for (Integer n : neigh)
                 {
                     int nei = board.get(n);
-                    if (nei == NMM.I_BLANK_FIELD && n != player.getLastMove(NMM.I_FIRST_FIELD)) // different shift than last
+                    if (nei == NMM.I_BLANK_FIELD && (n != player.getLastMove(NMM.I_FIELD_FROM) && i != player.getLastMove(NMM.I_FIELD_TO))) // different shift than last
                     {
                         move = new ArrayList<>(board);
                         move.set(n,playerId);
@@ -161,16 +149,18 @@ public class Algorithm
     }
 
     private static double evaluateEndPhaseFunction(int player, Node board) {
+        Random r = new Random();
         ArrayList<Integer> heu = NMM.getPlayer(player).getHeuristics(); // for end phase 13, 14, 15, 16
         int closed_morris = board.getMill() == Node.I_CLOSED_MILL ? 1 : 0;
         int two_conf = countTwoConfigurations(player, board.getBoard());
         int three_conf = two_conf;
         int win = isGameOver(getSecondPlayerId(player), board.getBoard()) ? 1 : isGameOver(player, board.getBoard()) ? -1 : 0;
 
-        return heu.get(13) * closed_morris + heu.get(14) * two_conf + heu.get(15) * three_conf + heu.get(16) * win;
+        return (heu.get(13) * closed_morris + heu.get(14) * two_conf + heu.get(15) * three_conf + heu.get(16) * win);// * r.nextDouble();
     }
 
     private static double evaluateMidPhaseFunction(int player, Node board) {
+        Random r = new Random();
         ArrayList<Integer> heu = NMM.getPlayer(player).getHeuristics(); // for mid phase 6, 7, 8, 9, 10, 11, 12
         int closed_morris = board.getMill() == Node.I_CLOSED_MILL ? 1 : 0;
         int morris_number = countMorris(player, board.getBoard());
@@ -180,12 +170,12 @@ public class Algorithm
         int double_morris = board.getMill() == Node.I_DOUBLE_MILL ? 1 : 0;
         int win = isGameOver(getSecondPlayerId(player), board.getBoard()) ? 1 : isGameOver(player, board.getBoard()) ? -1 : 0;
 
-        return heu.get(6) * closed_morris + heu.get(7) * morris_number + heu.get(8) * block_opp_pieces + heu.get(9) *
-                pieces_number + heu.get(10) * opened_morris + heu.get(11) * double_morris + heu.get(12) * win;
+        return (heu.get(6) * closed_morris + heu.get(7) * morris_number + heu.get(8) * block_opp_pieces + heu.get(9) *
+                pieces_number + heu.get(10) * opened_morris + heu.get(11) * double_morris + heu.get(12) * win);// * r.nextDouble();
     }
 
     private static boolean isEndOfOpenPhase(int act_depth) {
-        return NMM.getGame_counter() + (NMM.I_DEPTH_FOR_ALG - act_depth) > 18; // each of players has 9 pawns on board
+        return NMM.getGame_counter() + (NMM.I_DEPTH_FOR_ALG_O - act_depth) > 18; // each of players has 9 pawns on board
     }
 
     private static int evaluateOpenPhaseFunction(int player, Node board) {
@@ -321,129 +311,153 @@ public class Algorithm
         return moves;
     }
 
-    private static boolean isDoubleMill(ArrayList<Integer> board, int field) {
+    public static boolean isDoubleMill(ArrayList<Integer> board, int field) {
         int value = board.get(field);
 
         switch(field)
         {
             case 0:
-                if ((board.get(1) == value && board.get(2) == value) && (board.get(9) == value &&
-                        board.get(21) == value))
+                if ((isMorrisInLine(8, value, board) && isMorrisInLine(0, value, board)) || (isMorrisInLine(8, value, board) && isMorrisInLine(7, value, board)) ||
+                        (isMorrisInLine(0, value, board) && isMorrisInLine(15, value, board)) || (isMorrisInLine(8, value, board) && isMorrisInLine(3, value, board)) ||
+                        (isMorrisInLine(0, value, board) && isMorrisInLine(11, value, board)))
                     return true;
                 break;
             case 1:
-                if ((board.get(0) == value && board.get(2) == value) && (board.get(4) == value &&
-                        board.get(7) == value))
+                if ((isMorrisInLine(8, value, board) && isMorrisInLine(0, value, board)) || (isMorrisInLine(8, value, board) && isMorrisInLine(3, value, board)) ||
+                        (isMorrisInLine(8, value, board) && isMorrisInLine(7, value, board)) || (isMorrisInLine(3, value, board) && isMorrisInLine(9, value, board)) ||
+                        (isMorrisInLine(3, value, board) && isMorrisInLine(10, value, board)))
                     return true;
                 break;
             case 2:
-                if ((board.get(1) == value && board.get(0) == value) && (board.get(14) == value &&
-                        board.get(23) == value))
+                if ((isMorrisInLine(8, value, board) && isMorrisInLine(0, value, board)) || (isMorrisInLine(8, value, board) && isMorrisInLine(3, value, board)) ||
+                        (isMorrisInLine(8, value, board) && isMorrisInLine(7, value, board)) || (isMorrisInLine(7, value, board) && isMorrisInLine(12, value, board)) ||
+                        (isMorrisInLine(7, value, board) && isMorrisInLine(15, value, board)))
                     return true;
                 break;
             case 3:
-                if ((board.get(4) == value && board.get(5) == value) && (board.get(10) == value &&
-                        board.get(18) == value))
+                if ((isMorrisInLine(1, value, board) && isMorrisInLine(9, value, board)) || (isMorrisInLine(1, value, board) && isMorrisInLine(11, value, board)) ||
+                        (isMorrisInLine(1, value, board) && isMorrisInLine(14, value, board)) || (isMorrisInLine(9, value, board) && isMorrisInLine(6, value, board)) ||
+                        (isMorrisInLine(9, value, board) && isMorrisInLine(3, value, board)))
                     return true;
                 break;
             case 4:
-                if ((board.get(1) == value && board.get(7) == value) && (board.get(3) == value &&
-                        board.get(5) == value))
+                if ((isMorrisInLine(9, value, board) && isMorrisInLine(6, value, board)) || (isMorrisInLine(9, value, board) && isMorrisInLine(3, value, board)) ||
+                        (isMorrisInLine(9, value, board) && isMorrisInLine(1, value, board)) || (isMorrisInLine(3, value, board) && isMorrisInLine(8, value, board)) ||
+                        (isMorrisInLine(3, value, board) && isMorrisInLine(10, value, board)))
                     return true;
                 break;
             case 5:
-                if ((board.get(3) == value && board.get(4) == value) && (board.get(13) == value &&
-                        board.get(20) == value))
+                if ((isMorrisInLine(6, value, board) && isMorrisInLine(9, value, board)) || (isMorrisInLine(6, value, board) && isMorrisInLine(12, value, board)) ||
+                        (isMorrisInLine(6, value, board) && isMorrisInLine(14, value, board)) || (isMorrisInLine(9, value, board) && isMorrisInLine(3, value, board)) ||
+                        (isMorrisInLine(9, value, board) && isMorrisInLine(1, value, board)))
                     return true;
                 break;
             case 6:
-                if ((board.get(7) == value && board.get(8) == value) && (board.get(11) == value &&
-                        board.get(15) == value))
+                if ((isMorrisInLine(10, value, board) && isMorrisInLine(5, value, board)) || (isMorrisInLine(10, value, board) && isMorrisInLine(3, value, board)) ||
+                        (isMorrisInLine(10, value, board) && isMorrisInLine(2, value, board)) || (isMorrisInLine(2, value, board) && isMorrisInLine(11, value, board)) ||
+                        (isMorrisInLine(2, value, board) && isMorrisInLine(13, value, board)))
                     return true;
                 break;
             case 7:
-                if ((board.get(6) == value && board.get(8) == value) && (board.get(1) == value &&
-                        board.get(4) == value))
+                if ((isMorrisInLine(10, value, board) && isMorrisInLine(5, value, board)) || (isMorrisInLine(10, value, board) && isMorrisInLine(3, value, board)) ||
+                        (isMorrisInLine(10, value, board) && isMorrisInLine(2, value, board)) || (isMorrisInLine(3, value, board) && isMorrisInLine(8, value, board)) ||
+                        (isMorrisInLine(3, value, board) && isMorrisInLine(9, value, board)))
                     return true;
                 break;
             case 8:
-                if ((board.get(6) == value && board.get(7) == value) && (board.get(12) == value &&
-                        board.get(17) == value))
+                if ((isMorrisInLine(10, value, board) && isMorrisInLine(5, value, board)) || (isMorrisInLine(10, value, board) && isMorrisInLine(3, value, board)) ||
+                        (isMorrisInLine(10, value, board) && isMorrisInLine(2, value, board)) || (isMorrisInLine(5, value, board) && isMorrisInLine(12, value, board)) ||
+                        (isMorrisInLine(5, value, board) && isMorrisInLine(13, value, board)))
                     return true;
                 break;
             case 9:
-                if ((board.get(0) == value && board.get(21) == value) && (board.get(10) == value &&
-                        board.get(11) == value))
+                if ((isMorrisInLine(0, value, board) && isMorrisInLine(8, value, board)) || (isMorrisInLine(0, value, board) && isMorrisInLine(11, value, board)) ||
+                        (isMorrisInLine(0, value, board) && isMorrisInLine(15, value, board)) || (isMorrisInLine(11, value, board) && isMorrisInLine(1, value, board)) ||
+                        (isMorrisInLine(11, value, board) && isMorrisInLine(2, value, board)))
                     return true;
                 break;
             case 10:
-                if ((board.get(9) == value && board.get(11) == value) && (board.get(3) == value &&
-                        board.get(18) == value))
+                if ((isMorrisInLine(1, value, board) && isMorrisInLine(9, value, board)) || (isMorrisInLine(1, value, board) && isMorrisInLine(11, value, board)) ||
+                        (isMorrisInLine(1, value, board) && isMorrisInLine(14, value, board)) || (isMorrisInLine(11, value, board) && isMorrisInLine(0, value, board)) ||
+                        (isMorrisInLine(11, value, board) && isMorrisInLine(2, value, board)))
                     return true;
                 break;
             case 11:
-                if ((board.get(9) == value && board.get(10) == value) && (board.get(6) == value &&
-                        board.get(15) == value))
+                if ((isMorrisInLine(2, value, board) && isMorrisInLine(10, value, board)) || (isMorrisInLine(2, value, board) && isMorrisInLine(11, value, board)) ||
+                        (isMorrisInLine(2, value, board) && isMorrisInLine(13, value, board)) || (isMorrisInLine(11, value, board) && isMorrisInLine(1, value, board)) ||
+                        (isMorrisInLine(11, value, board) && isMorrisInLine(0, value, board)))
                     return true;
                 break;
             case 12:
-                if ((board.get(8) == value && board.get(17) == value) && (board.get(13) == value &&
-                        board.get(14) == value))
+                if ((isMorrisInLine(5, value, board) && isMorrisInLine(10, value, board)) || (isMorrisInLine(5, value, board) && isMorrisInLine(12, value, board)) ||
+                        (isMorrisInLine(5, value, board) && isMorrisInLine(13, value, board)) || (isMorrisInLine(12, value, board) && isMorrisInLine(6, value, board)) ||
+                        (isMorrisInLine(12, value, board) && isMorrisInLine(7, value, board)))
                     return true;
                 break;
             case 13:
-                if ((board.get(12) == value && board.get(14) == value) && (board.get(5) == value &&
-                        board.get(20) == value))
+                if ((isMorrisInLine(6, value, board) && isMorrisInLine(9, value, board)) || (isMorrisInLine(6, value, board) && isMorrisInLine(12, value, board)) ||
+                        (isMorrisInLine(6, value, board) && isMorrisInLine(14, value, board)) || (isMorrisInLine(12, value, board) && isMorrisInLine(7, value, board)) ||
+                        (isMorrisInLine(12, value, board) && isMorrisInLine(5, value, board)))
                     return true;
                 break;
             case 14:
-                if ((board.get(12) == value && board.get(13) == value) && (board.get(2) == value &&
-                        board.get(23) == value))
+                if ((isMorrisInLine(7, value, board) && isMorrisInLine(8, value, board)) || (isMorrisInLine(7, value, board) && isMorrisInLine(12, value, board)) ||
+                        (isMorrisInLine(7, value, board) && isMorrisInLine(15, value, board)) || (isMorrisInLine(12, value, board) && isMorrisInLine(6, value, board)) ||
+                        (isMorrisInLine(12, value, board) && isMorrisInLine(5, value, board)))
                     return true;
                 break;
             case 15:
-                if ((board.get(6) == value && board.get(11) == value) && (board.get(16) == value &&
-                        board.get(17) == value))
+                if ((isMorrisInLine(2, value, board) && isMorrisInLine(10, value, board)) || (isMorrisInLine(2, value, board) && isMorrisInLine(11, value, board)) ||
+                        (isMorrisInLine(2, value, board) && isMorrisInLine(13, value, board)) || (isMorrisInLine(13, value, board) && isMorrisInLine(5, value, board)) ||
+                        (isMorrisInLine(13, value, board) && isMorrisInLine(4, value, board)))
                     return true;
                 break;
             case 16:
-                if ((board.get(19) == value && board.get(22) == value) && (board.get(15) == value &&
-                        board.get(17) == value))
+                if ((isMorrisInLine(13, value, board) && isMorrisInLine(2, value, board)) || (isMorrisInLine(13, value, board) && isMorrisInLine(4, value, board)) ||
+                        (isMorrisInLine(13, value, board) && isMorrisInLine(5, value, board)) || (isMorrisInLine(4, value, board) && isMorrisInLine(14, value, board)) ||
+                        (isMorrisInLine(4, value, board) && isMorrisInLine(15, value, board)))
                     return true;
                 break;
             case 17:
-                if ((board.get(8) == value && board.get(12) == value) && (board.get(16) == value &&
-                        board.get(15) == value))
+                if ((isMorrisInLine(13, value, board) && isMorrisInLine(5, value, board)) || (isMorrisInLine(13, value, board) && isMorrisInLine(4, value, board)) ||
+                        (isMorrisInLine(13, value, board) && isMorrisInLine(2, value, board)) || (isMorrisInLine(5, value, board) && isMorrisInLine(12, value, board)) ||
+                        (isMorrisInLine(5, value, board) && isMorrisInLine(10, value, board)))
                     return true;
                 break;
             case 18:
-                if ((board.get(19) == value && board.get(20) == value) && (board.get(3) == value &&
-                        board.get(10) == value))
+                if ((isMorrisInLine(1, value, board) && isMorrisInLine(9, value, board)) || (isMorrisInLine(1, value, board) && isMorrisInLine(11, value, board)) ||
+                        (isMorrisInLine(1, value, board) && isMorrisInLine(14, value, board)) || (isMorrisInLine(14, value, board) && isMorrisInLine(4, value, board)) ||
+                        (isMorrisInLine(14, value, board) && isMorrisInLine(6, value, board)))
                     return true;
                 break;
             case 19:
-                if ((board.get(16) == value && board.get(22) == value) && (board.get(20) == value &&
-                        board.get(18) == value))
+                if ((isMorrisInLine(4, value, board) && isMorrisInLine(13, value, board)) || (isMorrisInLine(4, value, board) && isMorrisInLine(14, value, board)) ||
+                        (isMorrisInLine(4, value, board) && isMorrisInLine(15, value, board)) || (isMorrisInLine(14, value, board) && isMorrisInLine(1, value, board)) ||
+                        (isMorrisInLine(14, value, board) && isMorrisInLine(6, value, board)))
                     return true;
                 break;
             case 20:
-                if ((board.get(18) == value && board.get(19) == value) && (board.get(5) == value &&
-                        board.get(13) == value))
+                if ((isMorrisInLine(6, value, board) && isMorrisInLine(9, value, board)) || (isMorrisInLine(6, value, board) && isMorrisInLine(12, value, board)) ||
+                        (isMorrisInLine(6, value, board) && isMorrisInLine(14, value, board)) || (isMorrisInLine(14, value, board) && isMorrisInLine(4, value, board)) ||
+                        (isMorrisInLine(14, value, board) && isMorrisInLine(1, value, board)))
                     return true;
                 break;
             case 21:
-                if ((board.get(9) == value && board.get(0) == value) && (board.get(22) == value &&
-                        board.get(23) == value))
+                if ((isMorrisInLine(0, value, board) && isMorrisInLine(8, value, board)) || (isMorrisInLine(0, value, board) && isMorrisInLine(11, value, board)) ||
+                        (isMorrisInLine(0, value, board) && isMorrisInLine(15, value, board)) || (isMorrisInLine(15, value, board) && isMorrisInLine(4, value, board)) ||
+                        (isMorrisInLine(15, value, board) && isMorrisInLine(7, value, board)))
                     return true;
                 break;
             case 22:
-                if ((board.get(21) == value && board.get(23) == value) && (board.get(16) == value &&
-                        board.get(19) == value))
+                if ((isMorrisInLine(4, value, board) && isMorrisInLine(13, value, board)) || (isMorrisInLine(4, value, board) && isMorrisInLine(14, value, board)) ||
+                        (isMorrisInLine(4, value, board) && isMorrisInLine(15, value, board)) || (isMorrisInLine(15, value, board) && isMorrisInLine(7, value, board)) ||
+                        (isMorrisInLine(15, value, board) && isMorrisInLine(0, value, board)))
                     return true;
                 break;
             case 23:
-                if ((board.get(21) == value && board.get(22) == value) && (board.get(2) == value &&
-                        board.get(14) == value))
+                if ((isMorrisInLine(7, value, board) && isMorrisInLine(8, value, board)) || (isMorrisInLine(7, value, board) && isMorrisInLine(12, value, board)) ||
+                        (isMorrisInLine(7, value, board) && isMorrisInLine(15, value, board)) || (isMorrisInLine(15, value, board) && isMorrisInLine(4, value, board)) ||
+                        (isMorrisInLine(15, value, board) && isMorrisInLine(0, value, board)))
                     return true;
                 break;
         }
@@ -732,7 +746,6 @@ public class Algorithm
 
     private static int countOpponentBlockPawns(int player, ArrayList<Integer> board) {
         int counter_f = 0;
-        int counter_s = 0;
 
         int opposite_player = getSecondPlayerId(player);
 
@@ -747,11 +760,9 @@ public class Algorithm
                 if (help_counter == neigh.size())
                     if (board.get(i) == opposite_player)
                         counter_f++;
-                    else if (board.get(i) == player)
-                        counter_s++;
         }
 
-        return counter_f - counter_s;
+        return counter_f;
     }
 
     public static boolean isGameOver(ArrayList<Integer> board) {
@@ -764,11 +775,11 @@ public class Algorithm
         switch (getPhaseForPlayer(player, board))
         {
             case NMM.I_MID_GAME_PHASE:
-                if (countPlayerMoves(player, board) == 0)// || countPawnsOfPlayer(player, board) <= 2)
+                if (countPlayerMoves(player, board) == 0)// || p.getCounter_of_moves() > 40)
                     return true;
                 break;
             case NMM.I_END_GAME_PHASE:
-                if (countPawnsOfPlayer(player, board) <= 2 || p.getCounter_of_moves() > 60)
+                if (countPawnsOfPlayer(player, board) <= 2)// || p.getCounter_of_moves() > 40)
                     return true;
                 break;
         }
@@ -832,7 +843,7 @@ public class Algorithm
         for (int i=0; i<board.size(); i++){
             if (board.get(i) == iPlayer) {
                 for (Integer neigh : getNeighbours(i))
-                    if (board.get(neigh) == NMM.I_BLANK_FIELD && p.getLastMove(NMM.I_FIRST_FIELD) != neigh)
+                    if (board.get(neigh) == NMM.I_BLANK_FIELD && p.getLastMove(NMM.I_FIELD_FROM) != neigh)
                             counter++;
             }
         }

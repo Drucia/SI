@@ -54,8 +54,8 @@ public class GameOverController {
 
         w_time.setText(w.getTime() + "");
         b_time.setText(b.getTime() + "");
-        w_counter.setText(w.getCounter_of_moves() + "");
-        b_counter.setText(b.getCounter_of_moves() + "");
+        w_counter.setText(w.getHistory_of_moves().size() + "");
+        b_counter.setText(b.getHistory_of_moves().size() + "");
 
         writeToFile();
     }

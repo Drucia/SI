@@ -16,9 +16,10 @@ public class NMM {
     public static final int I_AI_PLAYER = 0;
     public static final int I_MAN_PLAYER = 1;
     private static final int I_AMOUNT_OF_END_PHASE_PAWN = 3;
-    public static final int I_SECOND_FIELD = 2;
-    public static final int I_FIRST_FIELD = 0;
-    public static final int I_DEPTH_FOR_ALG = 4;
+    public static final int I_FIELD_TO = 2;
+    public static final int I_FIELD_FROM = 0;
+    public static final int I_DEPTH_FOR_ALG = 7;
+    public static final int I_DEPTH_FOR_ALG_O = 4;
     public static final int I_DRAW = 10;
 
     private static ArrayList<Player> players;
@@ -95,7 +96,7 @@ public class NMM {
             startTime = System.nanoTime();
 
             if (player.getPlayerPhase() == I_OPEN_GAME_PHASE)
-                score = Algorithm.miniMaxiOpenPhase(player.getPlayerId(), Algorithm.I_MAX_TURN, I_DEPTH_FOR_ALG, new Node(0, Node.I_NO_MILL, board)).getBoard();
+                score = Algorithm.miniMaxiOpenPhase(player.getPlayerId(), Algorithm.I_MAX_TURN, I_DEPTH_FOR_ALG_O, new Node(0, Node.I_NO_MILL, board)).getBoard();
             else // (p.getPlayerPhase() != I_OPEN_GAME_PHASE)
                 score = Algorithm.miniMaxiMidEndPhase(player.getPlayerId(), Algorithm.I_MAX_TURN, I_DEPTH_FOR_ALG, new Node(0, Node.I_NO_MILL, board)).getBoard();
             endTime   = System.nanoTime();
@@ -105,7 +106,7 @@ public class NMM {
         } else { // (p.getPlayerPhase() != I_OPEN_GAME_PHASE)
             startTime = System.nanoTime();
             if (player.getPlayerPhase() == I_OPEN_GAME_PHASE)
-                score = Algorithm.alphaBetaOpenPhase(player.getPlayerId(), Algorithm.I_MAX_TURN, I_DEPTH_FOR_ALG, new Node(0, Node.I_NO_MILL, board), new Node(Double.NEGATIVE_INFINITY, Node.I_NO_MILL, board), new Node(Double.POSITIVE_INFINITY, Node.I_NO_MILL, board)).getBoard();
+                score = Algorithm.alphaBetaOpenPhase(player.getPlayerId(), Algorithm.I_MAX_TURN, I_DEPTH_FOR_ALG_O, new Node(0, Node.I_NO_MILL, board), new Node(Double.NEGATIVE_INFINITY, Node.I_NO_MILL, board), new Node(Double.POSITIVE_INFINITY, Node.I_NO_MILL, board)).getBoard();
             else
                 score = Algorithm.alphaBetaMidEndPhase(player.getPlayerId(), Algorithm.I_MAX_TURN, I_DEPTH_FOR_ALG, new Node(0, Node.I_NO_MILL, board), new Node(Double.NEGATIVE_INFINITY, Node.I_NO_MILL, board), new Node(Double.POSITIVE_INFINITY, Node.I_NO_MILL, board)).getBoard();
             endTime = System.nanoTime();
@@ -136,16 +137,23 @@ public class NMM {
         {
             case I_OPEN_GAME_PHASE:
                 if (actualPlayer.getAmountOfPawns() == I_AMOUNT_OF_PAWN)
-                    actualPlayer.setPlayerPhase(I_MID_GAME_PHASE);
+                {actualPlayer.setPlayerPhase(I_MID_GAME_PHASE);
+                actualPlayer.setCounter_of_moves(0);}
                 break;
             case I_MID_GAME_PHASE:
                 if (actualPlayer.getAmountOfPawns() == I_AMOUNT_OF_END_PHASE_PAWN)
-                    actualPlayer.setPlayerPhase(I_END_GAME_PHASE);
+                {actualPlayer.setPlayerPhase(I_END_GAME_PHASE);
+                actualPlayer.setCounter_of_moves(0);}
                 break;
         }
     }
 
-    public static boolean checkIfCanDeleteOpponent(Player actualPlayer) { // search mills
-        return Algorithm.isCloseMill(board, actualPlayer.getLastMove(NMM.I_SECOND_FIELD));
+    public static int checkHowMuchOpponentCanDelete(Player actualPlayer) { // search mills
+        if (Algorithm.isDoubleMill(board, actualPlayer.getLastMove(NMM.I_FIELD_TO)))
+            return 2;
+        else if (Algorithm.isCloseMill(board, actualPlayer.getLastMove(NMM.I_FIELD_TO)))
+            return 1;
+        else
+            return 0;
     }
 }

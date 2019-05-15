@@ -86,6 +86,10 @@ public class Player {
         this.counter_of_moves++;
     }
 
+    public void setCounter_of_moves(int counter_of_moves) {
+        this.counter_of_moves = counter_of_moves;
+    }
+
     public int getCounter_of_moves() {
         return counter_of_moves;
     }
@@ -114,6 +118,13 @@ public class Player {
     public int getLastMove(int field) {
         String last_move = history_of_moves.get(history_of_moves.size()-1);
         String fields[] = last_move.split(" ");
+
+        if (Controller.list_of_fields_in_words.indexOf(fields[field]) == -1)
+        {
+            last_move = history_of_moves.get(history_of_moves.size()-2);
+            fields = last_move.split(" ");
+        }
+
         return Controller.list_of_fields_in_words.indexOf(fields[field]);
     }
 }
