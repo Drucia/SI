@@ -148,7 +148,7 @@
             <ImageView fx:id="p18" fitHeight="40.0" fitWidth="40.0" layoutX="442.0" layoutY="454.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="p0" fitHeight="40.0" fitWidth="40.0" layoutX="55.0" layoutY="531.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="p9" fitHeight="40.0" fitWidth="40.0" layoutX="287.0" layoutY="531.0" onMousePressed="#onPlaceClicked" pickOnBounds="true" preserveRatio="true" />
-            <Button layoutX="648.0" layoutY="283.0" mnemonicParsing="false" onAction="#nextPlayerPressed" prefHeight="31.0" prefWidth="146.0" text="Następny gracz" />
+            <Button fx:id="next" layoutX="648.0" layoutY="283.0" mnemonicParsing="false" onAction="#nextPlayerPressed" prefHeight="31.0" prefWidth="146.0" text="Następny gracz" />
             <Label fx:id="comm" layoutX="645.0" layoutY="319.0" prefHeight="50.0" prefWidth="154.0" text="Wykonano ruch. Wcisnij przycisk, żeby zakończyć rundę." textAlignment="CENTER" visible="false" wrapText="true">
                <font>
                   <Font size="12.0" />

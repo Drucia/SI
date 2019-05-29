@@ -30,6 +30,7 @@ public class NewGameController {
     private final static int I_THREE_CONF_E = 16;
     private final static int I_WIN_CONF_E = 1190;
     public static boolean isClose = true;
+
     @FXML
     private ChoiceBox<String> white_player;
 

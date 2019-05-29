@@ -52,8 +52,8 @@ public class GameOverController {
         Player w = NMM.getPlayer(NMM.I_WHITE_PLAYER);
         Player b = NMM.getPlayer(NMM.I_BLACK_PLAYER);
 
-        w_time.setText(w.getTime() + "");
-        b_time.setText(b.getTime() + "");
+        w_time.setText(w.getTime() + " ns");
+        b_time.setText(b.getTime() + " ns");
         w_counter.setText(w.getHistory_of_moves().size() + "");
         b_counter.setText(b.getHistory_of_moves().size() + "");
 

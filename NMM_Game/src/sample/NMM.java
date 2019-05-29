@@ -18,7 +18,7 @@ public class NMM {
     private static final int I_AMOUNT_OF_END_PHASE_PAWN = 3;
     public static final int I_FIELD_TO = 2;
     public static final int I_FIELD_FROM = 0;
-    public static final int I_DEPTH_FOR_ALG = 7;
+    public static final int I_DEPTH_FOR_ALG = 5;
     public static final int I_DEPTH_FOR_ALG_O = 4;
     public static final int I_DRAW = 10;
 
@@ -26,6 +26,7 @@ public class NMM {
     private static ArrayList<Integer> board;
     private static ArrayList<String> history_of_moves;
     private static int game_counter;
+    private static int game_counter_of_moves_after_beat;
 
     public static void newGame() {
         // clear all fields on board
@@ -52,6 +53,18 @@ public class NMM {
 
     public static void incrementGameCounter() {
         NMM.game_counter++;
+    }
+
+    public static void incrementGameCounterAfterBeat() {
+        NMM.game_counter_of_moves_after_beat++;
+    }
+
+    public static int getGame_counter_of_moves_after_beat() {
+        return game_counter_of_moves_after_beat;
+    }
+
+    public static void setGame_counter_of_moves_after_beat(int game_counter_of_moves_after_beat) {
+        NMM.game_counter_of_moves_after_beat = game_counter_of_moves_after_beat;
     }
 
     public static int getGame_counter() {
@@ -138,12 +151,14 @@ public class NMM {
             case I_OPEN_GAME_PHASE:
                 if (actualPlayer.getAmountOfPawns() == I_AMOUNT_OF_PAWN)
                 {actualPlayer.setPlayerPhase(I_MID_GAME_PHASE);
-                actualPlayer.setCounter_of_moves(0);}
+                actualPlayer.setCounter_of_moves(0);
+                NMM.setGame_counter_of_moves_after_beat(0);}
                 break;
             case I_MID_GAME_PHASE:
                 if (actualPlayer.getAmountOfPawns() == I_AMOUNT_OF_END_PHASE_PAWN)
                 {actualPlayer.setPlayerPhase(I_END_GAME_PHASE);
-                actualPlayer.setCounter_of_moves(0);}
+                actualPlayer.setCounter_of_moves(0);
+                    NMM.setGame_counter_of_moves_after_beat(0);}
                 break;
         }
     }

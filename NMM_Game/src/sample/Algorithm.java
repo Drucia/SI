@@ -19,7 +19,7 @@ public class Algorithm
         if (flag == I_MAX_TURN)
         {
             Node max = new Node(Double.NEGATIVE_INFINITY, Node.I_NO_MILL, null);
-            children = getPossMovesForPlayerOpenPhase(playerId, board.getBoard());
+            children = getPossMovesForPlayerOpenPhase(playerId, board, depth == NMM.I_DEPTH_FOR_ALG_O);
 
             for (Node child:children) {
                 Node val = miniMaxiOpenPhase(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child);
@@ -30,7 +30,7 @@ public class Algorithm
         }
         else { //if (flag == I_MIN_TURN)
             Node min = new Node(Double.POSITIVE_INFINITY, Node.I_NO_MILL, null);
-            children = getPossMovesForPlayerOpenPhase(playerId, board.getBoard());
+            children = getPossMovesForPlayerOpenPhase(playerId, board, depth == NMM.I_DEPTH_FOR_ALG_O);
 
             for (Node child:children) {
                 Node val = miniMaxiOpenPhase(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child);
@@ -57,9 +57,9 @@ public class Algorithm
             Node max = new Node(Double.NEGATIVE_INFINITY, Node.I_NO_MILL, null);
 
             if (getPhaseForPlayer(playerId, board.getBoard()) == NMM.I_MID_GAME_PHASE)
-                children = getPossMovesForPlayerMidPhase(playerId, board.getBoard());
+                children = getPossMovesForPlayerMidPhase(playerId, board, depth == NMM.I_DEPTH_FOR_ALG);
             else
-                children = getPossMovesForPlayerEndPhase(playerId, board.getBoard());
+                children = getPossMovesForPlayerEndPhase(playerId, board, depth == NMM.I_DEPTH_FOR_ALG);
 
             for (Node child:children) {
                 Node val = miniMaxiMidEndPhase(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child);
@@ -72,9 +72,9 @@ public class Algorithm
             Node min = new Node(Double.POSITIVE_INFINITY, Node.I_NO_MILL, null);
 
             if (getPhaseForPlayer(playerId, board.getBoard()) == NMM.I_MID_GAME_PHASE)
-                children = getPossMovesForPlayerMidPhase(playerId, board.getBoard());
+                children = getPossMovesForPlayerMidPhase(playerId, board, depth == NMM.I_DEPTH_FOR_ALG);
             else
-                children = getPossMovesForPlayerEndPhase(playerId, board.getBoard());
+                children = getPossMovesForPlayerEndPhase(playerId, board, depth == NMM.I_DEPTH_FOR_ALG);
 
             for (Node child:children) {
                 Node val = miniMaxiMidEndPhase(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child);
@@ -85,10 +85,11 @@ public class Algorithm
         }
     }
 
-    private static ArrayList<Node> getPossMovesForPlayerEndPhase(int playerId, ArrayList<Integer> board) {
+    private static ArrayList<Node> getPossMovesForPlayerEndPhase(int playerId, Node node, boolean isFirst) {
         Player player = NMM.getPlayer(playerId);
         ArrayList<Node> moves = new ArrayList<>();
         ArrayList<Integer> move;
+        ArrayList<Integer> board = node.getBoard();
 
         for(int i=0; i<board.size(); i++)
         {
@@ -96,16 +97,25 @@ public class Algorithm
             {
                 for (int n=0; n<board.size(); n++)
                 {
-                    if (board.get(n) == NMM.I_BLANK_FIELD && (n != player.getLastMove(NMM.I_FIELD_FROM) && i != player.getLastMove(NMM.I_FIELD_TO))) // different shift than last
+                    if (board.get(n) == NMM.I_BLANK_FIELD && (n != player.getLastMove(NMM.I_FIELD_FROM) || i != player.getLastMove(NMM.I_FIELD_TO))) // different shift than last
                     {
                         move = new ArrayList<>(board);
                         move.set(n,playerId);
                         move.set(i, NMM.I_BLANK_FIELD);
 
-                        if (isCloseMill(move, n))
-                            moves.add(new Node(0, Node.I_CLOSED_MILL, beatPawnMove(move, getSecondPlayerId(playerId), 1)));
+                        if (isFirst){
+                            if (isCloseMill(move, n))
+                                moves.add(new Node(0, Node.I_CLOSED_MILL, beatPawnMove(move, getSecondPlayerId(playerId), 1)));
+                            else
+                                moves.add(new Node(0, Node.I_NO_MILL, move));
+                        }
                         else
-                            moves.add(new Node(0, Node.I_NO_MILL, move));
+                        {
+                            if (isCloseMill(move, n))
+                                moves.add(new Node(0, node.getMill(), beatPawnMove(move, getSecondPlayerId(playerId), 1)));
+                            else
+                                moves.add(new Node(0, node.getMill(), move));
+                        }
                     }
                 }
             }
@@ -114,9 +124,10 @@ public class Algorithm
         return moves;
     }
 
-    private static ArrayList<Node> getPossMovesForPlayerMidPhase(int playerId, ArrayList<Integer> board) {
+    private static ArrayList<Node> getPossMovesForPlayerMidPhase(int playerId, Node node, boolean isFirst) {
         Player player = NMM.getPlayer(playerId);
         ArrayList<Node> moves = new ArrayList<>();
+        ArrayList<Integer> board = node.getBoard();
         ArrayList<Integer> move;
 
         for(int i=0; i<board.size(); i++)
@@ -128,18 +139,28 @@ public class Algorithm
                 for (Integer n : neigh)
                 {
                     int nei = board.get(n);
-                    if (nei == NMM.I_BLANK_FIELD && (n != player.getLastMove(NMM.I_FIELD_FROM) && i != player.getLastMove(NMM.I_FIELD_TO))) // different shift than last
+                    if (nei == NMM.I_BLANK_FIELD && (n != player.getLastMove(NMM.I_FIELD_FROM) || i != player.getLastMove(NMM.I_FIELD_TO))) // different shift than last
                     {
                         move = new ArrayList<>(board);
                         move.set(n,playerId);
                         move.set(i, NMM.I_BLANK_FIELD);
 
-                        if (isDoubleMill(move, n))
-                            moves.add(new Node(0, Node.I_DOUBLE_MILL, beatPawnMove(move, getSecondPlayerId(playerId), 2)));
-                        else if (isCloseMill(move, n))
-                            moves.add(new Node(0, Node.I_CLOSED_MILL, beatPawnMove(move, getSecondPlayerId(playerId), 1)));
-                        else
-                            moves.add(new Node(0, Node.I_NO_MILL, move));
+                        if (isFirst) {
+                            if (isDoubleMill(move, n))
+                                moves.add(new Node(0, Node.I_DOUBLE_MILL, beatPawnMove(move, getSecondPlayerId(playerId), 2)));
+                            else if (isCloseMill(move, n))
+                                moves.add(new Node(0, Node.I_CLOSED_MILL, beatPawnMove(move, getSecondPlayerId(playerId), 1)));
+                            else
+                                moves.add(new Node(0, Node.I_NO_MILL, move));
+                        } else
+                        {
+                            if (isDoubleMill(move, n))
+                                moves.add(new Node(0, node.getMill(), beatPawnMove(move, getSecondPlayerId(playerId), 2)));
+                            else if (isCloseMill(move, n))
+                                moves.add(new Node(0, node.getMill(), beatPawnMove(move, getSecondPlayerId(playerId), 1)));
+                            else
+                                moves.add(new Node(0, node.getMill(), move));
+                        }
                     }
                 }
             }
@@ -156,7 +177,7 @@ public class Algorithm
         int three_conf = two_conf;
         int win = isGameOver(getSecondPlayerId(player), board.getBoard()) ? 1 : isGameOver(player, board.getBoard()) ? -1 : 0;
 
-        return (heu.get(13) * closed_morris + heu.get(14) * two_conf + heu.get(15) * three_conf + heu.get(16) * win);// * r.nextDouble();
+        return (heu.get(13) * closed_morris + heu.get(14) * two_conf + heu.get(15) * three_conf + heu.get(16) * win) + r.nextInt(15);// * r.nextDouble();
     }
 
     private static double evaluateMidPhaseFunction(int player, Node board) {
@@ -171,7 +192,7 @@ public class Algorithm
         int win = isGameOver(getSecondPlayerId(player), board.getBoard()) ? 1 : isGameOver(player, board.getBoard()) ? -1 : 0;
 
         return (heu.get(6) * closed_morris + heu.get(7) * morris_number + heu.get(8) * block_opp_pieces + heu.get(9) *
-                pieces_number + heu.get(10) * opened_morris + heu.get(11) * double_morris + heu.get(12) * win);// * r.nextDouble();
+                pieces_number + heu.get(10) * opened_morris + heu.get(11) * double_morris + heu.get(12) * win) + r.nextInt(15);
     }
 
     private static boolean isEndOfOpenPhase(int act_depth) {
@@ -289,9 +310,10 @@ public class Algorithm
         return false;
     }
 
-    private static ArrayList<Node> getPossMovesForPlayerOpenPhase(int playerId, ArrayList<Integer> board) {
+    private static ArrayList<Node> getPossMovesForPlayerOpenPhase(int playerId, Node node, boolean isFirst) {
         ArrayList<Node> moves = new ArrayList<>();
         ArrayList<Integer> move;
+        ArrayList<Integer> board = node.getBoard();
 
         for (int i=0; i<board.size(); i++)
         {
@@ -299,12 +321,22 @@ public class Algorithm
                 move = new ArrayList<>(board);
                 move.set(i, playerId);
 
-                if (isDoubleMill(move, i))
-                    moves.add(new Node(0, Node.I_DOUBLE_MILL, beatPawnMove(move, getSecondPlayerId(playerId), 2)));
-                else if (isCloseMill(move, i))
-                    moves.add(new Node(0, Node.I_CLOSED_MILL, beatPawnMove(move, getSecondPlayerId(playerId), 1)));
-                else
-                    moves.add(new Node(0, Node.I_NO_MILL, move));
+                if (isFirst) {
+                    if (isDoubleMill(move, i))
+                        moves.add(new Node(0, Node.I_DOUBLE_MILL, beatPawnMove(move, getSecondPlayerId(playerId), 2)));
+                    else if (isCloseMill(move, i))
+                        moves.add(new Node(0, Node.I_CLOSED_MILL, beatPawnMove(move, getSecondPlayerId(playerId), 1)));
+                    else
+                        moves.add(new Node(0, Node.I_NO_MILL, move));
+                } else
+                {
+                    if (isDoubleMill(move, i))
+                        moves.add(new Node(0, node.getMill(), beatPawnMove(move, getSecondPlayerId(playerId), 2)));
+                    else if (isCloseMill(move, i))
+                        moves.add(new Node(0, node.getMill(), beatPawnMove(move, getSecondPlayerId(playerId), 1)));
+                    else
+                        moves.add(new Node(0, node.getMill(), move));
+                }
             }
         }
 
@@ -476,9 +508,9 @@ public class Algorithm
         if (flag == I_MAX_TURN)
         {
             if (getPhaseForPlayer(playerId, board.getBoard()) == NMM.I_MID_GAME_PHASE)
-                children = getPossMovesForPlayerMidPhase(playerId, board.getBoard());
+                children = getPossMovesForPlayerMidPhase(playerId, board, depth == NMM.I_DEPTH_FOR_ALG);
             else
-                children = getPossMovesForPlayerEndPhase(playerId, board.getBoard());
+                children = getPossMovesForPlayerEndPhase(playerId, board, depth == NMM.I_DEPTH_FOR_ALG);
 
             for (Node child:children) {
                 Node val = alphaBetaMidEndPhase(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child, alpha, beta);
@@ -493,9 +525,9 @@ public class Algorithm
         else { //if (flag == I_MIN_TURN)
 
             if (getPhaseForPlayer(playerId, board.getBoard()) == NMM.I_MID_GAME_PHASE)
-                children = getPossMovesForPlayerMidPhase(playerId, board.getBoard());
+                children = getPossMovesForPlayerMidPhase(playerId, board, depth == NMM.I_DEPTH_FOR_ALG);
             else
-                children = getPossMovesForPlayerEndPhase(playerId, board.getBoard());
+                children = getPossMovesForPlayerEndPhase(playerId, board, depth == NMM.I_DEPTH_FOR_ALG);
 
             for (Node child:children) {
                 Node val = alphaBetaMidEndPhase(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child, alpha, beta);
@@ -517,7 +549,7 @@ public class Algorithm
 
         if (flag == I_MAX_TURN)
         {
-            children = getPossMovesForPlayerOpenPhase(playerId, board.getBoard());
+            children = getPossMovesForPlayerOpenPhase(playerId, board, depth == NMM.I_DEPTH_FOR_ALG_O);
 
             for (Node child:children) {
                 Node val = alphaBetaOpenPhase(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child, alpha, beta);
@@ -531,7 +563,7 @@ public class Algorithm
             return alpha; // this is best move
         }
         else { //if (flag == I_MIN_TURN)
-            children = getPossMovesForPlayerOpenPhase(playerId, board.getBoard());
+            children = getPossMovesForPlayerOpenPhase(playerId, board, depth == NMM.I_DEPTH_FOR_ALG_O);
 
             for (Node child:children) {
                 Node val = alphaBetaOpenPhase(getSecondPlayerId(playerId), I_MIN_TURN, depth-1, child, alpha, beta);
@@ -770,16 +802,16 @@ public class Algorithm
     }
 
     private static boolean isGameOver(int player, ArrayList<Integer> board) {
-        Player p = NMM.getPlayer(player);
+        //Player p = NMM.getPlayer(player);
 
         switch (getPhaseForPlayer(player, board))
         {
             case NMM.I_MID_GAME_PHASE:
-                if (countPlayerMoves(player, board) == 0)// || p.getCounter_of_moves() > 40)
+                if (countPlayerMoves(player, board) == 0 || NMM.getGame_counter_of_moves_after_beat() > 60)//p.getCounter_of_moves() > 80)
                     return true;
                 break;
             case NMM.I_END_GAME_PHASE:
-                if (countPawnsOfPlayer(player, board) <= 2)// || p.getCounter_of_moves() > 40)
+                if (countPawnsOfPlayer(player, board) <= 2 || NMM.getGame_counter_of_moves_after_beat() > 60) // || p.getCounter_of_moves() > 40)
                     return true;
                 break;
         }

@@ -1,17 +1,23 @@
 package sample;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import javafx.scene.control.Label;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +32,9 @@ public class Controller {
     private static final int I_NO_MOVE = 4;
     private static int id_shift_from;
     private static int to_delete;
+
+    @FXML
+    private Button next;
 
     @FXML
     private ImageView b2;
@@ -272,14 +281,6 @@ public class Controller {
         NMM.updateFieldOfBoard(id, NMM.I_BLANK_FIELD);
         to_delete--;
 
-        if (NMM.isGameOver() && to_delete == 0 && actualPlayer.getPlayerPhase() != NMM.I_OPEN_GAME_PHASE) {
-            GameOverController.n_game = false;
-            showPopup("Koniec Gry", "GameOver.fxml");
-
-            if (GameOverController.n_game)
-                newGameClicked();
-        }
-
         return true;
     }
 
@@ -325,6 +326,7 @@ public class Controller {
         for (int i=0; i<shifts.size(); i++)
         {
             actualPlayer.increment_moves();
+            NMM.incrementGameCounterAfterBeat();
             Pair<Pair<Integer, Integer>, Integer> tmp = shifts.get(i);
             int idx_from = tmp.getKey().getKey();
             int idx_to = tmp.getKey().getValue();
@@ -347,6 +349,7 @@ public class Controller {
                     actualPlayer.addHistory(list_of_fields_in_words.get(idx_from) + " -> " + NMM.I_BLANK_FIELD);
                     NMM.addHistory("Gracz " + actualPlayer.getName() + ": " + list_of_fields_in_words.get(idx_from) + " -> " + NMM.I_BLANK_FIELD);
                     actualPlayer.setCounter_of_moves(0);
+                    NMM.setGame_counter_of_moves_after_beat(0);
                 }
             } else
                 setPawnOnBoard("p"+idx_to);
@@ -359,9 +362,10 @@ public class Controller {
     {
         ArrayList<Integer> old_board = NMM.getActualBoard();
         ArrayList<Pair<Pair<Integer, Integer>, Integer>> shifts = new ArrayList<>();
+        ArrayList<Integer> to_del = new ArrayList<>();
 
-        int from, to, delete, new_val;
-        from = to = delete = new_val = NMM.I_BLANK_FIELD;
+        int from, to, new_val;
+        from = to = new_val = NMM.I_BLANK_FIELD;
 
         for (int i=0; i<board.size(); i++)
         {
@@ -377,21 +381,31 @@ public class Controller {
                 }
                 else if (old_val == playerId)
                     from = i;
-                else
-                    delete = i;
+                else {
+                    to_del.add(i);
+                }
             }
         }
 
         Pair<Pair<Integer, Integer>, Integer> shift = new Pair<>(new Pair<>(from, to), new_val);
         shifts.add(shift);
 
-        if (delete != NMM.I_BLANK_FIELD) {
+        for (Integer delete : to_del)
+        {
             shift = new Pair<>(new Pair<>(delete, NMM.I_BLANK_FIELD), NMM.I_BLANK_FIELD);
             shifts.add(shift);
         }
 
         makeShifts(shifts);
         NMM.updateBoard(board);
+
+        if (NMM.isGameOver() && to_delete == 0 && actualPlayer.getPlayerPhase() != NMM.I_OPEN_GAME_PHASE) {
+            GameOverController.n_game = false;
+            showPopup("Koniec Gry", "GameOver.fxml");
+
+            if (GameOverController.n_game)
+                newGameClicked();
+        }
     }
 
     private boolean setPawnOnBoard(String id_of_clicked_place) {
