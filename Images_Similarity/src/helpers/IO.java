@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class IO {
-    public static final String path = "D:\\Users\\oladr\\Studia\\Term_VI\\Sztuczna\\WorkSpace\\Images_Similarity\\photos\\";
+    public static final String path = "D:\\Users\\oladr\\Studia\\Term_VI\\Sztuczna\\WorkSpace\\Images_Similarity\\src\\photos\\";
     public static final String extension = ".png.haraff.sift";
 
     public static ArrayList<Image> readImagesData(String image1, String image2)
@@ -36,8 +36,8 @@ public class IO {
             {
                 String line[] = reader.readLine().split(" ");
 
-                double x = Double.parseDouble(line[0]) / 1000;
-                double y = Double.parseDouble(line[1]) / 1000;
+                double x = Double.parseDouble(line[0]);
+                double y = Double.parseDouble(line[1]);
 
                 ArrayList<Integer> feat_of_point = new ArrayList<>();
 

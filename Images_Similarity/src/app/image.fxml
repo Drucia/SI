@@ -8,23 +8,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.Controller">
+<VBox fx:id="box" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.Controller">
    <children>
-      <AnchorPane prefHeight="400.0" prefWidth="600.0">
+      <AnchorPane fx:id="anchor" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="600.0">
          <children>
-            <ImageView fx:id="image_a" fitHeight="150.0" fitWidth="200.0" layoutX="94.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="image_a" fitHeight="150.0" fitWidth="300.0" layoutX="69.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../photos/mousee_1.png" />
+                  <Image url="@../photos/pwr_mouse_1.png" />
                </image></ImageView>
-            <ImageView fx:id="image_b" fitHeight="150.0" fitWidth="200.0" layoutX="94.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="image_b" fitHeight="150.0" fitWidth="300.0" layoutX="69.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../photos/mousee_2.png" />
+                  <Image url="@../photos/pwr_mouse_2.png" />
                </image></ImageView>
             <Label layoutX="335.0" layoutY="61.0" text="Wybierz obraz A:" />
             <Label layoutX="335.0" layoutY="182.0" text="Wybierz obraz B:" />
             <ChoiceBox fx:id="choice_a" layoutX="335.0" layoutY="87.0" prefWidth="150.0" />
             <ChoiceBox fx:id="choice_b" layoutX="335.0" layoutY="207.0" prefWidth="150.0" />
-            <Button layoutX="385.0" layoutY="285.0" mnemonicParsing="false" onAction="#onStartClicked" text="START" />
+            <Button layoutX="354.0" layoutY="285.0" mnemonicParsing="false" onAction="#onStartClicked" prefHeight="26.0" prefWidth="127.0" text="START" />
          </children>
       </AnchorPane>
    </children>

@@ -2,27 +2,56 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11b7c5e3-e000-410a-953f-517d50964c4e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/../Images_Similarity/src/algorithm/ImageProcessor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Images_Similarity/src/helpers/IO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Images_Similarity/src/helpers/Image.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Images_Similarity/src/helpers/KeyPoint.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Images_Similarity/src/helpers/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/app/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/app/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/app/image.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/app/image.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/box_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/box_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/box_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/box_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/cup_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/cup_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/cup_1.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/cup_1.png.haraff.sift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/cup_1.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/cup_1.png.haraff.sift.params" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/cup_1.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/cup_1.png.haraff.sift.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/cup_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/cup_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/cup_2.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/cup_2.png.haraff.sift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/cup_2.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/cup_2.png.haraff.sift.params" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/cup_2.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/cup_2.png.haraff.sift.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/glasses_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/glasses_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/glasses_1.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/glasses_1.png.haraff.sift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/glasses_1.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/glasses_1.png.haraff.sift.params" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/glasses_1.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/glasses_1.png.haraff.sift.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/glasses_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/glasses_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/glasses_2.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/glasses_2.png.haraff.sift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/glasses_2.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/glasses_2.png.haraff.sift.params" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/glasses_2.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/glasses_2.png.haraff.sift.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mouse_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mouse_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mouse_1.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mouse_1.png.haraff.sift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mouse_1.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mouse_1.png.haraff.sift.params" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mouse_1.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mouse_1.png.haraff.sift.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mouse_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mouse_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mouse_2.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mouse_2.png.haraff.sift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mouse_2.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mouse_2.png.haraff.sift.params" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mouse_2.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mouse_2.png.haraff.sift.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mousee_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mousee_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mousee_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mousee_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/whisky_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/whisky_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/whisky_1.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/whisky_1.png.haraff.sift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/whisky_1.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/whisky_1.png.haraff.sift.params" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/whisky_1.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/whisky_1.png.haraff.sift.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/whisky_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/whisky_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/whisky_2.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/whisky_2.png.haraff.sift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/whisky_2.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/whisky_2.png.haraff.sift.params" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/whisky_2.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/whisky_2.png.haraff.sift.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/wipes_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/wipes_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/wipes_1.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/wipes_1.png.haraff.sift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/wipes_1.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/wipes_1.png.haraff.sift.params" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/wipes_1.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/wipes_1.png.haraff.sift.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/wipes_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/wipes_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/wipes_2.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/wipes_2.png.haraff.sift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/wipes_2.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/wipes_2.png.haraff.sift.params" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/wipes_2.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/wipes_2.png.haraff.sift.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/src/app/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/app/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/src/app/image.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/app/image.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NMM_Game/sample/Algorithm.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NMM_Game/sample/Algorithm.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NMM_Game/sample/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NMM_Game/sample/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NMM_Game/sample/GameOverController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NMM_Game/sample/GameOverController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NMM_Game/sample/NMM.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NMM_Game/sample/NMM.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NMM_Game/sample/NMM.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NMM_Game/sample/NMM.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NMM_Game/sample/NewGameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NMM_Game/sample/NewGameController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/score/score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/score/score.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Algorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/GameOverController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/GameOverController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/NMM.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/NMM.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/NMM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/NMM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/NewGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/NewGameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TTF_Problem/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TTF_Problem/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TTF_Problem/SI-TTF.vpp" beforeDir="false" afterPath="$PROJECT_DIR$/../TTF_Problem/SI-TTF.vpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -93,8 +122,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="343" column="71" lean-forward="true" selection-start-line="343" selection-start-column="22" selection-end-line="343" selection-end-column="71" />
+            <state relative-caret-position="471">
+              <caret line="347" column="10" lean-forward="true" selection-start-line="347" selection-start-column="10" selection-end-line="347" selection-end-column="10" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#13561#13562#0" expanded="true" />
@@ -289,7 +318,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../ZPI" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Images_Similarity" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
@@ -763,8 +792,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="343" column="71" lean-forward="true" selection-start-line="343" selection-start-column="22" selection-end-line="343" selection-end-column="71" />
+        <state relative-caret-position="471">
+          <caret line="347" column="10" lean-forward="true" selection-start-line="347" selection-start-column="10" selection-end-line="347" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#13561#13562#0" expanded="true" />

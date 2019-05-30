@@ -1,14 +1,10 @@
 package app;
 
-import helpers.IO;
-import helpers.Image;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 public class Main extends Application {
 
