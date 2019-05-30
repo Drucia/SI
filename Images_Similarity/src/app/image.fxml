@@ -24,7 +24,8 @@
             <Label layoutX="335.0" layoutY="182.0" text="Wybierz obraz B:" />
             <ChoiceBox fx:id="choice_a" layoutX="335.0" layoutY="87.0" prefWidth="150.0" />
             <ChoiceBox fx:id="choice_b" layoutX="335.0" layoutY="207.0" prefWidth="150.0" />
-            <Button layoutX="354.0" layoutY="285.0" mnemonicParsing="false" onAction="#onStartClicked" prefHeight="26.0" prefWidth="127.0" text="START" />
+            <Button layoutX="300.0" layoutY="284.0" mnemonicParsing="false" onAction="#onStartClickedWithoutSelection" prefHeight="26.0" prefWidth="127.0" text="BEZ SELEKCJI" />
+            <Button layoutX="436.0" layoutY="284.0" mnemonicParsing="false" onAction="#onStartClickedWithSelection" prefHeight="26.0" prefWidth="127.0" text="Z SELEKCJĄ" />
          </children>
       </AnchorPane>
    </children>

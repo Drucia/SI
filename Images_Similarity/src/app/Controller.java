@@ -38,8 +38,8 @@ public class Controller {
     @FXML
     private ChoiceBox<String> choice_b;
 
-    private ArrayList<String> photos_a = new ArrayList<>(Arrays.asList("pwr_mouse_1","mousee_1","box_1"));
-    private ArrayList<String> photos_b = new ArrayList<>(Arrays.asList("pwr_mouse_2","mousee_2","box_2"));
+    private ArrayList<String> photos_a = new ArrayList<>(Arrays.asList("pwr_mouse_1","mousee_1","box_1", "natalia_1"));
+    private ArrayList<String> photos_b = new ArrayList<>(Arrays.asList("pwr_mouse_2","mousee_2","box_2", "natalia_2"));
 
     @FXML
     public void initialize()
@@ -57,7 +57,7 @@ public class Controller {
         choice_b.setOnAction(event -> {image_b.setImage(new Image("/photos/" + choice_b.getValue() + ".png"));});
     }
 
-    public void onStartClicked() {
+    public void onStartClickedWithoutSelection() {
         String img_1 = choice_a.getValue();
         String img_2 = choice_b.getValue();
         ArrayList<helpers.Image> data = IO.readImagesData(img_1, img_2);
@@ -69,7 +69,30 @@ public class Controller {
 
         // filtered
 
-        s = ImageProcessor.getConsistentPairs(50, 0, s, a, b);
+        s = ImageProcessor.getConsistentPairs(15, 0, s, a, b);
+
+        WinController.photo_a = img_1;
+        WinController.photo_b = img_2;
+        WinController.a_p = a.getPoints();
+        WinController.b_p = b.getPoints();
+        WinController.pairs = s;
+
+        WinController.initial();
+    }
+
+    public void onStartClickedWithSelection() {
+        String img_1 = choice_a.getValue();
+        String img_2 = choice_b.getValue();
+        ArrayList<helpers.Image> data = IO.readImagesData(img_1, img_2);
+
+        helpers.Image a = data.get(0);
+        helpers.Image b = data.get(1);
+
+        ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints(a,b);
+
+        // filtered
+
+        s = ImageProcessor.getConsistentPairs(15, 5, s, a, b);
 
         WinController.photo_a = img_1;
         WinController.photo_b = img_2;

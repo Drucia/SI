@@ -56,7 +56,7 @@ public class ImageProcessor
                     .filter(pa -> neigh_a.contains(pa.getKey()) && neigh_b.contains(pa.getValue()))
                     .collect(Collectors.toList());
 
-            if ((double)tmp.size() > consistent_limes)
+            if ((double)tmp.size() >= consistent_limes)
                 filter_pairs.add(p);
 
         }
