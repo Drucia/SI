@@ -62,19 +62,27 @@ public class Controller {
         String img_2 = choice_b.getValue();
         ArrayList<helpers.Image> data = IO.readImagesData(img_1, img_2);
 
-        helpers.Image a = data.get(0);
-        helpers.Image b = data.get(1);
+        // set ImageProcessor data
+        //helpers.Image a = data.get(0);
+        //helpers.Image b = data.get(1);
 
-        ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints(a,b);
+        ImageProcessor.imgA = data.get(0);
+        ImageProcessor.imgB = data.get(1);
+
+        ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints();//(a,b);
 
         // filtered
 
-        s = ImageProcessor.getConsistentPairs(15, 0, s, a, b);
+        s = ImageProcessor.getConsistentPairs(15, 0, s);//, a, b);
+
+        // choose best model
+
+        //s = ImageProcessor.goRunsac(s);
 
         WinController.photo_a = img_1;
         WinController.photo_b = img_2;
-        WinController.a_p = a.getPoints();
-        WinController.b_p = b.getPoints();
+        WinController.a_p = ImageProcessor.imgA.getPoints();
+        WinController.b_p = ImageProcessor.imgB.getPoints();
         WinController.pairs = s;
 
         WinController.initial();
@@ -85,19 +93,23 @@ public class Controller {
         String img_2 = choice_b.getValue();
         ArrayList<helpers.Image> data = IO.readImagesData(img_1, img_2);
 
-        helpers.Image a = data.get(0);
-        helpers.Image b = data.get(1);
+        // set ImageProcessor data
+        //helpers.Image a = data.get(0);
+        //helpers.Image b = data.get(1);
 
-        ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints(a,b);
+        ImageProcessor.imgA = data.get(0);
+        ImageProcessor.imgB = data.get(1);
+
+        ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints();//(a,b);
 
         // filtered
 
-        s = ImageProcessor.getConsistentPairs(15, 5, s, a, b);
+        s = ImageProcessor.getConsistentPairs(15, 5, s);//, a, b);
 
         WinController.photo_a = img_1;
         WinController.photo_b = img_2;
-        WinController.a_p = a.getPoints();
-        WinController.b_p = b.getPoints();
+        WinController.a_p = ImageProcessor.imgA.getPoints();
+        WinController.b_p = ImageProcessor.imgB.getPoints();
         WinController.pairs = s;
 
         WinController.initial();

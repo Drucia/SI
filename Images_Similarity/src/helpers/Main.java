@@ -10,11 +10,11 @@ public class Main {
         String img_2 = "cup_1";
         ArrayList<Image> data = IO.readImagesData(img_1, img_2);
 
-        ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints(data.get(0), data.get(1));
+        //ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints(data.get(0), data.get(1));
 
         // filtered
 
-        s = ImageProcessor.getConsistentPairs(300, 50, s, data.get(0), data.get(1));
+        //s = ImageProcessor.getConsistentPairs(300, 50, s, data.get(0), data.get(1));
 
         System.out.println("KONIEC");
     }
