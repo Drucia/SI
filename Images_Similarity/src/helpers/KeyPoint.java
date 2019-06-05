@@ -45,14 +45,15 @@ public class KeyPoint {
         return Math.sqrt(Math.pow((x - other.x), 2) + Math.pow((y - other.y), 2));
     }
 
-    public int getSimilarity(KeyPoint other)
+    public double getSimilarity(KeyPoint other)
     {
-        int sum = 0;
+        double sum = 0;
         ArrayList<Integer> feat = other.features;
 
         for (int i=0; i<features.size(); i++)
-            sum += Math.abs(features.get(i) - feat.get(i));
+              sum += Math.pow((features.get(i) - feat.get(i)), 2);
+            //sum += Math.abs(features.get(i) - feat.get(i));
 
-        return sum;
+        return Math.sqrt(sum);
     }
 }

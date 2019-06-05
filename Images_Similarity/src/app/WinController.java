@@ -14,28 +14,22 @@ import java.util.ArrayList;
 
 public class WinController
 {
-    public static String photo_a;
-    public static String photo_b;
-    public static ArrayList<Pair<Integer, Integer>> pairs;
-    public static ArrayList<KeyPoint> a_p;
-    public static ArrayList<KeyPoint> b_p;
-
-    public static void initial()
+    public static final int HEIGHT = 300;
+    public static final int WIDTH = 400;
+    public static void initial(ArrayList<Pair<Integer, Integer>> pairs, ArrayList<KeyPoint> a_p, ArrayList<KeyPoint> b_p, String photo_a, String photo_b, String title)
     {
-        int height = 300;
-        int width = 400;
         Stage primaryStage = new Stage();
         ImageView imgA = new ImageView();
-        imgA.setFitWidth(width);
-        imgA.setFitHeight(height);
+        imgA.setFitWidth(WIDTH);
+        imgA.setFitHeight(HEIGHT);
         imgA.setX(0);
         imgA.setY(0);
         imgA.setImage(new Image(photo_a));
         ImageView imgB = new ImageView();
-        imgB.setFitWidth(width);
-        imgB.setFitHeight(height);
+        imgB.setFitWidth(WIDTH);
+        imgB.setFitHeight(HEIGHT);
         imgB.setX(0);
-        imgB.setY(height);
+        imgB.setY(HEIGHT);
         imgB.setImage(new Image(photo_b));
         Group root = new Group();
         Scene scene = new Scene(root);
@@ -49,11 +43,11 @@ public class WinController
             line.setStartX(a_cor.getX()/2);
             line.setStartY(a_cor.getY()/2);
             line.setEndX(b_cor.getX()/2);
-            line.setEndY(height+b_cor.getY()/2);
+            line.setEndY(HEIGHT+b_cor.getY()/2);
             root.getChildren().add(line);
         }
 
-        primaryStage.setTitle("Images Similarity");
+        primaryStage.setTitle(title + " - IS");
         primaryStage.setScene(scene);
         primaryStage.show();
         System.out.println("KONIEC");
