@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="box" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.Controller">
+<VBox fx:id="box" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.Controller">
    <children>
       <AnchorPane fx:id="anchor" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="600.0">
          <children>
@@ -20,12 +20,16 @@
                <image>
                   <Image url="@../photos/pwr_mouse_2.png" />
                </image></ImageView>
-            <Label layoutX="335.0" layoutY="61.0" text="Wybierz obraz A:" />
-            <Label layoutX="335.0" layoutY="182.0" text="Wybierz obraz B:" />
-            <ChoiceBox fx:id="choice_a" layoutX="335.0" layoutY="87.0" prefWidth="150.0" />
-            <ChoiceBox fx:id="choice_b" layoutX="335.0" layoutY="207.0" prefWidth="150.0" />
+            <Label layoutX="371.0" layoutY="63.0" text="Wybierz obraz A:" />
+            <Label layoutX="371.0" layoutY="106.0" text="Wybierz obraz B:" />
             <Button layoutX="300.0" layoutY="284.0" mnemonicParsing="false" onAction="#onStartClickedWithoutSelection" prefHeight="26.0" prefWidth="127.0" text="BEZ SELEKCJI" />
             <Button layoutX="436.0" layoutY="284.0" mnemonicParsing="false" onAction="#onStartClickedWithSelection" prefHeight="26.0" prefWidth="127.0" text="Z SELEKCJĄ" />
+            <Button fx:id="searchA" layoutX="493.0" layoutY="59.0" mnemonicParsing="false" onAction="#onBrowseAClicked" text="Szukaj" />
+            <Button fx:id="searchA1" layoutX="493.0" layoutY="102.0" mnemonicParsing="false" onAction="#onBrowseBClicked" text="Szukaj" />
+            <Label layoutX="308.0" layoutY="147.0" text="Podaj wielkość sąsiedztwa:" />
+            <Label layoutX="341.0" layoutY="181.0" text="Podaj próg spójności:" />
+            <TextField fx:id="neigh_size" layoutX="493.0" layoutY="142.0" prefHeight="26.0" prefWidth="72.0" text="15" />
+            <TextField fx:id="neigh_lim" layoutX="493.0" layoutY="176.0" prefHeight="26.0" prefWidth="72.0" text="5" />
          </children>
       </AnchorPane>
    </children>

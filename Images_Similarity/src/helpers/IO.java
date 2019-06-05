@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class IO {
     public static final String path = "D:\\Users\\oladr\\Studia\\Term_VI\\Sztuczna\\WorkSpace\\Images_Similarity\\src\\photos\\";
-    public static final String extension = ".png.haraff.sift";
+    public static final String extension = ".haraff.sift";
 
     public static ArrayList<Image> readImagesData(String image1, String image2)
     {

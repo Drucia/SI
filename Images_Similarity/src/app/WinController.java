@@ -30,13 +30,13 @@ public class WinController
         imgA.setFitHeight(height);
         imgA.setX(0);
         imgA.setY(0);
-        imgA.setImage(new Image("/photos/" + photo_a + ".png"));
+        imgA.setImage(new Image(photo_a));
         ImageView imgB = new ImageView();
         imgB.setFitWidth(width);
         imgB.setFitHeight(height);
         imgB.setX(0);
         imgB.setY(height);
-        imgB.setImage(new Image("/photos/" + photo_b + ".png"));
+        imgB.setImage(new Image(photo_b));
         Group root = new Group();
         Scene scene = new Scene(root);
         root.getChildren().addAll(imgA, imgB);
