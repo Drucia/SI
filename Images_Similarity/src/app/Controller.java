@@ -73,8 +73,7 @@ public class Controller {
 
         // set ImageProcessor data
 
-        ImageProcessor.imgA = data.get(0);
-        ImageProcessor.imgB = data.get(1);
+        ImageProcessor.initialize(data.get(0), data.get(1));
 
         ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints();
 
@@ -87,8 +86,7 @@ public class Controller {
 
         // set ImageProcessor data
 
-        ImageProcessor.imgA = data.get(0);
-        ImageProcessor.imgB = data.get(1);
+        ImageProcessor.initialize(data.get(0), data.get(1));
 
         ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints();
 
@@ -131,8 +129,7 @@ public class Controller {
 
         // set ImageProcessor data
 
-        ImageProcessor.imgA = data.get(0);
-        ImageProcessor.imgB = data.get(1);
+        ImageProcessor.initialize(data.get(0), data.get(1));
 
         ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints();
 
@@ -141,16 +138,19 @@ public class Controller {
         s = ImageProcessor.getConsistentPairs(Integer.parseInt(neigh_size.getText()), Integer.parseInt(neigh_lim.getText()), s);
 
         Double size_of_image = null; // distance heuristic
+        boolean is_distr_heu = false; // distr heuristic
 
         // go ransac with affine
 
         if (heu_dis.isSelected())
             size_of_image = new Double(WinController.HEIGHT + WinController.WIDTH);
 
-        //if (heu_distr.isSelected())
+        if (heu_distr.isSelected())
+            is_distr_heu = true;
+
         //if (heu_iter.isSelected())
 
-        Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> best_model = ImageProcessor.goRansac(s, Integer.parseInt(runsac_iter.getText()), SAMPLES_FOR_AFFINE, true, Double.parseDouble(runsac_error.getText()), size_of_image);
+        Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> best_model = ImageProcessor.goRansac(s, Integer.parseInt(runsac_iter.getText()), SAMPLES_FOR_AFFINE, true, Double.parseDouble(runsac_error.getText()), size_of_image, is_distr_heu);
 
         WinController.initial(best_model.getValue(), ImageProcessor.imgA.getPoints(), ImageProcessor.imgB.getPoints(), img_1.toURI().toString(), img_2.toURI().toString(), "AFINICZNA");
     }
@@ -161,8 +161,7 @@ public class Controller {
 
         // set ImageProcessor data
 
-        ImageProcessor.imgA = data.get(0);
-        ImageProcessor.imgB = data.get(1);
+        ImageProcessor.initialize(data.get(0), data.get(1));
 
         ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints();
 
@@ -171,16 +170,19 @@ public class Controller {
         s = ImageProcessor.getConsistentPairs(Integer.parseInt(neigh_size.getText()), Integer.parseInt(neigh_lim.getText()), s);
 
         Double size_of_image = null; // distance heuristic
+        boolean is_distr_heu = false; // distr heuristic
 
         // go ransac with outlook
 
         if (heu_dis.isSelected())
             size_of_image = new Double(WinController.HEIGHT + WinController.WIDTH);
 
-        //if (heu_distr.isSelected())
-        //if (heu_iter.isSelected())  
+        if (heu_distr.isSelected())
+            is_distr_heu = true;
 
-        Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> best_model = ImageProcessor.goRansac(s, Integer.parseInt(runsac_iter.getText()), SAMPLES_FOR_OUTLOOK, false, Double.parseDouble(runsac_error.getText()), size_of_image);
+        //if (heu_iter.isSelected())
+
+        Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> best_model = ImageProcessor.goRansac(s, Integer.parseInt(runsac_iter.getText()), SAMPLES_FOR_OUTLOOK, false, Double.parseDouble(runsac_error.getText()), size_of_image, is_distr_heu);
 
         WinController.initial(best_model.getValue(), ImageProcessor.imgA.getPoints(), ImageProcessor.imgB.getPoints(), img_1.toURI().toString(), img_2.toURI().toString(), "PERSPEKTYWICZNA");
     }

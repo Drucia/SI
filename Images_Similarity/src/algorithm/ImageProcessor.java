@@ -6,7 +6,6 @@ import helpers.KeyPoint;
 import javafx.util.Pair;
 import org.ejml.simple.SimpleMatrix;
 
-import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -14,6 +13,16 @@ public class ImageProcessor
 {
     public static Image imgA;
     public static Image imgB;
+    private static ArrayList<KeyPoint> a_p;
+    private static ArrayList<KeyPoint> b_p;
+
+    public static void initialize(Image ia, Image ib)
+    {
+        imgA = ia;
+        imgB = ib;
+        a_p = ia.getPoints();
+        b_p = ib.getPoints();
+    }
 
     private static List<Integer> getNearestKeyPoints(int how_much, Image img, int idx)
     {
@@ -109,7 +118,7 @@ public class ImageProcessor
         return score;
     }
 
-    public static Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> goRansac(ArrayList<Pair<Integer, Integer>> data, int iter, int samples, boolean isAffine, double max_error, Double size_of_image){
+    public static Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> goRansac(ArrayList<Pair<Integer, Integer>> data, int iter, int samples, boolean isAffine, double max_error, Double size_of_image, boolean is_distr_heu){
         SimpleMatrix best_model = null;
         int best_score = 0;
         ArrayList<Pair<Integer, Integer>> consensus = null;
@@ -118,25 +127,41 @@ public class ImageProcessor
         {
             SimpleMatrix curr_model = null;
 
-            if (size_of_image == null) {
-
                 while (curr_model == null) {
-                    Collections.shuffle(data);
-                    List<Pair<Integer, Integer>> s = data.subList(0, samples);
+                    Collections.shuffle(data); // source of data
+                    List<Pair<Integer, Integer>> s = size_of_image == null ? getPairs(data, samples) : getPairsWithImageSize(data, size_of_image, samples);
                     curr_model = calculateModel(s, isAffine);
                 }
-            }
-            else
+            
+            int score = 0;
+            ArrayList<Pair<Integer, Integer>> curr_consensus = new ArrayList<>();
+            
+            for (Pair<Integer, Integer> pair : data)
             {
-                Random random = new Random();
-                double r = size_of_image / 100;
-                double R = size_of_image * 0.5;
-                ArrayList<KeyPoint> a_p = imgA.getPoints();
-                ArrayList<KeyPoint> b_p = imgB.getPoints();
+                double error = modelError(curr_model, pair, isAffine);
+                if (error < max_error) {
+                    score++;
+                    curr_consensus.add(pair);
+                }
+            }
+            
+            if (score > best_score) {
+                best_score = score;
+                best_model = curr_model;
+                consensus = curr_consensus;
+            }
+        }
 
-                while (curr_model == null) {
-                    // add first pair in random
-                    ArrayList<Pair<Integer, Integer>> s = new ArrayList<>();
+        return new Pair<>(best_model, consensus);
+    }
+
+    private static List<Pair<Integer, Integer>> getPairsWithImageSize(ArrayList<Pair<Integer, Integer>> data, Double image_size, int samples)
+    {
+        Random random = new Random();
+                double r = image_size / 100;
+                double R = image_size * 0.5;
+
+        ArrayList<Pair<Integer, Integer>> s = new ArrayList<>();
                     s.add(data.get(random.nextInt(data.size())));
 
                     while (s.size() < samples)
@@ -165,31 +190,12 @@ public class ImageProcessor
                                 isBad = true;
                         }
                     }
+                return s;
+    }
 
-                    curr_model = calculateModel(s, isAffine);
-                }
-            }
-            
-            int score = 0;
-            ArrayList<Pair<Integer, Integer>> curr_consensus = new ArrayList<>();
-            
-            for (Pair<Integer, Integer> pair : data)
-            {
-                double error = modelError(curr_model, pair, isAffine);
-                if (error < max_error) {
-                    score++;
-                    curr_consensus.add(pair);
-                }
-            }
-            
-            if (score > best_score) {
-                best_score = score;
-                best_model = curr_model;
-                consensus = curr_consensus;
-            }
-        }
-
-        return new Pair<>(best_model, consensus);
+    private static List<Pair<Integer, Integer>> getPairs(ArrayList<Pair<Integer, Integer>> data, int samples)
+    {
+        return data.subList(0, samples);
     }
 
     private static double modelError(SimpleMatrix curr_model, Pair<Integer, Integer> pairs, boolean isAffine) {
@@ -200,9 +206,6 @@ public class ImageProcessor
     }
 
     private static double outlookModelError(SimpleMatrix curr_model, Pair<Integer, Integer> pair) {
-        ArrayList<KeyPoint> points_a = imgA.getPoints();
-        ArrayList<KeyPoint> points_b = imgB.getPoints();
-
         double a = curr_model.get(0, 0);
         double b = curr_model.get(0, 1);
         double c = curr_model.get(0, 2);
@@ -211,10 +214,10 @@ public class ImageProcessor
         double f = curr_model.get(1, 2);
         double g = curr_model.get(2, 0);
         double h = curr_model.get(2, 1);
-        double x = points_a.get(pair.getKey()).getX();
-        double y = points_a.get(pair.getKey()).getY();
-        double u = points_b.get(pair.getValue()).getX();
-        double v = points_b.get(pair.getValue()).getY();
+        double x = a_p.get(pair.getKey()).getX();
+        double y = a_p.get(pair.getKey()).getY();
+        double u = b_p.get(pair.getValue()).getX();
+        double v = b_p.get(pair.getValue()).getY();
 
         double trans_x = a*x + b*y + c;
         double trans_y = d*x + e*y + f;
@@ -227,19 +230,16 @@ public class ImageProcessor
 
     private static double affineModelError(SimpleMatrix curr_model, Pair<Integer, Integer> pair)
     {
-        ArrayList<KeyPoint> points_a = imgA.getPoints();
-        ArrayList<KeyPoint> points_b = imgB.getPoints();
-
         double a = curr_model.get(0, 0);
         double b = curr_model.get(0, 1);
         double c = curr_model.get(0, 2);
         double d = curr_model.get(1, 0);
         double e = curr_model.get(1, 1);
         double f = curr_model.get(1, 2);
-        double x = points_a.get(pair.getKey()).getX();
-        double y = points_a.get(pair.getKey()).getY();
-        double u = points_b.get(pair.getValue()).getX();
-        double v = points_b.get(pair.getValue()).getY();
+        double x = a_p.get(pair.getKey()).getX();
+        double y = a_p.get(pair.getKey()).getY();
+        double u = b_p.get(pair.getValue()).getX();
+        double v = b_p.get(pair.getValue()).getY();
 
         double trans_x = a*x + b*y + c;
         double trans_y = d*x + e*y + f;
@@ -257,15 +257,13 @@ public class ImageProcessor
     private static SimpleMatrix affineTransform(List<Pair<Integer, Integer>> pairs)
     {
         // prepare data for matrix
-        ArrayList<KeyPoint> p_a = imgA.getPoints();
-        ArrayList<KeyPoint> p_b = imgB.getPoints();
 
-        KeyPoint a1 = p_a.get(pairs.get(0).getKey());
-        KeyPoint a2 = p_a.get(pairs.get(1).getKey());
-        KeyPoint a3 = p_a.get(pairs.get(2).getKey());
-        KeyPoint b1 = p_b.get(pairs.get(0).getValue());
-        KeyPoint b2 = p_b.get(pairs.get(1).getValue());
-        KeyPoint b3 = p_b.get(pairs.get(2).getValue());
+        KeyPoint a1 = a_p.get(pairs.get(0).getKey());
+        KeyPoint a2 = a_p.get(pairs.get(1).getKey());
+        KeyPoint a3 = a_p.get(pairs.get(2).getKey());
+        KeyPoint b1 = b_p.get(pairs.get(0).getValue());
+        KeyPoint b2 = b_p.get(pairs.get(1).getValue());
+        KeyPoint b3 = b_p.get(pairs.get(2).getValue());
 
         double[][] data_to_matrix_left = {
                 {a1.getX(), a1.getY(), 1, 0, 0, 0},
@@ -310,17 +308,15 @@ public class ImageProcessor
     private static SimpleMatrix outlookTransform(List<Pair<Integer, Integer>> pairs)
     {
         // prepare data for matrix
-        ArrayList<KeyPoint> p_a = imgA.getPoints();
-        ArrayList<KeyPoint> p_b = imgB.getPoints();
 
-        KeyPoint a1 = p_a.get(pairs.get(0).getKey());
-        KeyPoint a2 = p_a.get(pairs.get(1).getKey());
-        KeyPoint a3 = p_a.get(pairs.get(2).getKey());
-        KeyPoint a4 = p_a.get(pairs.get(3).getKey());
-        KeyPoint b1 = p_b.get(pairs.get(0).getValue());
-        KeyPoint b2 = p_b.get(pairs.get(1).getValue());
-        KeyPoint b3 = p_b.get(pairs.get(2).getValue());
-        KeyPoint b4 = p_b.get(pairs.get(3).getValue());
+        KeyPoint a1 = a_p.get(pairs.get(0).getKey());
+        KeyPoint a2 = a_p.get(pairs.get(1).getKey());
+        KeyPoint a3 = a_p.get(pairs.get(2).getKey());
+        KeyPoint a4 = a_p.get(pairs.get(3).getKey());
+        KeyPoint b1 = b_p.get(pairs.get(0).getValue());
+        KeyPoint b2 = b_p.get(pairs.get(1).getValue());
+        KeyPoint b3 = b_p.get(pairs.get(2).getValue());
+        KeyPoint b4 = b_p.get(pairs.get(3).getValue());
 
         double[][] data_to_matrix_left = {
                 {a1.getX(), a1.getY(), 1, 0, 0, 0, -b1.getX()*a1.getX(), -b1.getX()*a1.getY()},

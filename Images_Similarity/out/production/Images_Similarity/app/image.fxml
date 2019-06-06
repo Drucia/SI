@@ -23,8 +23,6 @@
                </image></ImageView>
             <Label layoutX="531.0" layoutY="48.0" text="Wybierz obraz A:" />
             <Label layoutX="531.0" layoutY="91.0" text="Wybierz obraz B:" />
-            <Button layoutX="461.0" layoutY="371.0" mnemonicParsing="false" onAction="#onStartClickedWithoutSelection" prefHeight="26.0" prefWidth="153.0" text="BEZ SELEKCJI" />
-            <Button layoutX="625.0" layoutY="371.0" mnemonicParsing="false" onAction="#onStartClickedWithSelection" prefHeight="26.0" prefWidth="153.0" text="Z SELEKCJĄ" />
             <Button fx:id="searchA" layoutX="653.0" layoutY="44.0" mnemonicParsing="false" onAction="#onBrowseAClicked" text="Szukaj" />
             <Button fx:id="searchA1" layoutX="653.0" layoutY="87.0" mnemonicParsing="false" onAction="#onBrowseBClicked" text="Szukaj" />
             <Label layoutX="468.0" layoutY="132.0" text="Podaj wielkość sąsiedztwa:" />
@@ -36,6 +34,8 @@
             <CheckBox fx:id="heu_dis" layoutX="653.0" layoutY="270.0" mnemonicParsing="false" text="odległości" />
             <CheckBox fx:id="heu_distr" layoutX="653.0" layoutY="293.0" mnemonicParsing="false" text="rozkładu" />
             <CheckBox fx:id="heu_iter" layoutX="653.0" layoutY="316.0" mnemonicParsing="false" text="iteracji" />
+            <Button layoutX="461.0" layoutY="371.0" mnemonicParsing="false" onAction="#onStartClickedWithoutSelection" prefHeight="26.0" prefWidth="153.0" text="BEZ SELEKCJI" />
+            <Button layoutX="625.0" layoutY="371.0" mnemonicParsing="false" onAction="#onStartClickedWithSelection" prefHeight="26.0" prefWidth="153.0" text="Z SELEKCJĄ" />
             <Button layoutX="461.0" layoutY="410.0" mnemonicParsing="false" onAction="#onAffineStartClicked" prefHeight="26.0" prefWidth="153.0" text="AFINICZNA" />
             <Button layoutX="625.0" layoutY="410.0" mnemonicParsing="false" onAction="#onOutlookStartClicked" prefHeight="26.0" prefWidth="153.0" text="PERSPEKTYWICZNA" />
             <Label layoutX="511.0" layoutY="203.0" text="Podaj liczbę iteracji:" />
