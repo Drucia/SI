@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -22,21 +23,25 @@
                </image></ImageView>
             <Label layoutX="531.0" layoutY="48.0" text="Wybierz obraz A:" />
             <Label layoutX="531.0" layoutY="91.0" text="Wybierz obraz B:" />
-            <Button layoutX="460.0" layoutY="290.0" mnemonicParsing="false" onAction="#onStartClickedWithoutSelection" prefHeight="26.0" prefWidth="153.0" text="BEZ SELEKCJI" />
-            <Button layoutX="624.0" layoutY="290.0" mnemonicParsing="false" onAction="#onStartClickedWithSelection" prefHeight="26.0" prefWidth="153.0" text="Z SELEKCJĄ" />
+            <Button layoutX="461.0" layoutY="371.0" mnemonicParsing="false" onAction="#onStartClickedWithoutSelection" prefHeight="26.0" prefWidth="153.0" text="BEZ SELEKCJI" />
+            <Button layoutX="625.0" layoutY="371.0" mnemonicParsing="false" onAction="#onStartClickedWithSelection" prefHeight="26.0" prefWidth="153.0" text="Z SELEKCJĄ" />
             <Button fx:id="searchA" layoutX="653.0" layoutY="44.0" mnemonicParsing="false" onAction="#onBrowseAClicked" text="Szukaj" />
             <Button fx:id="searchA1" layoutX="653.0" layoutY="87.0" mnemonicParsing="false" onAction="#onBrowseBClicked" text="Szukaj" />
             <Label layoutX="468.0" layoutY="132.0" text="Podaj wielkość sąsiedztwa:" />
             <Label layoutX="501.0" layoutY="166.0" text="Podaj próg spójności:" />
             <TextField fx:id="neigh_size" layoutX="653.0" layoutY="127.0" prefHeight="26.0" prefWidth="75.0" text="100" />
             <TextField fx:id="neigh_lim" layoutX="653.0" layoutY="161.0" prefHeight="26.0" prefWidth="75.0" text="10" />
-            <TextField fx:id="runsac_iter" layoutX="653.0" layoutY="199.0" prefHeight="26.0" prefWidth="75.0" text="1050000" />
-            <TextField fx:id="runsac_error" layoutX="653.0" layoutY="233.0" prefHeight="26.0" prefWidth="75.0" text="0.5" />
-            <Button layoutX="460.0" layoutY="329.0" mnemonicParsing="false" onAction="#onAffineStartClicked" prefHeight="26.0" prefWidth="153.0" text="AFINICZNA" />
-            <Button layoutX="624.0" layoutY="329.0" mnemonicParsing="false" onAction="#onOutlookStartClicked" prefHeight="26.0" prefWidth="153.0" text="PERSPEKTYWICZNA" />
+            <TextField fx:id="runsac_iter" layoutX="653.0" layoutY="199.0" prefHeight="26.0" prefWidth="75.0" text="10200" />
+            <TextField fx:id="runsac_error" layoutX="653.0" layoutY="233.0" prefHeight="26.0" prefWidth="75.0" text="20" />
+            <CheckBox fx:id="heu_dis" layoutX="653.0" layoutY="270.0" mnemonicParsing="false" text="odległości" />
+            <CheckBox fx:id="heu_distr" layoutX="653.0" layoutY="293.0" mnemonicParsing="false" text="rozkładu" />
+            <CheckBox fx:id="heu_iter" layoutX="653.0" layoutY="316.0" mnemonicParsing="false" text="iteracji" />
+            <Button layoutX="461.0" layoutY="410.0" mnemonicParsing="false" onAction="#onAffineStartClicked" prefHeight="26.0" prefWidth="153.0" text="AFINICZNA" />
+            <Button layoutX="625.0" layoutY="410.0" mnemonicParsing="false" onAction="#onOutlookStartClicked" prefHeight="26.0" prefWidth="153.0" text="PERSPEKTYWICZNA" />
             <Label layoutX="511.0" layoutY="203.0" text="Podaj liczbę iteracji:" />
             <Label layoutX="487.0" layoutY="237.0" text="Podaj maksymalny błąd:" />
-            <Button fx:id="circle" layoutX="553.0" layoutY="374.0" mnemonicParsing="false" onAction="#onPointsClicked" text="PUNKTY KLUCZOWE" />
+            <Button fx:id="circle" layoutX="554.0" layoutY="455.0" mnemonicParsing="false" onAction="#onPointsClicked" text="PUNKTY KLUCZOWE" />
+            <Label layoutX="558.0" layoutY="270.0" text="Heurystyki:" />
          </children>
       </AnchorPane>
    </children>

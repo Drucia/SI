@@ -6,10 +6,8 @@ import helpers.KeyPoint;
 import javafx.util.Pair;
 import org.ejml.simple.SimpleMatrix;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.security.Key;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ImageProcessor
@@ -111,7 +109,7 @@ public class ImageProcessor
         return score;
     }
 
-    public static Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> goRansac(ArrayList<Pair<Integer, Integer>> data, int iter, int samples, boolean isAffine, double max_error){
+    public static Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> goRansac(ArrayList<Pair<Integer, Integer>> data, int iter, int samples, boolean isAffine, double max_error, Double size_of_image){
         SimpleMatrix best_model = null;
         int best_score = 0;
         ArrayList<Pair<Integer, Integer>> consensus = null;
@@ -120,10 +118,56 @@ public class ImageProcessor
         {
             SimpleMatrix curr_model = null;
 
-            while (curr_model == null) {
-                Collections.shuffle(data);
-                List<Pair<Integer, Integer>> s = data.subList(0, samples);
-                curr_model = calculateModel(s, isAffine);
+            if (size_of_image == null) {
+
+                while (curr_model == null) {
+                    Collections.shuffle(data);
+                    List<Pair<Integer, Integer>> s = data.subList(0, samples);
+                    curr_model = calculateModel(s, isAffine);
+                }
+            }
+            else
+            {
+                Random random = new Random();
+                double r = size_of_image / 100;
+                double R = size_of_image * 0.5;
+                ArrayList<KeyPoint> a_p = imgA.getPoints();
+                ArrayList<KeyPoint> b_p = imgB.getPoints();
+
+                while (curr_model == null) {
+                    // add first pair in random
+                    ArrayList<Pair<Integer, Integer>> s = new ArrayList<>();
+                    s.add(data.get(random.nextInt(data.size())));
+
+                    while (s.size() < samples)
+                    {
+                        Pair<Integer, Integer> next_pair = data.get(random.nextInt(data.size()));
+                        boolean isBad = false;
+
+                        for (int p=0; p<s.size() && !isBad; p++)
+                        {
+                            int id_a = s.get(p).getKey();
+                            int id_b = s.get(p).getValue();
+                            KeyPoint last_a = a_p.get(id_a);
+                            KeyPoint last_b = b_p.get(id_b);
+
+                            int id_next_a = next_pair.getKey();
+                            int id_next_b = next_pair.getValue();
+                            KeyPoint next_a = a_p.get(id_next_a);
+                            KeyPoint next_b = b_p.get(id_next_b);
+
+                            double first = (Math.pow(last_a.getX() - next_a.getX(), 2) + Math.pow(last_a.getY() - next_a.getY(), 2));
+                            double second = (Math.pow(last_b.getX() - next_b.getX(), 2) + Math.pow(last_b.getY() - next_b.getY(), 2));
+
+                            if ((first > r*r && first < R*R) && (second > r*r && second < R*R))
+                                s.add(next_pair);
+                            else
+                                isBad = true;
+                        }
+                    }
+
+                    curr_model = calculateModel(s, isAffine);
+                }
             }
             
             int score = 0;

@@ -6,6 +6,7 @@ import helpers.KeyPoint;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,6 +46,13 @@ public class Controller {
 
     @FXML
     private AnchorPane anchor;
+
+    @FXML
+    private CheckBox heu_dis;
+    @FXML
+    private CheckBox heu_distr;
+    @FXML
+    private CheckBox heu_iter;
 
     private ArrayList<Circle> circles;
 
@@ -128,9 +136,21 @@ public class Controller {
 
         ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints();
 
+        // filter
+
+        s = ImageProcessor.getConsistentPairs(Integer.parseInt(neigh_size.getText()), Integer.parseInt(neigh_lim.getText()), s);
+
+        Double size_of_image = null; // distance heuristic
+
         // go ransac with affine
 
-        Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> best_model = ImageProcessor.goRansac(s, Integer.parseInt(runsac_iter.getText()), SAMPLES_FOR_AFFINE, true, Double.parseDouble(runsac_error.getText()));
+        if (heu_dis.isSelected())
+            size_of_image = new Double(WinController.HEIGHT + WinController.WIDTH);
+
+        //if (heu_distr.isSelected())
+        //if (heu_iter.isSelected())
+
+        Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> best_model = ImageProcessor.goRansac(s, Integer.parseInt(runsac_iter.getText()), SAMPLES_FOR_AFFINE, true, Double.parseDouble(runsac_error.getText()), size_of_image);
 
         WinController.initial(best_model.getValue(), ImageProcessor.imgA.getPoints(), ImageProcessor.imgB.getPoints(), img_1.toURI().toString(), img_2.toURI().toString(), "AFINICZNA");
     }
@@ -146,9 +166,21 @@ public class Controller {
 
         ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints();
 
-        // go ransac with affine
+        // filter
 
-        Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> best_model = ImageProcessor.goRansac(s, Integer.parseInt(runsac_iter.getText()), SAMPLES_FOR_OUTLOOK, false, Double.parseDouble(runsac_error.getText()));
+        s = ImageProcessor.getConsistentPairs(Integer.parseInt(neigh_size.getText()), Integer.parseInt(neigh_lim.getText()), s);
+
+        Double size_of_image = null; // distance heuristic
+
+        // go ransac with outlook
+
+        if (heu_dis.isSelected())
+            size_of_image = new Double(WinController.HEIGHT + WinController.WIDTH);
+
+        //if (heu_distr.isSelected())
+        //if (heu_iter.isSelected())  
+
+        Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> best_model = ImageProcessor.goRansac(s, Integer.parseInt(runsac_iter.getText()), SAMPLES_FOR_OUTLOOK, false, Double.parseDouble(runsac_error.getText()), size_of_image);
 
         WinController.initial(best_model.getValue(), ImageProcessor.imgA.getPoints(), ImageProcessor.imgB.getPoints(), img_1.toURI().toString(), img_2.toURI().toString(), "PERSPEKTYWICZNA");
     }
