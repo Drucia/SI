@@ -1,6 +1,5 @@
 package algorithm;
 
-import app.WinController;
 import helpers.Image;
 import helpers.KeyPoint;
 import javafx.util.Pair;
@@ -118,37 +117,46 @@ public class ImageProcessor
         return score;
     }
 
-    public static Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> goRansac(ArrayList<Pair<Integer, Integer>> data, int iter, int samples, boolean isAffine, double max_error, Double size_of_image, boolean is_distr_heu){
+    public static Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> goRansac(ArrayList<Pair<Integer, Integer>> data, int iter, int samples, boolean isAffine, double max_error, Double size_of_image, boolean is_distr_heu, Integer propability){
         SimpleMatrix best_model = null;
         int best_score = 0;
-        ArrayList<Pair<Integer, Integer>> consensus = null;
+        ArrayList<Pair<Integer, Integer>> consensus = new ArrayList<>();
 
-        for (int i=0; i<iter; i++)
-        {
-            SimpleMatrix curr_model = null;
+        if (data.size() >= samples) {
+            ArrayList<Pair<Integer, Integer>> source = new ArrayList<>(data);
+
+            if (propability != null)
+                iter = propability;
+
+            for (int i = 0; i < iter; i++) {
+                SimpleMatrix curr_model = null;
+                List<Pair<Integer, Integer>> s = null;
 
                 while (curr_model == null) {
-                    Collections.shuffle(data); // source of data
-                    List<Pair<Integer, Integer>> s = size_of_image == null ? getPairs(data, samples) : getPairsWithImageSize(data, size_of_image, samples);
+                    Collections.shuffle(source);
+                    s = size_of_image == null ? getPairs(source, samples) : getPairsWithImageSize(source, size_of_image, samples);
                     curr_model = calculateModel(s, isAffine);
                 }
-            
-            int score = 0;
-            ArrayList<Pair<Integer, Integer>> curr_consensus = new ArrayList<>();
-            
-            for (Pair<Integer, Integer> pair : data)
-            {
-                double error = modelError(curr_model, pair, isAffine);
-                if (error < max_error) {
-                    score++;
-                    curr_consensus.add(pair);
+
+                int score = 0;
+                ArrayList<Pair<Integer, Integer>> curr_consensus = new ArrayList<>();
+
+                for (Pair<Integer, Integer> pair : data) {
+                    double error = modelError(curr_model, pair, isAffine);
+                    if (error < max_error) {
+                        score++;
+                        curr_consensus.add(pair);
+                    }
                 }
-            }
-            
-            if (score > best_score) {
-                best_score = score;
-                best_model = curr_model;
-                consensus = curr_consensus;
+
+                if (score > best_score) {
+                    best_score = score;
+                    best_model = curr_model;
+                    consensus = curr_consensus;
+
+                    if (is_distr_heu)
+                        source.addAll(s);
+                }
             }
         }
 

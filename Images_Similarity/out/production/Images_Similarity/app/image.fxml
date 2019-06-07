@@ -29,19 +29,21 @@
             <Label layoutX="501.0" layoutY="166.0" text="Podaj próg spójności:" />
             <TextField fx:id="neigh_size" layoutX="653.0" layoutY="127.0" prefHeight="26.0" prefWidth="75.0" text="100" />
             <TextField fx:id="neigh_lim" layoutX="653.0" layoutY="161.0" prefHeight="26.0" prefWidth="75.0" text="10" />
-            <TextField fx:id="runsac_iter" layoutX="653.0" layoutY="199.0" prefHeight="26.0" prefWidth="75.0" text="10200" />
-            <TextField fx:id="runsac_error" layoutX="653.0" layoutY="233.0" prefHeight="26.0" prefWidth="75.0" text="20" />
+            <TextField fx:id="runsac_iter" layoutX="653.0" layoutY="195.0" prefHeight="26.0" prefWidth="75.0" text="10200" />
+            <TextField fx:id="runsac_error" layoutX="653.0" layoutY="229.0" prefHeight="26.0" prefWidth="75.0" text="20" />
             <CheckBox fx:id="heu_dis" layoutX="653.0" layoutY="270.0" mnemonicParsing="false" text="odległości" />
             <CheckBox fx:id="heu_distr" layoutX="653.0" layoutY="293.0" mnemonicParsing="false" text="rozkładu" />
             <CheckBox fx:id="heu_iter" layoutX="653.0" layoutY="316.0" mnemonicParsing="false" text="iteracji" />
-            <Button layoutX="461.0" layoutY="371.0" mnemonicParsing="false" onAction="#onStartClickedWithoutSelection" prefHeight="26.0" prefWidth="153.0" text="BEZ SELEKCJI" />
-            <Button layoutX="625.0" layoutY="371.0" mnemonicParsing="false" onAction="#onStartClickedWithSelection" prefHeight="26.0" prefWidth="153.0" text="Z SELEKCJĄ" />
-            <Button layoutX="461.0" layoutY="410.0" mnemonicParsing="false" onAction="#onAffineStartClicked" prefHeight="26.0" prefWidth="153.0" text="AFINICZNA" />
-            <Button layoutX="625.0" layoutY="410.0" mnemonicParsing="false" onAction="#onOutlookStartClicked" prefHeight="26.0" prefWidth="153.0" text="PERSPEKTYWICZNA" />
-            <Label layoutX="511.0" layoutY="203.0" text="Podaj liczbę iteracji:" />
-            <Label layoutX="487.0" layoutY="237.0" text="Podaj maksymalny błąd:" />
-            <Button fx:id="circle" layoutX="554.0" layoutY="455.0" mnemonicParsing="false" onAction="#onPointsClicked" text="PUNKTY KLUCZOWE" />
+            <Button layoutX="462.0" layoutY="423.0" mnemonicParsing="false" onAction="#onStartClickedWithoutSelection" prefHeight="26.0" prefWidth="153.0" text="BEZ SELEKCJI" />
+            <Button layoutX="626.0" layoutY="423.0" mnemonicParsing="false" onAction="#onStartClickedWithSelection" prefHeight="26.0" prefWidth="153.0" text="Z SELEKCJĄ" />
+            <Button layoutX="462.0" layoutY="462.0" mnemonicParsing="false" onAction="#onAffineStartClicked" prefHeight="26.0" prefWidth="153.0" text="AFINICZNA" />
+            <Button layoutX="626.0" layoutY="462.0" mnemonicParsing="false" onAction="#onOutlookStartClicked" prefHeight="26.0" prefWidth="153.0" text="PERSPEKTYWICZNA" />
+            <Label layoutX="512.0" layoutY="201.0" text="Podaj liczbę iteracji:" />
+            <Label layoutX="483.0" layoutY="234.0" text="Podaj maksymalny błąd:" />
+            <Button fx:id="circle" layoutX="555.0" layoutY="507.0" mnemonicParsing="false" onAction="#onPointsClicked" text="PUNKTY KLUCZOWE" />
             <Label layoutX="558.0" layoutY="270.0" text="Heurystyki:" />
+            <Label fx:id="p_label" disable="true" layoutX="484.0" layoutY="350.0" text="Prawdopodobieństwo p:" />
+            <TextField fx:id="p" disable="true" layoutX="653.0" layoutY="346.0" prefHeight="26.0" prefWidth="75.0" text="60" />
          </children>
       </AnchorPane>
    </children>

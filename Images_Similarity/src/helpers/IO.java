@@ -1,9 +1,6 @@
 package helpers;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class IO {
@@ -24,6 +21,34 @@ public class IO {
         Image image_scr = null;
 
         File file = new File(path + image + extension);
+
+        // use extract features to generate points file if is there not the file
+        if (!file.exists()) {
+
+            Runtime run = Runtime.getRuntime();
+            String cyg_path = "cd /cygdrive/d/Users/oladr/Studia/Term_VI/Sztuczna/WorkSpace/Images_Similarity/src/photos";
+            String command = "extract_features2.tar/extract_features/extract_features_32bit.exe -haraff -sift -i " + image + " -DE";
+
+            try {
+                String[] env = new String[]{"path=%PATH%;D:/cygwin/bin/"};
+                Process proc = run.exec(new String[]{"bash.exe", "-c", cyg_path + " && " + command},
+                        env);
+                proc.waitFor();
+                BufferedReader br = new BufferedReader(new InputStreamReader(
+                        proc.getInputStream()));
+                while (br.ready())
+                    System.out.println(br.readLine());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // delete unused files
+            File file_to_dele = new File(path + image + extension + ".png");
+            file_to_dele.delete();
+            file_to_dele = new File(path + image + extension + ".params");
+            file_to_dele.delete();
+        }
+
         try {
             FileReader freader = new FileReader(file);
             BufferedReader reader = new BufferedReader(freader);

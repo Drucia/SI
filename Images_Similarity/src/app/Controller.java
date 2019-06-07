@@ -1,12 +1,14 @@
 package app;
 
 import algorithm.ImageProcessor;
+import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import helpers.IO;
 import helpers.KeyPoint;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -54,6 +56,12 @@ public class Controller {
     @FXML
     private CheckBox heu_iter;
 
+    @FXML
+    private TextField p;
+
+    @FXML
+    private Label p_label;
+
     private ArrayList<Circle> circles;
 
     private static final String start_path = "D:\\Users\\oladr\\Studia\\Term_VI\\Sztuczna\\WorkSpace\\Images_Similarity\\src\\photos";
@@ -66,22 +74,23 @@ public class Controller {
         img_1 = new File(start_path + "\\natalia_1.png");
         img_2 = new File(start_path + "\\natalia_2.png");
         circles = new ArrayList<>();
+        heu_iter.setOnAction(event -> setDisabled(!heu_iter.isSelected()));
+    }
+
+    private void setDisabled(boolean selected) {
+        p.setDisable(selected);
+        p_label.setDisable(selected);
     }
 
     public void onStartClickedWithoutSelection() {
-        ArrayList<helpers.Image> data = IO.readImagesData(img_1.getName(), img_2.getName());
-
-        // set ImageProcessor data
-
-        ImageProcessor.initialize(data.get(0), data.get(1));
-
-        ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints();
-
-        WinController.initial(s, ImageProcessor.imgA.getPoints(), ImageProcessor.imgB.getPoints(), img_1.toURI().toString(), img_2.toURI().toString(), "BEZ SELEKCJI");
+        goMergeInPairs(false);
     }
 
     public void onStartClickedWithSelection() {
-        // prepare data for image
+        goMergeInPairs(true);
+    }
+
+    private void goMergeInPairs(boolean isSelection) {
         ArrayList<helpers.Image> data = IO.readImagesData(img_1.getName(), img_2.getName());
 
         // set ImageProcessor data
@@ -90,11 +99,10 @@ public class Controller {
 
         ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints();
 
-        // filtered
+        if (isSelection) // filtered
+            s = ImageProcessor.getConsistentPairs(Integer.parseInt(neigh_size.getText()), Integer.parseInt(neigh_lim.getText()), s);
 
-        s = ImageProcessor.getConsistentPairs(Integer.parseInt(neigh_size.getText()), Integer.parseInt(neigh_lim.getText()), s);
-
-        WinController.initial(s, ImageProcessor.imgA.getPoints(), ImageProcessor.imgB.getPoints(), img_1.toURI().toString(), img_2.toURI().toString(), "Z SELEKCJĄ");
+        WinController.initial(s, ImageProcessor.imgA.getPoints(), ImageProcessor.imgB.getPoints(), img_1.toURI().toString(), img_2.toURI().toString(), isSelection ? "Z SELEKCJĄ" : "BEZ SELEKCJI");
     }
 
     public void onBrowseAClicked(ActionEvent actionEvent) {
@@ -124,38 +132,14 @@ public class Controller {
     }
 
     public void onAffineStartClicked(ActionEvent actionEvent) {
-        // prepare data for image
-        ArrayList<helpers.Image> data = IO.readImagesData(img_1.getName(), img_2.getName());
-
-        // set ImageProcessor data
-
-        ImageProcessor.initialize(data.get(0), data.get(1));
-
-        ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints();
-
-        // filter
-
-        s = ImageProcessor.getConsistentPairs(Integer.parseInt(neigh_size.getText()), Integer.parseInt(neigh_lim.getText()), s);
-
-        Double size_of_image = null; // distance heuristic
-        boolean is_distr_heu = false; // distr heuristic
-
-        // go ransac with affine
-
-        if (heu_dis.isSelected())
-            size_of_image = new Double(WinController.HEIGHT + WinController.WIDTH);
-
-        if (heu_distr.isSelected())
-            is_distr_heu = true;
-
-        //if (heu_iter.isSelected())
-
-        Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> best_model = ImageProcessor.goRansac(s, Integer.parseInt(runsac_iter.getText()), SAMPLES_FOR_AFFINE, true, Double.parseDouble(runsac_error.getText()), size_of_image, is_distr_heu);
-
-        WinController.initial(best_model.getValue(), ImageProcessor.imgA.getPoints(), ImageProcessor.imgB.getPoints(), img_1.toURI().toString(), img_2.toURI().toString(), "AFINICZNA");
+        goRansac(true);
     }
 
     public void onOutlookStartClicked(ActionEvent actionEvent) {
+        goRansac(false);
+    }
+
+    private void goRansac(boolean isAffine) {
         // prepare data for image
         ArrayList<helpers.Image> data = IO.readImagesData(img_1.getName(), img_2.getName());
 
@@ -165,26 +149,36 @@ public class Controller {
 
         ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints();
 
+        int amount_before = s.size();
+
         // filter
 
         s = ImageProcessor.getConsistentPairs(Integer.parseInt(neigh_size.getText()), Integer.parseInt(neigh_lim.getText()), s);
 
+        int amount_after = s.size();
+
         Double size_of_image = null; // distance heuristic
         boolean is_distr_heu = false; // distr heuristic
+        Integer probability = null; // iter heuristic
 
-        // go ransac with outlook
+        // go ransac
 
         if (heu_dis.isSelected())
-            size_of_image = new Double(WinController.HEIGHT + WinController.WIDTH);
+            size_of_image = (double) (WinController.HEIGHT + WinController.WIDTH);
 
         if (heu_distr.isSelected())
             is_distr_heu = true;
 
-        //if (heu_iter.isSelected())
+        if (heu_iter.isSelected())
+            probability = calculateProbability(amount_after, amount_before, Integer.parseInt(p.getText()), isAffine ? SAMPLES_FOR_AFFINE : SAMPLES_FOR_OUTLOOK);
 
-        Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> best_model = ImageProcessor.goRansac(s, Integer.parseInt(runsac_iter.getText()), SAMPLES_FOR_OUTLOOK, false, Double.parseDouble(runsac_error.getText()), size_of_image, is_distr_heu);
+        Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> best_model = ImageProcessor.goRansac(s, Integer.parseInt(runsac_iter.getText()), isAffine ? SAMPLES_FOR_AFFINE : SAMPLES_FOR_OUTLOOK, isAffine, Double.parseDouble(runsac_error.getText()), size_of_image, is_distr_heu, probability);
 
-        WinController.initial(best_model.getValue(), ImageProcessor.imgA.getPoints(), ImageProcessor.imgB.getPoints(), img_1.toURI().toString(), img_2.toURI().toString(), "PERSPEKTYWICZNA");
+        WinController.initial(best_model.getValue(), ImageProcessor.imgA.getPoints(), ImageProcessor.imgB.getPoints(), img_1.toURI().toString(), img_2.toURI().toString(), isAffine ? "AFINICZNA" : "PERSPEKTYWICZNA");
+    }
+
+    private int calculateProbability(int amount_after, int amount_before, int p, int samples) {
+        return (int) (Math.log(1-((double)p)/100)/Math.log(1-Math.pow((double) amount_after/amount_before, samples)));
     }
 
     public void onPointsClicked(ActionEvent actionEvent) {
