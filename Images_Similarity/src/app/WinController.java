@@ -50,6 +50,6 @@ public class WinController
         primaryStage.setTitle(title + " - IS");
         primaryStage.setScene(scene);
         primaryStage.show();
-        System.out.println("KONIEC");
+        System.out.println("-------------KONIEC-------------");
     }
 }

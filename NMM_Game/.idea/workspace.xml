@@ -3,55 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="11b7c5e3-e000-410a-953f-517d50964c4e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/../Images_Similarity/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/algorithm/ImageProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/algorithm/ImageProcessor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/app/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/app/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/app/image.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/app/image.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/box_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/box_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/box_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/box_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/cup_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/cup_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/cup_1.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/cup_1.png.haraff.sift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/cup_1.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/cup_1.png.haraff.sift.params" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/cup_1.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/cup_1.png.haraff.sift.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/cup_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/cup_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/cup_2.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/cup_2.png.haraff.sift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/cup_2.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/cup_2.png.haraff.sift.params" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/cup_2.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/cup_2.png.haraff.sift.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/glasses_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/glasses_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/glasses_1.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/glasses_1.png.haraff.sift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/glasses_1.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/glasses_1.png.haraff.sift.params" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/glasses_1.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/glasses_1.png.haraff.sift.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/glasses_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/glasses_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/glasses_2.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/glasses_2.png.haraff.sift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/glasses_2.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/glasses_2.png.haraff.sift.params" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/glasses_2.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/glasses_2.png.haraff.sift.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mouse_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mouse_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mouse_1.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mouse_1.png.haraff.sift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mouse_1.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mouse_1.png.haraff.sift.params" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mouse_1.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mouse_1.png.haraff.sift.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mouse_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mouse_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mouse_2.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mouse_2.png.haraff.sift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mouse_2.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mouse_2.png.haraff.sift.params" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mouse_2.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mouse_2.png.haraff.sift.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mousee_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mousee_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/mousee_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/mousee_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/whisky_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/whisky_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/whisky_1.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/whisky_1.png.haraff.sift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/whisky_1.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/whisky_1.png.haraff.sift.params" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/whisky_1.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/whisky_1.png.haraff.sift.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/whisky_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/whisky_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/whisky_2.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/whisky_2.png.haraff.sift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/whisky_2.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/whisky_2.png.haraff.sift.params" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/whisky_2.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/whisky_2.png.haraff.sift.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/wipes_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/wipes_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/wipes_1.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/wipes_1.png.haraff.sift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/wipes_1.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/wipes_1.png.haraff.sift.params" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/wipes_1.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/wipes_1.png.haraff.sift.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/wipes_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/wipes_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/wipes_2.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/wipes_2.png.haraff.sift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/wipes_2.png.haraff.sift.params" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/wipes_2.png.haraff.sift.params" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/photos/wipes_2.png.haraff.sift.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/photos/wipes_2.png.haraff.sift.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/photos/box_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/photos/box_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/photos/box_1.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/photos/box_1.png.haraff.sift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/photos/box_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/photos/box_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/photos/box_2.png.haraff.sift" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/out/production/Images_Similarity/photos/box_2.png.haraff.sift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Images_Similarity/src/algorithm/ImageProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/algorithm/ImageProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Images_Similarity/src/app/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/app/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Images_Similarity/src/app/image.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../Images_Similarity/src/app/image.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -65,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/sample/NMM.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="74" selection-start-line="74" selection-end-line="74" />
+            <state relative-caret-position="233">
+              <caret line="108" column="42" lean-forward="true" selection-start-line="108" selection-start-column="12" selection-end-line="108" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1794#1795#0" expanded="true" />
@@ -78,6 +37,7 @@
                 <element signature="e#2058#2059#0" expanded="true" />
                 <element signature="e#2288#2289#0" expanded="true" />
                 <element signature="e#2323#2324#0" expanded="true" />
+                <element signature="e#2365#2366#0" expanded="true" />
                 <element signature="e#2415#2416#0" expanded="true" />
                 <element signature="e#2599#2600#0" expanded="true" />
                 <element signature="e#2627#2628#0" expanded="true" />
@@ -119,11 +79,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="471">
-              <caret line="347" column="10" lean-forward="true" selection-start-line="347" selection-start-column="10" selection-end-line="347" selection-end-column="10" />
+            <state relative-caret-position="420">
+              <caret line="347" column="10" selection-start-line="347" selection-start-column="10" selection-end-line="347" selection-end-column="10" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#13561#13562#0" expanded="true" />
@@ -135,12 +95,12 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/NMM.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder" />
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
               <caret line="15" column="195" selection-start-line="15" selection-start-column="162" selection-end-line="15" selection-end-column="195" />
             </state>
           </provider>
-          <provider editor-type-id="JavaFX-Scene-Builder" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -184,8 +144,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/NewGameController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4097">
-              <caret line="253" column="55" lean-forward="true" selection-start-line="253" selection-start-column="4" selection-end-line="253" selection-end-column="55" />
+            <state relative-caret-position="4148">
+              <caret line="253" column="55" selection-start-line="253" selection-start-column="4" selection-end-line="253" selection-end-column="55" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -195,12 +155,12 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/GameOver.fxml">
+          <provider editor-type-id="JavaFX-Scene-Builder" />
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="459">
               <caret line="27" column="114" selection-start-line="27" selection-start-column="114" selection-end-line="27" selection-end-column="114" />
             </state>
           </provider>
-          <provider editor-type-id="JavaFX-Scene-Builder" />
         </entry>
       </file>
     </leaf>
@@ -279,8 +239,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -314,6 +272,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -401,7 +361,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.498998" visible="true" weight="0.16510066" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.498998" visible="true" weight="0.1671141" />
       <window_info id="Structure" order="1" sideWeight="0.501002" side_tool="true" weight="0.1590604" />
       <window_info id="Designer" order="2" />
       <window_info id="DB Browser" order="3" />
@@ -517,12 +477,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/NewGame.fxml">
+      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
       <provider editor-type-id="text-editor">
         <state relative-caret-position="731">
           <caret line="43" column="36" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/javafx-src.zip!/javafx/scene/control/Button.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -703,6 +663,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/NMM.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="195" selection-start-line="15" selection-start-column="162" selection-end-line="15" selection-end-column="195" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Node.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -725,13 +693,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/NewGameController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4148">
+          <caret line="253" column="55" selection-start-line="253" selection-start-column="4" selection-end-line="253" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/GameOver.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
           <caret line="27" column="114" selection-start-line="27" selection-start-column="114" selection-end-line="27" selection-end-column="114" />
         </state>
       </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="347" column="10" selection-start-line="347" selection-start-column="10" selection-end-line="347" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#13561#13562#0" expanded="true" />
+            <element signature="e#13597#13598#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Algorithm.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -743,28 +733,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/NewGameController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4097">
-          <caret line="253" column="55" lean-forward="true" selection-start-line="253" selection-start-column="4" selection-end-line="253" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/NMM.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="195" selection-start-line="15" selection-start-column="162" selection-end-line="15" selection-end-column="195" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/NMM.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="74" selection-start-line="74" selection-end-line="74" />
+        <state relative-caret-position="233">
+          <caret line="108" column="42" lean-forward="true" selection-start-line="108" selection-start-column="12" selection-end-line="108" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1794#1795#0" expanded="true" />
@@ -773,6 +745,7 @@
             <element signature="e#2058#2059#0" expanded="true" />
             <element signature="e#2288#2289#0" expanded="true" />
             <element signature="e#2323#2324#0" expanded="true" />
+            <element signature="e#2365#2366#0" expanded="true" />
             <element signature="e#2415#2416#0" expanded="true" />
             <element signature="e#2599#2600#0" expanded="true" />
             <element signature="e#2627#2628#0" expanded="true" />
@@ -786,18 +759,6 @@
             <element signature="e#4936#4937#0" expanded="true" />
             <element signature="e#4985#4986#0" expanded="true" />
             <element signature="e#5022#5023#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="471">
-          <caret line="347" column="10" lean-forward="true" selection-start-line="347" selection-start-column="10" selection-end-line="347" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#13561#13562#0" expanded="true" />
-            <element signature="e#13597#13598#0" expanded="true" />
           </folding>
         </state>
       </provider>

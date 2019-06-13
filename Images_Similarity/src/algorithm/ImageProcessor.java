@@ -117,7 +117,7 @@ public class ImageProcessor
         return score;
     }
 
-    public static Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> goRansac(ArrayList<Pair<Integer, Integer>> data, int iter, int samples, boolean isAffine, double max_error, Double size_of_image, boolean is_distr_heu, Integer propability){
+    public static Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> goRansac(ArrayList<Pair<Integer, Integer>> data, int iter, int samples, boolean isAffine, double max_error, Double size_of_image, boolean is_distr_heu, Integer iterations){
         SimpleMatrix best_model = null;
         int best_score = 0;
         ArrayList<Pair<Integer, Integer>> consensus = new ArrayList<>();
@@ -125,8 +125,8 @@ public class ImageProcessor
         if (data.size() >= samples) {
             ArrayList<Pair<Integer, Integer>> source = new ArrayList<>(data);
 
-            if (propability != null)
-                iter = propability;
+            if (iterations != null)
+                iter = iterations;
 
             for (int i = 0; i < iter; i++) {
                 SimpleMatrix curr_model = null;

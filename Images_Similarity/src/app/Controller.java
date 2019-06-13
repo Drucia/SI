@@ -1,7 +1,6 @@
 package app;
 
 import algorithm.ImageProcessor;
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import helpers.IO;
 import helpers.KeyPoint;
 import javafx.event.ActionEvent;
@@ -23,8 +22,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Controller {
-    private static final int SAMPLES_FOR_AFFINE = 3;
-    private static final int SAMPLES_FOR_OUTLOOK = 4;
+    public static final int SAMPLES_FOR_AFFINE = 3;
+    public static final int SAMPLES_FOR_OUTLOOK = 4;
 
     @FXML
     private Button circle;
@@ -97,10 +96,26 @@ public class Controller {
 
         ImageProcessor.initialize(data.get(0), data.get(1));
 
+        long startTime, endTime, totalTime;
+
+        startTime = System.nanoTime();
+
         ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints();
+
+        int amount_before = s.size();
 
         if (isSelection) // filtered
             s = ImageProcessor.getConsistentPairs(Integer.parseInt(neigh_size.getText()), Integer.parseInt(neigh_lim.getText()), s);
+
+        int amount_after = s.size();
+
+        endTime = System.nanoTime();
+        totalTime = endTime - startTime;
+
+        System.out.println("\nWYBRANA METODA: " + (isSelection ? "Z SELEKCJĄ" : "BEZ SELEKCJI"));
+        System.out.println("Czas realizacji zadania [s]: " + (double)totalTime / 1_000_000_000.0);
+        System.out.println("Liczba par przed selekcją: " + amount_before);
+        System.out.println("Liczba par po użyciu metody: " + amount_after);
 
         WinController.initial(s, ImageProcessor.imgA.getPoints(), ImageProcessor.imgB.getPoints(), img_1.toURI().toString(), img_2.toURI().toString(), isSelection ? "Z SELEKCJĄ" : "BEZ SELEKCJI");
     }
@@ -147,6 +162,9 @@ public class Controller {
 
         ImageProcessor.initialize(data.get(0), data.get(1));
 
+        long startTime, endTime, totalTime;
+
+        startTime = System.nanoTime();
         ArrayList<Pair<Integer, Integer>> s = ImageProcessor.getListOfPairKeyPoints();
 
         int amount_before = s.size();
@@ -159,7 +177,7 @@ public class Controller {
 
         Double size_of_image = null; // distance heuristic
         boolean is_distr_heu = false; // distr heuristic
-        Integer probability = null; // iter heuristic
+        Integer iterations = null; // iter heuristic
 
         // go ransac
 
@@ -170,14 +188,22 @@ public class Controller {
             is_distr_heu = true;
 
         if (heu_iter.isSelected())
-            probability = calculateProbability(amount_after, amount_before, Integer.parseInt(p.getText()), isAffine ? SAMPLES_FOR_AFFINE : SAMPLES_FOR_OUTLOOK);
+            iterations = calculateProbability(amount_after, amount_before, Integer.parseInt(p.getText()), isAffine ? SAMPLES_FOR_AFFINE : SAMPLES_FOR_OUTLOOK);
 
-        Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> best_model = ImageProcessor.goRansac(s, Integer.parseInt(runsac_iter.getText()), isAffine ? SAMPLES_FOR_AFFINE : SAMPLES_FOR_OUTLOOK, isAffine, Double.parseDouble(runsac_error.getText()), size_of_image, is_distr_heu, probability);
+        Pair<SimpleMatrix, ArrayList<Pair<Integer, Integer>>> best_model = ImageProcessor.goRansac(s, Integer.parseInt(runsac_iter.getText()), isAffine ? SAMPLES_FOR_AFFINE : SAMPLES_FOR_OUTLOOK, isAffine, Double.parseDouble(runsac_error.getText()), size_of_image, is_distr_heu, iterations);
+
+        endTime = System.nanoTime();
+        totalTime = endTime - startTime;
+
+        System.out.println("\nWYBRANA METODA: " + (isAffine ? "AFINICZNA" : "PERSPEKTYWICZNA"));
+        System.out.println("Czas realizacji zadania [s]: " + (double)totalTime / 1_000_000_000.0);
+        System.out.println("Liczba par przed selekcją: " + amount_before);
+        System.out.println("Liczba par po użyciu metody: " + best_model.getValue().size());
 
         WinController.initial(best_model.getValue(), ImageProcessor.imgA.getPoints(), ImageProcessor.imgB.getPoints(), img_1.toURI().toString(), img_2.toURI().toString(), isAffine ? "AFINICZNA" : "PERSPEKTYWICZNA");
     }
 
-    private int calculateProbability(int amount_after, int amount_before, int p, int samples) {
+    public static int calculateProbability(int amount_after, int amount_before, int p, int samples) {
         return (int) (Math.log(1-((double)p)/100)/Math.log(1-Math.pow((double) amount_after/amount_before, samples)));
     }
 
